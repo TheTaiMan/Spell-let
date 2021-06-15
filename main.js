@@ -20,6 +20,17 @@ utterance.addEventListener('start', function(event) {
 
 /******************************************************** */
 
+/*Use the average time for a letter to be said and that can 
+ *be used to determine when to stop and when to resume. 
+ *There should be different voice synthesis for each type of word
+ *for example, the word should have its own synthesis and the spelling should too 
+ */
+
+/*For the spelling, you should use .substring() method to go to the spelling an OR
+ * use the syllable array and split each index of it, and when it ends, hopefully when you press 
+ * resume, it will resume from the word itself. 
+ */
+
 class Speak {
   constructor(word) {
     this.word = word;
@@ -35,7 +46,7 @@ class Speak {
     return words.match(syllableRegex);
   }
   indicateText(text = false) {
-    return (document.getElementById("text").innerHTML = text || '');
+    return (document.getElementById("text").innerHTML = text || "");
   }
   playText(text) {
     this.indicateText(text);
@@ -53,7 +64,7 @@ class Speak {
     return speechSynthesis.resume();
   }
   stopText() {
-    this.indicateText('');
+    this.indicateText("");
     speechSynthesis.resume();
     return speechSynthesis.cancel();
   }
@@ -91,4 +102,6 @@ const pauseButton = document.getElementById("pause-button");
 const stopButton = document.getElementById("stop-button");
 
 pauseButton.addEventListener("click", vegetable.pauseText);
-stopButton.addEventListener("click", () => {vegetable.stopText()});
+stopButton.addEventListener("click", () => {
+  vegetable.stopText();
+});
