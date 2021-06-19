@@ -48,7 +48,7 @@ class Speak extends Word {
     return speechSynthesis.resume();
   }
   stopText() {
-    //this.indicateText("");
+    this.renderLetter = [];
     speechSynthesis.resume();
     this.onSyllable = 0;
     return speechSynthesis.cancel();
@@ -94,7 +94,6 @@ class Speak extends Word {
   }
   ifNoSyllable() {
     if (this.syllable.length === 1) {
-      console.log("HI");
       this.playText(this.spell, "syllable");
       this.utterance.addEventListener("end", (e) => {
         this.fullWord();
