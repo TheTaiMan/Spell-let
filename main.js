@@ -19,10 +19,11 @@ class Speak extends Word {
     super(word);
     this.syllable = this.syllabify(this.word);
     this.spell = this.word.split("");
-    this.renderLetter = [];
+    this.renderWord = [];
     this.utterance = "";
     this.onSyllable = 0;
     this.timeElapsed = 0;
+    this.block = false;
   }
   /* Tools */
   syllabify(words) {
@@ -40,7 +41,8 @@ class Speak extends Word {
     return speechSynthesis.resume();
   }
   stopText() {
-    this.renderLetter = [];
+    this.block = false;
+    this.renderWord = [];
     speechSynthesis.resume();
     this.onSyllable = 0;
     return speechSynthesis.cancel();
@@ -54,6 +56,30 @@ class Speak extends Word {
     }
     return (this.timeElapsed = e.elapsedTime / this.word.length + add);
   }
+  encrypt(string) {
+    string = string.toLowerCase();
+    let newCode = "";
+    for (const letter of string) {
+      let random = Math.floor(Math.random() * 26);
+      let letterCode = letter.charCodeAt(0);
+
+      let letterShift = letterCode + random;
+      if (letterShift > 122) {
+        letterShift -= 122;
+        letterShift += 96;
+      }
+      newCode += String.fromCharCode(letterShift);
+    }
+    return newCode.toUpperCase();
+  }
+  delayRender(time, text, imprint) {
+    for (let i = 0; i < text.length; i++) {
+      // This prints the letters of the syllable to the console in sync with the voice spelling it
+      setTimeout(function () {
+        imprint.innerHTML += ` ${text[i]}` || "";
+      }, i * (time || 200)); // this is responsible for the delay of the letter being shown in the window.
+    }
+  }
   /* Functions */
   indicateText(text = false, state) {
     // The last step of the step of this class, it renders the text being said in a dynamic way to the window, with the syllable and everything showing in sort of sync with teh voice.
@@ -61,25 +87,26 @@ class Speak extends Word {
     let textContent = renderText.textContent;
     switch (state) {
       case "syllable":
-        if (textContent === this.word) {
+        if (!this.renderWord.length) {
           renderText.innerHTML = "";
         }
-        for (let i = 0; i < text.length; i++) {
-          // This prints the letters of the syllable to the console in sync with the voice spelling it
-          setTimeout(function () {
-            renderText.innerHTML += ` ${text[i]}` || "";
-          }, i * (this.timeElapsed || 200)); // this is responsible for the delay of the letter being shown in the window.
-        }
+        this.delayRender(this.timeElapsed, text, renderText);
         break;
       case "word": // favorite function of this class, it takes the content already rendered to the window, and splits them it groups, one being a full syllable and the other a letters of a syllable. Then combines the letter that apart of a syllable into a syllable when the syllable is being said.
         textContent = textContent.split(" ");
         let syllable = textContent.filter((property) => property.length === 1); // Then it filters through the groups and stores the letters of syllables
         syllable = syllable.join(""); // Then makes those letters of syllable a full syllable string.
-        this.renderLetter.push(syllable); // That full syllable gets added to the this.renderLetter which can be accessed  by the whole class and allows previous words to be saved along with new ones getting added.
-        renderText.innerHTML = this.renderLetter.join(" "); // The all of the arraying in the this.renderLetter gets rendered to the window, showing an illusion of the syllables letters combining while the old syllables not changing, but the whole section is being changed even the old words.
+        this.renderWord.push(syllable); // That full syllable gets added to the this.renderWord which can be accessed  by the whole class and allows previous words to be saved along with new ones getting added.
+        renderText.innerHTML = this.renderWord.join(" "); // The all of the arraying in the this.renderWord gets rendered to the window, showing an illusion of the syllables letters combining while the old syllables not changing, but the whole section is being changed even the old words.
         break;
       case "full-word":
         renderText.innerHTML = text || "";
+        break;
+      case "encrypt":
+        renderText.innerHTML = "";
+        text = this.encrypt(text);
+        let time = text.length * 10;
+        this.delayRender(time, text, renderText);
         break;
     }
   }
@@ -143,18 +170,30 @@ class Speak extends Word {
 } */
 
 let givenWord;
-const revealGivenWord = (next = false) => {
-  givenWord.revealWord(givenWord.syllable, "syllable")
-  if (next === true) {
-    console.log('Hi'); 
+const revealGivenWord = () => {
+  if (!givenWord.block) {
+    givenWord.block = true;
+    return (
+      (document.getElementById("text").style.filter = "blur(0px)"),
+      givenWord.revealWord(givenWord.syllable, "syllable")
+    );
   }
+  return;
 };
 const playGivenWord = () => {
-  givenWord.playText(givenWord.word, "full-word");
-  givenWord.utterance.addEventListener("end", (e) => {
-    givenWord.set_timeElapsed(e);
-  });
-}
+  if (!givenWord.block) {
+    givenWord.block = true;
+    document.getElementById("text").style.filter = "";
+    return (
+      givenWord.playText(givenWord.word, "encrypt"),
+      givenWord.utterance.addEventListener("end", (e) => {
+        givenWord.set_timeElapsed(e);
+        return givenWord.block = false;
+      })
+    );
+  }
+  return;
+};
 
 class Check extends Word {
   constructor(word) {
@@ -163,8 +202,8 @@ class Check extends Word {
   checkSpelling(input) {
     const spellingValue = input.value.toLowerCase();
     if (this.word.toLowerCase() === spellingValue) {
-      console.log("Correct!");
-      revealGivenWord(true);
+      //console.log("Correct!");
+      revealGivenWord();
       return true;
     }
     console.log("Incorrect, go back to pre-school! ");
@@ -184,14 +223,14 @@ input.addEventListener("keyup", function (event) {
 });
 
 const playWord = document.getElementById("play-word");
-playWord.addEventListener("click",playGivenWord);
+playWord.addEventListener("click", playGivenWord);
 
 const revealWord = document.getElementById("revealWord");
 revealWord.addEventListener("click", revealGivenWord);
 
-const setWordClass = word => {
+const setWordClass = (word) => {
   givenWord = new Speak(word);
   toCheck = new Check(word);
-}
+};
 
-setWordClass('Computer');
+setWordClass("computer");
