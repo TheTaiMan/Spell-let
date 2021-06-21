@@ -14,15 +14,6 @@ class Word {
   }
 }
 
-class Check extends Word {
-  constructor(word) {
-    super(word);
-  }
-  /* checkSpelling(currentSyllable) {
-
-  } */
-}
-
 class Speak extends Word {
   constructor(word) {
     super(word);
@@ -59,7 +50,7 @@ class Speak extends Word {
     if (this.syllable.length === 1) {
       add = 100;
     } else {
-      add = 260;
+      add = 280;
     }
     return (this.timeElapsed = e.elapsedTime / this.word.length + add);
   }
@@ -73,18 +64,19 @@ class Speak extends Word {
         if (textContent === this.word) {
           renderText.innerHTML = "";
         }
-        for (let i = 0; i < text.length; i++) { // This prints the letters of the syllable to the console in sync with the voice spelling it
+        for (let i = 0; i < text.length; i++) {
+          // This prints the letters of the syllable to the console in sync with the voice spelling it
           setTimeout(function () {
             renderText.innerHTML += ` ${text[i]}` || "";
-          }, i * this.timeElapsed); // this is responsible for the delay of the letter being shown in the window. 
+          }, i * (this.timeElapsed || 200)); // this is responsible for the delay of the letter being shown in the window.
         }
         break;
       case "word": // favorite function of this class, it takes the content already rendered to the window, and splits them it groups, one being a full syllable and the other a letters of a syllable. Then combines the letter that apart of a syllable into a syllable when the syllable is being said.
         textContent = textContent.split(" ");
         let syllable = textContent.filter((property) => property.length === 1); // Then it filters through the groups and stores the letters of syllables
         syllable = syllable.join(""); // Then makes those letters of syllable a full syllable string.
-        this.renderLetter.push(syllable); // That full syllable gets added to the this.renderLetter which can be accessed  by the whole class and allows previous words to be saved along with new ones getting added. 
-        renderText.innerHTML = this.renderLetter.join(" "); // The all of the arraying in the this.renderLetter gets rendered to the window, showing an illusion of the syllables letters combining while the old syllables not changing, but the whole section is being changed even the old words. 
+        this.renderLetter.push(syllable); // That full syllable gets added to the this.renderLetter which can be accessed  by the whole class and allows previous words to be saved along with new ones getting added.
+        renderText.innerHTML = this.renderLetter.join(" "); // The all of the arraying in the this.renderLetter gets rendered to the window, showing an illusion of the syllables letters combining while the old syllables not changing, but the whole section is being changed even the old words.
         break;
       case "full-word":
         renderText.innerHTML = text || "";
@@ -138,25 +130,68 @@ class Speak extends Word {
     this.utterance.addEventListener("end", (e) => {
       setTimeout(() => {
         if (state === "syllable") {
-          return this.revealWord(vegetable.syllable, "word");
+          return this.revealWord(this.syllable, "word");
         }
-        return this.revealWord(vegetable.syllable, "syllable");
+        return this.revealWord(this.syllable, "syllable");
       }, 100);
     });
   }
 }
 
-const vegetable = new Speak("represenTED");
+/* const randomWord = () => {
+
+} */
+
+let givenWord;
+const revealGivenWord = (next = false) => {
+  givenWord.revealWord(givenWord.syllable, "syllable")
+  if (next === true) {
+    console.log('Hi'); 
+  }
+};
+const playGivenWord = () => {
+  givenWord.playText(givenWord.word, "full-word");
+  givenWord.utterance.addEventListener("end", (e) => {
+    givenWord.set_timeElapsed(e);
+  });
+}
+
+class Check extends Word {
+  constructor(word) {
+    super(word);
+  }
+  checkSpelling(input) {
+    const spellingValue = input.value.toLowerCase();
+    if (this.word.toLowerCase() === spellingValue) {
+      console.log("Correct!");
+      revealGivenWord(true);
+      return true;
+    }
+    console.log("Incorrect, go back to pre-school! ");
+    playGivenWord();
+    return false;
+  }
+}
+
+const input = document.getElementById("inputSpelling");
+let toCheck;
+
+input.addEventListener("keyup", function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    toCheck.checkSpelling(input);
+  }
+});
 
 const playWord = document.getElementById("play-word");
-playWord.addEventListener("click", () => {
-  vegetable.playText(vegetable.word, "full-word");
-  vegetable.utterance.addEventListener("end", (e) => {
-    vegetable.set_timeElapsed(e);
-  });
-});
+playWord.addEventListener("click",playGivenWord);
 
 const revealWord = document.getElementById("revealWord");
-revealWord.addEventListener("click", () => {
-  vegetable.revealWord(vegetable.syllable, "syllable");
-});
+revealWord.addEventListener("click", revealGivenWord);
+
+const setWordClass = word => {
+  givenWord = new Speak(word);
+  toCheck = new Check(word);
+}
+
+setWordClass('Computer');
