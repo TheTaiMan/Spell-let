@@ -9,7 +9,8 @@ class Word {
     if (typeof text !== "string" || !text.trim() || text.length === 0) {
       throw Error("Enter an actual word");
     }
-    return (this._word = text.toLowerCase());
+    text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    return (this._word = text.trim());
   }
 }
 
@@ -60,11 +61,11 @@ class Speak extends Word {
     } else {
       add = 260;
     }
-    return this.timeElapsed = (e.elapsedTime / this.word.length) + add;
-
+    return (this.timeElapsed = e.elapsedTime / this.word.length + add);
   }
   /* Functions */
   indicateText(text = false, state) {
+    // The last step of the step of this class, it renders the text being said in a dynamic way to the window, with the syllable and everything showing in sort of sync with teh voice.
     const renderText = document.getElementById("text");
     let textContent = renderText.textContent;
     switch (state) {
@@ -72,18 +73,18 @@ class Speak extends Word {
         if (textContent === this.word) {
           renderText.innerHTML = "";
         }
-        for (let i = 0; i < text.length; i++) {
+        for (let i = 0; i < text.length; i++) { // This prints the letters of the syllable to the console in sync with the voice spelling it
           setTimeout(function () {
             renderText.innerHTML += ` ${text[i]}` || "";
-          }, i * this.timeElapsed);
+          }, i * this.timeElapsed); // this is responsible for the delay of the letter being shown in the window. 
         }
         break;
-      case "word":
+      case "word": // favorite function of this class, it takes the content already rendered to the window, and splits them it groups, one being a full syllable and the other a letters of a syllable. Then combines the letter that apart of a syllable into a syllable when the syllable is being said.
         textContent = textContent.split(" ");
-        let syllable = textContent.filter((property) => property.length === 1);
-        syllable = syllable.join("");
-        this.renderLetter.push(syllable);
-        renderText.innerHTML = this.renderLetter.join(" ");
+        let syllable = textContent.filter((property) => property.length === 1); // Then it filters through the groups and stores the letters of syllables
+        syllable = syllable.join(""); // Then makes those letters of syllable a full syllable string.
+        this.renderLetter.push(syllable); // That full syllable gets added to the this.renderLetter which can be accessed  by the whole class and allows previous words to be saved along with new ones getting added. 
+        renderText.innerHTML = this.renderLetter.join(" "); // The all of the arraying in the this.renderLetter gets rendered to the window, showing an illusion of the syllables letters combining while the old syllables not changing, but the whole section is being changed even the old words. 
         break;
       case "full-word":
         renderText.innerHTML = text || "";
@@ -91,18 +92,21 @@ class Speak extends Word {
     }
   }
   playText(text, state) {
+    // the play text function is second to the last step of speaking, it actually says what is passed into the function and passes its value and state to the indicate text of what is being said.
     this.resumeText();
     if (speechSynthesis.speaking) return;
     this.indicateText(text, state);
     return window.speechSynthesis.speak(this.set_Utterance(text));
   }
   fullWord() {
+    // passes the full word to the play text function without anything being processed
     this.playText(this.word, "full-word"),
       this.utterance.addEventListener("end", (e) => {
         this.stopText();
       });
   }
   ifNoSyllable() {
+    // as the name suggest, this only activates when the word has only one syllable
     if (this.syllable.length === 1) {
       this.playText(this.spell, "syllable");
       this.utterance.addEventListener("end", (e) => {
@@ -113,6 +117,7 @@ class Speak extends Word {
     return false;
   }
   revealWord(text, state) {
+    // This function is the start, it takes a state and passes it to the playText method, and it repeats for the whole word. following a odd even pattern
     this.resumeText();
     if (speechSynthesis.speaking) return;
     if (this.ifNoSyllable()) return;
@@ -141,7 +146,7 @@ class Speak extends Word {
   }
 }
 
-const vegetable = new Speak("computer");
+const vegetable = new Speak("represenTED");
 
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
