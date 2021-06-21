@@ -53,6 +53,16 @@ class Speak extends Word {
     this.onSyllable = 0;
     return speechSynthesis.cancel();
   }
+  set_timeElapsed(e) {
+    let add = 0;
+    if (this.syllable.length === 1) {
+      add = 100;
+    } else {
+      add = 260;
+    }
+    return this.timeElapsed = (e.elapsedTime / this.word.length) + add;
+
+  }
   /* Functions */
   indicateText(text = false, state) {
     const renderText = document.getElementById("text");
@@ -81,9 +91,9 @@ class Speak extends Word {
     }
   }
   playText(text, state) {
-    this.indicateText(text, state);
     this.resumeText();
     if (speechSynthesis.speaking) return;
+    this.indicateText(text, state);
     return window.speechSynthesis.speak(this.set_Utterance(text));
   }
   fullWord() {
@@ -137,8 +147,7 @@ const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
   vegetable.playText(vegetable.word, "full-word");
   vegetable.utterance.addEventListener("end", (e) => {
-    vegetable.timeElapsed = e.elapsedTime / e.target.text.length + 200;
-    console.log(vegetable.timeElapsed);
+    vegetable.set_timeElapsed(e);
   });
 });
 
