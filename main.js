@@ -50,10 +50,13 @@ class Speak extends Word {
   set_timeElapsed(e) {
     let add = 0;
     if (this.syllable.length === 1) {
-      add = 100;
+      add = 250;
+    } else if (this.syllable.length >= 5) {
+      add = 200;
     } else {
       add = 280;
     }
+    //console.log(e.elapsedTime / this.word.length + add);
     return (this.timeElapsed = e.elapsedTime / this.word.length + add);
   }
   encrypt(string) {
@@ -62,7 +65,6 @@ class Speak extends Word {
     for (const letter of string) {
       let random = Math.floor(Math.random() * 26);
       let letterCode = letter.charCodeAt(0);
-
       let letterShift = letterCode + random;
       if (letterShift > 122) {
         letterShift -= 122;
@@ -70,19 +72,35 @@ class Speak extends Word {
       }
       newCode += String.fromCharCode(letterShift);
     }
+    if (newCode.length >= 13) {
+      let percentage = Math.floor(newCode.length * 0.7);
+      newCode = newCode.slice(0, percentage);
+    }
     return newCode.toUpperCase();
   }
-  delayRender(time, text, imprint) {
+  delayRender(time, text, imprint, retract = false) {
     for (let i = 0; i < text.length; i++) {
-      // This prints the letters of the syllable to the console in sync with the voice spelling it
-      setTimeout(function () {
+      setTimeout(() => {
         imprint.innerHTML += ` ${text[i]}` || "";
-      }, i * (time || 200)); // this is responsible for the delay of the letter being shown in the window.
+        retract && i === text.length - 1
+          ? this.renderReverse(time * 0.5, text, imprint)
+          : false;
+      }, i * (time || 200));
+    }
+  }
+  renderReverse(time, text, imprint) {
+    let encryptWord = text.split("");
+    for (let i = encryptWord.length; i >= 0; i--) {
+      setTimeout(() => {
+        imprint.innerHTML =
+          encryptWord.slice(0, encryptWord.length - i).join(" ") || "";
+        i === encryptWord.length ? this.stopText() : false;
+      }, i * (this.syllable.length === 1 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // *THIS SECTION MIGHT CAUSE ERRORS IN THE FUTURE
     }
   }
   /* Functions */
   indicateText(text = false, state) {
-    // The last step of the step of this class, it renders the text being said in a dynamic way to the window, with the syllable and everything showing in sort of sync with teh voice.
+    // This method prints the letter or word being said to the window, indicating the text being played
     const renderText = document.getElementById("text");
     let textContent = renderText.textContent;
     switch (state) {
@@ -92,21 +110,20 @@ class Speak extends Word {
         }
         this.delayRender(this.timeElapsed, text, renderText);
         break;
-      case "word": // favorite function of this class, it takes the content already rendered to the window, and splits them it groups, one being a full syllable and the other a letters of a syllable. Then combines the letter that apart of a syllable into a syllable when the syllable is being said.
+      case "word":
         textContent = textContent.split(" ");
-        let syllable = textContent.filter((property) => property.length === 1); // Then it filters through the groups and stores the letters of syllables
-        syllable = syllable.join(""); // Then makes those letters of syllable a full syllable string.
-        this.renderWord.push(syllable); // That full syllable gets added to the this.renderWord which can be accessed  by the whole class and allows previous words to be saved along with new ones getting added.
-        renderText.innerHTML = this.renderWord.join(" "); // The all of the arraying in the this.renderWord gets rendered to the window, showing an illusion of the syllables letters combining while the old syllables not changing, but the whole section is being changed even the old words.
+        let syllable = textContent.filter((property) => property.length === 1);
+        syllable = syllable.join("");
+        this.renderWord.push(syllable);
+        renderText.innerHTML = this.renderWord.join(" ");
         break;
       case "full-word":
         renderText.innerHTML = text || "";
         break;
       case "encrypt":
         renderText.innerHTML = "";
-        text = this.encrypt(text);
         let time = text.length * 10;
-        this.delayRender(time, text, renderText);
+        this.delayRender(time, this.encrypt(text), renderText, true);
         break;
     }
   }
@@ -143,7 +160,7 @@ class Speak extends Word {
     switch (state) {
       case "syllable":
         if (this.onSyllable < this.syllable.length) {
-          text = text[Math.min(this.onSyllable, text.length)].split("");
+          text = text[this.onSyllable].split("");
         } else {
           return this.fullWord();
         }
@@ -168,7 +185,6 @@ class Speak extends Word {
 /* const randomWord = () => {
 
 } */
-
 let givenWord;
 const revealGivenWord = () => {
   if (!givenWord.block) {
@@ -188,7 +204,7 @@ const playGivenWord = () => {
       givenWord.playText(givenWord.word, "encrypt"),
       givenWord.utterance.addEventListener("end", (e) => {
         givenWord.set_timeElapsed(e);
-        return givenWord.block = false;
+        //givenWord.block = false;
       })
     );
   }
@@ -206,7 +222,7 @@ class Check extends Word {
       revealGivenWord();
       return true;
     }
-    console.log("Incorrect, go back to pre-school! ");
+    //console.log("Incorrect, go back to pre-school! ");
     playGivenWord();
     return false;
   }
@@ -233,4 +249,14 @@ const setWordClass = (word) => {
   toCheck = new Check(word);
 };
 
-setWordClass("computer");
+let word = [
+  "perpendicular",
+  "Deforestation",
+  "Procrastination",
+  "computer",
+  "vegetable",
+  "text",
+  "beats",
+];
+
+setWordClass(word[2]);
