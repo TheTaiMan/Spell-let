@@ -100,9 +100,7 @@ class Speak extends Word {
   }
   /* Functions */
   indicateText(text = false, state) {
-    // This method prints the letter or word being said to the window, indicating the text being played
     const renderText = document.getElementById("text");
-    let textContent = renderText.textContent;
     switch (state) {
       case "syllable":
         if (!this.renderWord.length) {
@@ -110,11 +108,8 @@ class Speak extends Word {
         }
         this.delayRender(this.timeElapsed, text, renderText);
         break;
-      case "word":
-        textContent = textContent.split(" ");
-        let syllable = textContent.filter((property) => property.length === 1);
-        syllable = syllable.join("");
-        this.renderWord.push(syllable);
+      case "word": // ***FIXED***
+        this.renderWord.push(text);
         renderText.innerHTML = this.renderWord.join(" ");
         break;
       case "full-word":
