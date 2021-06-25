@@ -23,6 +23,7 @@ class Speak extends Word {
     this.renderWord = [];
     this.utterance = "";
     this.onSyllable = 0;
+    this.onLetter = 0;
     this.timeElapsed = 0;
     this.block = false;
   }
@@ -46,19 +47,8 @@ class Speak extends Word {
     this.renderWord = [];
     speechSynthesis.resume();
     this.onSyllable = 0;
+    this.onLetter = 0;
     return speechSynthesis.cancel();
-  }
-  set_timeElapsed(e) {
-    let add = 0;
-    if (this.syllable.length === 1) {
-      add = 250;
-    } else if (this.syllable.length >= 5) {
-      add = 200;
-    } else {
-      add = 280;
-    }
-    //console.log(e.elapsedTime / this.word.length + add);
-    return (this.timeElapsed = e.elapsedTime / this.word.length + add);
   }
   encrypt(string) {
     string = string.toLowerCase();
@@ -79,13 +69,11 @@ class Speak extends Word {
     }
     return newCode.toUpperCase();
   }
-  delayRender(time, text, retract = false) {
+  delayRender(time, text) {
     for (let i = 0; i < text.length; i++) {
       setTimeout(() => {
         this.renderText.innerHTML += ` ${text[i]}` || "";
-        retract && i === text.length - 1
-          ? this.renderReverse(time * 0.5, text)
-          : false;
+        i === text.length - 1 ? this.renderReverse(time * 0.5, text) : false;
       }, i * (time || 200));
     }
   }
@@ -101,13 +89,12 @@ class Speak extends Word {
   }
   /* Functions */
   indicateText(text = false, state) {
-    //const renderText = document.getElementById("text");
     switch (state) {
-      case "syllable":
-        if (!this.renderWord.length) {
+      case "letter":
+        if (this.renderText.textContent === this.word) {
           this.renderText.innerHTML = "";
         }
-        this.delayRender(this.timeElapsed, text);
+        this.renderText.innerHTML += ` ${text}`;
         break;
       case "word": // ***FIXED***
         this.renderWord.push(text);
@@ -137,43 +124,35 @@ class Speak extends Word {
         this.stopText();
       });
   }
-  ifNoSyllable() {
-    // as the name suggest, this only activates when the word has only one syllable
-    if (this.syllable.length === 1) {
-      this.playText(this.spell, "syllable");
-      this.utterance.addEventListener("end", (e) => {
-        this.fullWord();
-      });
-      return true;
-    }
-    return false;
-  }
   revealWord(text, state) {
     // This function is the start, it takes a state and passes it to the playText method, and it repeats for the whole word. following a odd even pattern
     this.resumeText();
     if (speechSynthesis.speaking) return;
-    if (this.ifNoSyllable()) return;
+    let syllable;
     switch (state) {
-      case "syllable":
+      case "letter":
         if (this.onSyllable < this.syllable.length) {
-          text = text[this.onSyllable].split("");
+          syllable = text[this.onSyllable].split("");
+          text = syllable[this.onLetter];
+          this.onLetter++;
+        } else if (this.syllable.length === 1) {
+          return this.stopText();
         } else {
           return this.fullWord();
         }
-        this.onSyllable++;
         break;
       case "word":
+        this.onLetter = 0;
+        this.onSyllable++;
         text = text[this.onSyllable - 1];
         break;
     }
     this.playText(text, state);
     this.utterance.addEventListener("end", (e) => {
-      setTimeout(() => {
-        if (state === "syllable") {
-          return this.revealWord(this.syllable, "word");
-        }
-        return this.revealWord(this.syllable, "syllable");
-      }, 100);
+      if (state === "letter" && syllable.length === this.onLetter) {
+        return this.revealWord(this.syllable, "word");
+      }
+      return this.revealWord(this.syllable, "letter");
     });
   }
 }
@@ -182,14 +161,13 @@ let givenWord;
 const SpeakFunction = {
   filter(value) {
     const text = document.getElementById("text");
-    console.log(text);
     return (text.style.filter = value);
   },
   play(text, type) {
     return givenWord.playText(text, type);
   },
   revealWord() {
-    return givenWord.revealWord(givenWord.syllable, "syllable");
+    return givenWord.revealWord(givenWord.syllable, "letter");
   },
   revealGivenWord() {
     if (givenWord.block) return;
@@ -200,17 +178,12 @@ const SpeakFunction = {
     if (givenWord.block) return;
     givenWord.block = true;
     this.filter("");
-    return (
-      this.play(givenWord.word, "encrypt"),
-      givenWord.utterance.addEventListener("end", (e) => {
-        givenWord.set_timeElapsed(e);
-      })
-    );
+    return this.play(givenWord.word, "encrypt");
   },
   playCorrectWord() {
-    this.filter("blur(0px)")
+    this.filter("blur(0px)");
     this.play(givenWord.word, "full-word");
-  }
+  },
 };
 
 class Check extends Word {
@@ -221,7 +194,6 @@ class Check extends Word {
   pickWord() {
     this.inCorrectCount = 0;
     let randomWord = Math.floor(Math.random() * word.length);
-    console.log("Hello");
     setWordClass(word[randomWord]);
     return SpeakFunction.playGivenWord();
   }
@@ -245,6 +217,7 @@ class Check extends Word {
     document.getElementById("inputSpelling").value = "";
   }
   checkSpelling(input) {
+    // Bug, when you press the enter button after reviling the word, it reviles the word again but you have it wrong.
     const spellingValue = input.value.trim().toLowerCase();
     if (this.word.toLowerCase() === spellingValue) {
       this.correct();
