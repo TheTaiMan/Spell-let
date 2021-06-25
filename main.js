@@ -1,6 +1,7 @@
 class Word {
   constructor(word) {
     this._word = this.setWord(word);
+    this.renderText = document.getElementById("text");
   }
   get word() {
     return this._word;
@@ -78,21 +79,21 @@ class Speak extends Word {
     }
     return newCode.toUpperCase();
   }
-  delayRender(time, text, imprint, retract = false) {
+  delayRender(time, text, retract = false) {
     for (let i = 0; i < text.length; i++) {
       setTimeout(() => {
-        imprint.innerHTML += ` ${text[i]}` || "";
+        this.renderText.innerHTML += ` ${text[i]}` || "";
         retract && i === text.length - 1
-          ? this.renderReverse(time * 0.5, text, imprint)
+          ? this.renderReverse(time * 0.5, text)
           : false;
       }, i * (time || 200));
     }
   }
-  renderReverse(time, text, imprint) {
+  renderReverse(time, text) {
     let encryptWord = text.split("");
     for (let i = encryptWord.length; i >= 0; i--) {
       setTimeout(() => {
-        imprint.innerHTML =
+        this.renderText.innerHTML =
           encryptWord.slice(0, encryptWord.length - i).join(" ") || "";
         i === encryptWord.length ? this.stopText() : false;
       }, i * (this.syllable.length === 1 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // *THIS SECTION MIGHT CAUSE ERRORS IN THE FUTURE
@@ -100,25 +101,25 @@ class Speak extends Word {
   }
   /* Functions */
   indicateText(text = false, state) {
-    const renderText = document.getElementById("text");
+    //const renderText = document.getElementById("text");
     switch (state) {
       case "syllable":
         if (!this.renderWord.length) {
-          renderText.innerHTML = "";
+          this.renderText.innerHTML = "";
         }
-        this.delayRender(this.timeElapsed, text, renderText);
+        this.delayRender(this.timeElapsed, text);
         break;
       case "word": // ***FIXED***
         this.renderWord.push(text);
-        renderText.innerHTML = this.renderWord.join(" ");
+        this.renderText.innerHTML = this.renderWord.join(" ");
         break;
       case "full-word":
-        renderText.innerHTML = text || "";
+        this.renderText.innerHTML = text || "";
         break;
       case "encrypt":
-        renderText.innerHTML = "";
+        this.renderText.innerHTML = "";
         let time = text.length * 10;
-        this.delayRender(time, this.encrypt(text), renderText, true);
+        this.delayRender(time, this.encrypt(text), true);
         break;
     }
   }
