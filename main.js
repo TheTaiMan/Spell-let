@@ -178,48 +178,85 @@ class Speak extends Word {
   }
 }
 
-/* const randomWord = () => {
-
-} */
 let givenWord;
-const revealGivenWord = () => {
-  if (!givenWord.block) {
+const SpeakFunction = {
+  filter(value) {
+    const text = document.getElementById("text");
+    console.log(text);
+    return (text.style.filter = value);
+  },
+  play(text, type) {
+    return givenWord.playText(text, type);
+  },
+  revealWord() {
+    return givenWord.revealWord(givenWord.syllable, "syllable");
+  },
+  revealGivenWord() {
+    if (givenWord.block) return;
     givenWord.block = true;
-    return (
-      (document.getElementById("text").style.filter = "blur(0px)"),
-      givenWord.revealWord(givenWord.syllable, "syllable")
-    );
-  }
-  return;
-};
-const playGivenWord = () => {
-  if (!givenWord.block) {
+    return this.filter("blur(0px)"), this.revealWord();
+  },
+  playGivenWord() {
+    if (givenWord.block) return;
     givenWord.block = true;
-    document.getElementById("text").style.filter = "";
+    this.filter("");
     return (
-      givenWord.playText(givenWord.word, "encrypt"),
+      this.play(givenWord.word, "encrypt"),
       givenWord.utterance.addEventListener("end", (e) => {
         givenWord.set_timeElapsed(e);
-        //givenWord.block = false;
       })
     );
+  },
+  playCorrectWord() {
+    this.filter("blur(0px)")
+    this.play(givenWord.word, "full-word");
   }
-  return;
 };
 
 class Check extends Word {
   constructor(word) {
     super(word);
+    this.inCorrectCount = 0;
+  }
+  pickWord() {
+    this.inCorrectCount = 0;
+    let randomWord = Math.floor(Math.random() * word.length);
+    console.log("Hello");
+    setWordClass(word[randomWord]);
+    return SpeakFunction.playGivenWord();
+  }
+  correct() {
+    if (givenWord.block) return;
+    givenWord.block = true;
+    SpeakFunction.playCorrectWord();
+    this.renderText.innerHTML += " Correct!";
+    givenWord.utterance.addEventListener("end", (e) => {
+      setTimeout(() => {
+        this.blank();
+        this.pickWord();
+      }, 300);
+    });
+  }
+  inCorrect() {
+    return SpeakFunction.playGivenWord();
+  }
+  blank() {
+    this.renderText.innerHTML = "";
+    document.getElementById("inputSpelling").value = "";
   }
   checkSpelling(input) {
-    const spellingValue = input.value.toLowerCase();
+    const spellingValue = input.value.trim().toLowerCase();
     if (this.word.toLowerCase() === spellingValue) {
-      //console.log("Correct!");
-      revealGivenWord();
+      this.correct();
       return true;
     }
-    //console.log("Incorrect, go back to pre-school! ");
-    playGivenWord();
+    if (this.inCorrectCount === 5) {
+      SpeakFunction.revealGivenWord();
+      this.inCorrectCount = 0;
+    } else {
+      this.inCorrect();
+    }
+    this.inCorrectCount++;
     return false;
   }
 }
@@ -228,22 +265,23 @@ const input = document.getElementById("inputSpelling");
 let toCheck;
 
 input.addEventListener("keyup", function (event) {
+  event.preventDefault();
   if (event.keyCode === 13) {
-    event.preventDefault();
     toCheck.checkSpelling(input);
   }
 });
 
+// Add something that when pressed will reveal the word
+
 const playWord = document.getElementById("play-word");
-playWord.addEventListener("click", playGivenWord);
+playWord.addEventListener("click", () => {
+  SpeakFunction.playGivenWord();
+});
 
 const revealWord = document.getElementById("revealWord");
-revealWord.addEventListener("click", revealGivenWord);
-
-const setWordClass = (word) => {
-  givenWord = new Speak(word);
-  toCheck = new Check(word);
-};
+revealWord.addEventListener("click", () => {
+  SpeakFunction.revealGivenWord();
+});
 
 let word = [
   "perpendicular",
@@ -253,6 +291,13 @@ let word = [
   "vegetable",
   "text",
   "beats",
+  "analogous",
+  "resemblance",
+  "activation",
 ];
+const setWordClass = (word) => {
+  givenWord = new Speak(word);
+  toCheck = new Check(word);
+};
 
-setWordClass(word[2]);
+setWordClass("computer");
