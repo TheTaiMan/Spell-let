@@ -181,7 +181,35 @@ class Speak extends Word {
 /* const randomWord = () => {
 
 } */
+
+
+/**
+ * CREATE an object for the functions below;
+ */
 let givenWord;
+
+/* const SpeakFunction = {
+  filter(value) {
+    document.getElementById("text").style.filter = value;
+  },
+  play(text, type) {
+    return givenWord.playText(text, type);
+  },
+  revealWord() {
+    return givenWord.revealWord(givenWord.syllable, "syllable");
+  },
+  revealGivenWord() {
+    if (givenWord.block) {
+      givenWord.block = true;
+      return (
+        (this.filter("blur(0px)")),
+        revealWord()
+      );
+    }
+    return;
+  }
+} */
+
 const revealGivenWord = () => {
   if (!givenWord.block) {
     givenWord.block = true;
@@ -207,19 +235,66 @@ const playGivenWord = () => {
   return;
 };
 
+
+let word = [
+  "perpendicular",
+  "Deforestation",
+  "Procrastination",
+  "computer",
+  "vegetable",
+  "text",
+  "beats",
+  "analogous",
+  "resemblance",
+];
+
 class Check extends Word {
   constructor(word) {
     super(word);
+    this.inCorrectCount = 0;
+  }
+  pickWord() {
+    if (!givenWord.block) {
+      givenWord.block = true;
+      this.inCorrectCount = 0;
+      let randomWord = Math.floor(Math.random()*word.length); 
+      console.log('Hello')
+      setWordClass(word[randomWord]);
+      return playGivenWord();
+    }
+    return;
+  }
+  correct() {
+    document.getElementById("text").style.filter = "blur(0px)";
+    givenWord.playText(givenWord.word, "full-word");
+    this.renderText.innerHTML += " Correct!";
+    givenWord.utterance.addEventListener("end", (e) => {
+      setTimeout(() => {
+        this.blank(); 
+        this.pickWord();
+      }, 300);
+    })
+  }
+  inCorrect() {
+    return playGivenWord();
+  }
+  blank() {
+    this.renderText.innerHTML = "";
+    document.getElementById('inputSpelling').value = ''; 
   }
   checkSpelling(input) {
-    const spellingValue = input.value.toLowerCase();
+    const spellingValue = input.value.trim().toLowerCase();
     if (this.word.toLowerCase() === spellingValue) {
-      //console.log("Correct!");
-      revealGivenWord();
+      this.correct();
       return true;
     }
-    //console.log("Incorrect, go back to pre-school! ");
-    playGivenWord();
+    if (this.inCorrectCount === 5) {
+      revealGivenWord();
+      this.inCorrectCount = 0;
+    } else {
+      this.inCorrect();
+    }
+    this.inCorrectCount++;
     return false;
   }
 }
@@ -228,11 +303,13 @@ const input = document.getElementById("inputSpelling");
 let toCheck;
 
 input.addEventListener("keyup", function (event) {
+  event.preventDefault();
   if (event.keyCode === 13) {
-    event.preventDefault();
     toCheck.checkSpelling(input);
   }
 });
+
+// Add something that when pressed will reveal the word
 
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", playGivenWord);
@@ -245,14 +322,18 @@ const setWordClass = (word) => {
   toCheck = new Check(word);
 };
 
-let word = [
-  "perpendicular",
-  "Deforestation",
-  "Procrastination",
-  "computer",
-  "vegetable",
-  "text",
-  "beats",
-];
+setWordClass('computer');
+// This is a test
 
-setWordClass(word[2]);
+/* document.getElementById("inputSpelling").focus();
+playGivenWord(); */
+
+/**
+ * Change the syllable function so it will indicate the letter instead of the whole syllable being played, and it will also say the letter one at a time,
+ * and it send that one letter. Also, do this in a separate branch because it's going to be hard. 
+*/
+/**
+ * Highlight letter of text being played and if that text is wrong, that highlight it red on the input and
+ * highlight it green on tha acutal word being played.
+  https://stackoverflow.com/a/8644513/14000013
+  */
