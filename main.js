@@ -50,6 +50,9 @@ class Speak extends Word {
     this.onLetter = 0;
     return speechSynthesis.cancel();
   }
+  set_timeElapsed(e) {
+    return (this.timeElapsed = e.elapsedTime / this.word.length - 50);
+  }
   encrypt(string) {
     string = string.toLowerCase();
     let newCode = "";
@@ -69,11 +72,13 @@ class Speak extends Word {
     }
     return newCode.toUpperCase();
   }
-  delayRender(time, text) {
+  delayRender(time, text, retract = false) {
     for (let i = 0; i < text.length; i++) {
       setTimeout(() => {
         this.renderText.innerHTML += ` ${text[i]}` || "";
-        i === text.length - 1 ? this.renderReverse(time * 0.5, text) : false;
+        if (i === text.length - 1) {
+          !retract ? this.renderText.innerHTML += " ✓" : this.renderReverse(time * 0.5, text);
+        }
       }, i * (time || 200));
     }
   }
@@ -107,6 +112,9 @@ class Speak extends Word {
         this.renderText.innerHTML = "";
         let time = text.length * 10;
         this.delayRender(time, this.encrypt(text), true);
+        break;
+      case "correct":
+        this.delayRender(this.timeElapsed, text);
         break;
     }
   }
@@ -178,11 +186,14 @@ const SpeakFunction = {
     if (givenWord.block) return;
     givenWord.block = true;
     this.filter("");
-    return this.play(givenWord.word, "encrypt");
+    this.play(givenWord.word, "encrypt");
+    givenWord.utterance.addEventListener("end", (e) => {
+      return givenWord.set_timeElapsed(e);
+    });
   },
   playCorrectWord() {
     this.filter("blur(0px)");
-    this.play(givenWord.word, "full-word");
+    this.play(givenWord.word, "correct");
   },
 };
 
@@ -201,12 +212,12 @@ class Check extends Word {
     if (givenWord.block) return;
     givenWord.block = true;
     SpeakFunction.playCorrectWord();
-    this.renderText.innerHTML += " Correct!";
+    if (this.renderText.textContent = this.word) this.renderText.innerHTML = "";
     givenWord.utterance.addEventListener("end", (e) => {
       setTimeout(() => {
         this.blank();
         this.pickWord();
-      }, 300);
+      }, 1000);
     });
   }
   inCorrect() {
@@ -216,7 +227,7 @@ class Check extends Word {
     this.renderText.innerHTML = "";
     document.getElementById("inputSpelling").value = "";
   }
-  checkSpelling(input) { // Bug, when you press the enter button after reviling the word, it reviles the word again but you have it wrong.
+  checkSpelling(input) {
     const spellingValue = input.value.trim().toLowerCase();
     if (this.word.toLowerCase() === spellingValue) {
       this.correct();
