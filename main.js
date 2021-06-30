@@ -1,6 +1,8 @@
 class Word {
   constructor(word) {
     this._word = this.setWord(word);
+    this.input = document.getElementById("inputSpelling");
+    this.renderInput = document.getElementById("inputValue");
     this.renderText = document.getElementById("text");
   }
   get word() {
@@ -20,12 +22,14 @@ class Speak extends Word {
     super(word);
     this.syllable = this.syllabify(this.word);
     this.spell = this.word.split("");
+    this.renderLetter = [];
     this.renderWord = [];
     this.utterance = "";
     this.onSyllable = 0;
     this.onLetter = 0;
     this.timeElapsed = 0;
     this.block = false;
+    this.inputValue = [];
   }
   /* Tools */
   syllabify(words) {
@@ -45,6 +49,7 @@ class Speak extends Word {
   stopText() {
     this.block = false;
     this.renderWord = [];
+    this.renderLetter = [];
     speechSynthesis.resume();
     this.onSyllable = 0;
     this.onLetter = 0;
@@ -75,9 +80,11 @@ class Speak extends Word {
   delayRender(time, text, retract = false) {
     for (let i = 0; i < text.length; i++) {
       setTimeout(() => {
-        this.renderText.innerHTML += ` ${text[i]}` || "";
+        this.renderText.innerHTML += ` ${text[i]}`;
         if (i === text.length - 1) {
-          !retract ? this.renderText.innerHTML += " ✓" : this.renderReverse(time * 0.5, text);
+          !retract
+            ? (this.renderText.innerHTML += ` ✓`)
+            : this.renderReverse(time * 0.5, text);
         }
       }, i * (time || 200));
     }
@@ -87,10 +94,58 @@ class Speak extends Word {
     for (let i = encryptWord.length; i >= 0; i--) {
       setTimeout(() => {
         this.renderText.innerHTML =
-          encryptWord.slice(0, encryptWord.length - i).join(" ") || "";
+          encryptWord.slice(0, encryptWord.length - i).join(" ");
         i === encryptWord.length ? this.stopText() : false;
       }, i * (this.syllable.length === 1 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // *THIS SECTION MIGHT CAUSE ERRORS IN THE FUTURE
     }
+  }
+  onCharacter() {
+    let sum = 0;
+    if (this.onSyllable === 0) return (sum = this.onLetter - 1);
+    for (let i = 0; i < this.onSyllable; i++) {
+      sum += this.syllable[i].length;
+    }
+    return sum + this.onLetter - 1;
+  }
+  checkLetter(index) {
+    try {
+      if (
+        this.inputValue[index].toLowerCase() !== this.spell[index].toLowerCase()
+      ) {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+  highlight(index) {
+    let correct;
+    if (!this.checkLetter(index)) {
+      if (this.inputValue[index] === undefined) {
+        this.inputValue.push(`<span class='highlightWrong'>-</span>`);
+      } else {
+        this.inputValue.splice(
+          index,
+          1,
+          `<span class='highlightWrong'>${this.input.value[index]}</span>`
+        );
+      }
+      correct = false;
+    } else {
+      this.inputValue.splice(
+        index,
+        1,
+        `<span class='highlight'>${this.input.value[index]}</span>`
+      );
+      correct = true;
+    }
+    this.renderInput.innerHTML = this.inputValue.join("");
+    if (correct) this.inputValue.splice(index, 1, this.input.value[index]);
+  }
+  indicateInputValue() {
+    this.inputValue = this.input.value.trim().split("");
+    this.renderInput.innerHTML = this.input.value.trim();
   }
   /* Functions */
   indicateText(text = false, state) {
@@ -99,14 +154,37 @@ class Speak extends Word {
         if (this.renderText.textContent === this.word) {
           this.renderText.innerHTML = "";
         }
-        this.renderText.innerHTML += " " + text;
+        this.checkLetter(this.onCharacter())
+          ? this.renderLetter.push(`<span class='highlight'>${text}</span>`)
+          : this.renderLetter.push(`<span class='highlightRed'>${text}</span>`);
+
+        this.renderText.innerHTML =
+          `${this.renderWord.join(" ")} ${this.renderLetter.join(" ")}`;
+
+        if (this.checkLetter(this.onCharacter())) {
+          this.renderLetter.splice(this.onLetter - 1, 1, text);
+        }
+
+        this.highlight(this.onCharacter());
         break;
-      case "word": // ***FIXED***
-        this.renderWord.push(text);
+      case "word":
+        let syllable = this.renderLetter.filter((letter) => {
+          return (
+            this.syllable[this.onSyllable - 1].includes(letter) ||
+            this.syllable[this.onSyllable - 1].includes(letter[27])
+          ); // Use a regex to get the letter, for next time
+        });
+
+        syllable = syllable.join("");
+        this.renderWord.push(syllable);
         this.renderText.innerHTML = this.renderWord.join(" ");
+        this.renderLetter = [];
+
+        if (this.onSyllable === this.syllable.length)
+          this.renderInput.innerHTML = this.inputValue.join("");
         break;
       case "full-word":
-        this.renderText.innerHTML = text || "";
+        this.renderText.innerHTML = this.renderWord.join("");
         break;
       case "encrypt":
         this.renderText.innerHTML = "";
@@ -126,14 +204,12 @@ class Speak extends Word {
     return window.speechSynthesis.speak(this.set_Utterance(text));
   }
   fullWord() {
-    // passes the full word to the play text function without anything being processed
-    this.playText(this.word, "full-word"),
-      this.utterance.addEventListener("end", (e) => {
-        this.stopText();
-      });
+    this.playText(this.word, "full-word");
+    this.utterance.addEventListener("end", (e) => {
+      this.stopText();
+    });
   }
   revealWord(text, state) {
-    // This function is the start, it takes a state and passes it to the playText method, and it repeats for the whole word. following a odd even pattern
     this.resumeText();
     if (speechSynthesis.speaking) return;
     let syllable;
@@ -212,7 +288,8 @@ class Check extends Word {
     if (givenWord.block) return;
     givenWord.block = true;
     SpeakFunction.playCorrectWord();
-    if (this.renderText.textContent = this.word) this.renderText.innerHTML = "";
+    if ((this.renderText.textContent = this.word))
+      this.renderText.innerHTML = "";
     givenWord.utterance.addEventListener("end", (e) => {
       setTimeout(() => {
         this.blank();
@@ -225,15 +302,16 @@ class Check extends Word {
   }
   blank() {
     this.renderText.innerHTML = "";
-    document.getElementById("inputSpelling").value = "";
+    this.renderInput.innerHTML = "";
+    this.input.value = "";
   }
-  checkSpelling(input) {
-    const spellingValue = input.value.trim().toLowerCase();
+  checkSpelling() {
+    const spellingValue = this.input.value.trim().toLowerCase();
     if (this.word.toLowerCase() === spellingValue) {
       this.correct();
       return true;
     }
-    if (this.inCorrectCount === 5) {
+    if (this.inCorrectCount === 3) {
       SpeakFunction.revealGivenWord();
       this.inCorrectCount = 0;
     } else {
@@ -247,11 +325,15 @@ class Check extends Word {
 const input = document.getElementById("inputSpelling");
 let toCheck;
 
-input.addEventListener("keyup", function (event) {
+input.addEventListener("keyup", (event) => {
   event.preventDefault();
   if (event.keyCode === 13) {
-    toCheck.checkSpelling(input);
+    toCheck.checkSpelling();
   }
+});
+
+input.addEventListener("input", (event) => {
+  givenWord.indicateInputValue();
 });
 
 // Add something that when pressed will reveal the word
@@ -272,9 +354,11 @@ let word = [
   "Procrastination",
   "computer",
   "vegetable",
+  "molecules",
   "text",
   "beats",
   "analogous",
+  "disappear",
   "resemblance",
   "activation",
 ];
@@ -284,3 +368,5 @@ const setWordClass = (word) => {
 };
 
 setWordClass("computer");
+
+// Use the datamuse https://www.datamuse.com/api/ API to check if the input is actually a word. If it comes back with an Error, its not a word and will not be saved, but if is doesn't have any errors, it will save the word to local storage object
