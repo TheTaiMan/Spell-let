@@ -56,7 +56,7 @@ class Speak extends Word {
     return speechSynthesis.cancel();
   }
   set_timeElapsed(e) {
-    return (this.timeElapsed = e.elapsedTime / this.word.length - 50);
+    return (this.timeElapsed = e.elapsedTime / this.word.length - 50); // Change this based on text length; if bigger, make the time bigger and if it is shorter, make it short
   }
   encrypt(string) {
     string = string.toLowerCase();
@@ -110,9 +110,7 @@ class Speak extends Word {
   }
   checkLetter(index) {
     try {
-      if (
-        this.inputValue[index].toLowerCase() !== this.spell[index].toLowerCase()
-      ) {
+      if (this.inputValue[index] !== this.spell[index]) {
         return false;
       }
     } catch (e) {
@@ -146,7 +144,7 @@ class Speak extends Word {
     if (correct) this.inputValue.splice(index, 1, this.input.value[index]);
   }
   indicateInputValue() {
-    this.inputValue = this.input.value.replace(/[^A-Za-z]/, "").split("");
+    this.inputValue = this.input.value.split("");
     this.renderInput.innerHTML = this.inputValue.join("");
   }
   /* Functions */
@@ -309,12 +307,11 @@ class Check extends Word {
     this.input.value = "";
   }
   checkSpelling() {
-    const spellingValue = this.input.value.trim().toLowerCase();
-    if (this.word.toLowerCase() === spellingValue) {
+    if (this.word === this.input.value) {
       this.correct();
       return true;
     }
-    if (this.inCorrectCount === 3) {
+    if (this.inCorrectCount === 3) { // Change this so the counter can be spanned to get the reveal word
       SpeakFunction.revealGivenWord();
       this.inCorrectCount = 0;
     } else {
@@ -329,18 +326,20 @@ const input = document.getElementById("inputSpelling");
 let toCheck;
 
 input.addEventListener("keyup", (event) => {
-  event.target.onpaste = e => e.preventDefault();
-    if (event.keyCode === 13) {
-      toCheck.checkSpelling();
-    }
-    event.target.value = event.target.value.replace(/[^A-Za-z]/, ""); // Do a shaking animation when you enter these characters 
-});
-
-input.addEventListener("keydown", (e) => {
-  e.target.value = e.target.value.replace(/[^A-Za-z]/, "");
+  event.target.onpaste = (e) => e.preventDefault();
+  if (event.keyCode === 13) {
+    toCheck.checkSpelling();
+  }
+  event.target.addEventListener("keydown", (e) => {
+    return (e.target.value = e.target.value.replace(/[^A-Za-z]/, ""));
+  });
+  return (event.target.value = event.target.value.replace(/[^A-Za-z]/, "")); // Do a shaking animation when you enter these characters
 });
 
 input.addEventListener("input", (event) => {
+  event.target.value =
+    event.target.value.charAt(0).toUpperCase() +
+    event.target.value.slice(1).toLowerCase();
   givenWord.indicateInputValue();
 });
 
