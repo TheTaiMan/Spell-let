@@ -329,11 +329,11 @@ const input = document.getElementById("inputSpelling");
 let toCheck;
 
 input.addEventListener("keyup", (event) => {
-  event.preventDefault();
+  event.target.onpaste = e => e.preventDefault();
     if (event.keyCode === 13) {
       toCheck.checkSpelling();
     }
-    event.target.value = event.target.value.replace(/[^A-Za-z]/, "");
+    event.target.value = event.target.value.replace(/[^A-Za-z]/, ""); // Do a shaking animation when you enter these characters 
 });
 
 input.addEventListener("keydown", (e) => {
