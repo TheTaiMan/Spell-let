@@ -9,12 +9,18 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <p id="text" ></p>
+    <p id="text"></p>
 
     <button id="play-word">Word</button>
     <button id="revealWord">Reveal</button>
-    <br><br>
-    <input id="inputSpelling" type="text" placeholder="Spelling..."/>
+    <br /><br />
+    <input
+      id="inputSpelling"
+      type="text"
+      placeholder="Spelling..."
+      oninput="this.value = this.value.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')"
+    />
+    <!-- Do a shaking animation with it is wrong -->
     <p id="inputValue"></p>
   </body>
 </html>

@@ -93,8 +93,9 @@ class Speak extends Word {
     let encryptWord = text.split("");
     for (let i = encryptWord.length; i >= 0; i--) {
       setTimeout(() => {
-        this.renderText.innerHTML =
-          encryptWord.slice(0, encryptWord.length - i).join(" ");
+        this.renderText.innerHTML = encryptWord
+          .slice(0, encryptWord.length - i)
+          .join(" ");
         i === encryptWord.length ? this.stopText() : false;
       }, i * (this.syllable.length === 1 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // *THIS SECTION MIGHT CAUSE ERRORS IN THE FUTURE
     }
@@ -120,6 +121,7 @@ class Speak extends Word {
     return true;
   }
   highlight(index) {
+    // Add a feature where every letter after the index of the actual word is wrong and it will be highlighted a different color
     let correct;
     if (!this.checkLetter(index)) {
       if (this.inputValue[index] === undefined) {
@@ -144,8 +146,8 @@ class Speak extends Word {
     if (correct) this.inputValue.splice(index, 1, this.input.value[index]);
   }
   indicateInputValue() {
-    this.inputValue = this.input.value.trim().split("");
-    this.renderInput.innerHTML = this.input.value.trim();
+    this.inputValue = this.input.value.replace(/[^A-Za-z]/, "").split("");
+    this.renderInput.innerHTML = this.inputValue.join("");
   }
   /* Functions */
   indicateText(text = false, state) {
@@ -158,8 +160,9 @@ class Speak extends Word {
           ? this.renderLetter.push(`<span class='highlight'>${text}</span>`)
           : this.renderLetter.push(`<span class='highlightRed'>${text}</span>`);
 
-        this.renderText.innerHTML =
-          `${this.renderWord.join(" ")} ${this.renderLetter.join(" ")}`;
+        this.renderText.innerHTML = `${this.renderWord.join(
+          " "
+        )} ${this.renderLetter.join(" ")}`;
 
         if (this.checkLetter(this.onCharacter())) {
           this.renderLetter.splice(this.onLetter - 1, 1, text);
@@ -327,9 +330,14 @@ let toCheck;
 
 input.addEventListener("keyup", (event) => {
   event.preventDefault();
-  if (event.keyCode === 13) {
-    toCheck.checkSpelling();
-  }
+    if (event.keyCode === 13) {
+      toCheck.checkSpelling();
+    }
+    event.target.value = event.target.value.replace(/[^A-Za-z]/, "");
+});
+
+input.addEventListener("keydown", (e) => {
+  e.target.value = e.target.value.replace(/[^A-Za-z]/, "");
 });
 
 input.addEventListener("input", (event) => {
