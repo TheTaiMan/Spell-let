@@ -144,7 +144,7 @@ class Speak extends Word {
     if (correct) this.inputValue.splice(index, 1, this.input.value[index]);
   }
   indicateInputValue() {
-    this.inputValue = this.input.value.split("");
+    this.inputValue = this.input.value.replace(/[^A-Za-z]/, "").split("");
     this.renderInput.innerHTML = this.inputValue.join("");
   }
   /* Functions */
