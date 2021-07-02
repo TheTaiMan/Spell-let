@@ -18,6 +18,7 @@ class Word {
   static start() {
     let randomWord = Math.floor(Math.random() * word.length);
     input.setAttribute("maxlength", word[randomWord].length);
+    input.focus();
     return word[randomWord];
   }
 }
@@ -88,7 +89,7 @@ class Speak extends Word {
         this.renderText.innerHTML += ` ${text[i]}`;
         if (i === text.length - 1) {
           !retract
-            ? (this.renderText.innerHTML += ` ✓`)
+            ? (this.renderText.innerHTML += ` ✔`)
             : this.renderReverse(time * 0.5, text);
         }
       }, i * (time || 200));
@@ -124,16 +125,17 @@ class Speak extends Word {
     return true;
   }
   highlight(index) {
-    // Add a feature where every letter after the index of the actual word is wrong and it will be highlighted a different color
     let correct;
     if (!this.checkLetter(index)) {
       if (this.inputValue[index] === undefined) {
-        this.inputValue.push(`<span class='highlightWrong'>-</span>`);
+        this.inputValue.push(`<span class='highlightWrong'> - </span>`);
       } else {
         this.inputValue.splice(
           index,
           1,
-          `<span class='highlightWrong'>${this.input.value[index]}</span>`
+          `<span class='highlightWrong'>${
+            !this.input.value[index] ? " - " : this.input.value[index]
+          }</span>`
         );
       }
       correct = false;
@@ -161,7 +163,7 @@ class Speak extends Word {
         }
         this.checkLetter(this.onCharacter())
           ? this.renderLetter.push(`<span class='highlight'>${text}</span>`)
-          : this.renderLetter.push(`<span class='highlightRed'>${text}</span>`);
+          : this.renderLetter.push(`<span class='highlightCorrect'>${text}</span>`);
 
         this.renderText.innerHTML = `${this.renderWord.join(
           " "
@@ -174,12 +176,11 @@ class Speak extends Word {
         this.highlight(this.onCharacter());
         break;
       case "word":
-        let syllable = this.renderLetter.filter((letter) => {
-          return (
-            this.syllable[this.onSyllable - 1].includes(letter) ||
-            this.syllable[this.onSyllable - 1].includes(letter[27])
-          ); // Use a regex to get the letter, for next time
-        });
+        let syllable = this.renderLetter.filter((letter) =>
+          this.syllable[this.onSyllable - 1].includes(
+            letter.replace(/<\/?[^>]+(>|$)/g, "")
+          )
+        );
 
         syllable = syllable.join("");
         this.renderWord.push(syllable);
@@ -246,8 +247,10 @@ class Speak extends Word {
     });
   }
 }
-
+const input = document.getElementById("inputSpelling");
+let toCheck;
 let givenWord;
+
 const SpeakFunction = {
   filter(value) {
     const text = document.getElementById("text");
@@ -259,15 +262,29 @@ const SpeakFunction = {
   revealWord() {
     return givenWord.revealWord(givenWord.syllable, "letter");
   },
+  display(reveal) {
+    if (reveal) {
+      input.style.display = "none";
+      this.filter("blur(0px)");
+      document.getElementById("inputValue").style.display = "block";
+      playWord.focus();
+    } else {
+      input.style.display = "block";
+      this.filter("");
+      document.getElementById("inputValue").style.display = "none";
+      input.focus();
+    }
+  },
   revealGivenWord() {
     if (givenWord.block) return;
     givenWord.block = true;
-    return this.filter("blur(0px)"), this.revealWord();
+    this.display(true);
+    return this.revealWord();
   },
   playGivenWord() {
     if (givenWord.block) return;
     givenWord.block = true;
-    this.filter("");
+    this.display(false);
     this.play(givenWord.word, "encrypt");
     givenWord.utterance.addEventListener("end", (e) => {
       return givenWord.set_timeElapsed(e);
@@ -317,7 +334,7 @@ class Check extends Word {
       this.correct();
       return true;
     }
-    if (this.inCorrectCount === 3) { // Change this so the counter can be spanned to get the reveal word
+    if (this.inCorrectCount === 5) {
       SpeakFunction.revealGivenWord();
       this.inCorrectCount = 0;
     } else {
@@ -328,17 +345,12 @@ class Check extends Word {
   }
 }
 
-const input = document.getElementById("inputSpelling");
-let toCheck;
-
 input.addEventListener("keyup", (event) => {
   event.target.onpaste = (e) => e.preventDefault();
   if (event.keyCode === 13) {
+    if (speechSynthesis.speaking) return;
     toCheck.checkSpelling();
   }
-  event.target.addEventListener("keydown", (e) => {
-    return (e.target.value = e.target.value.replace(/[^A-Za-z]/, ""));
-  });
   return (event.target.value = event.target.value.replace(/[^A-Za-z]/, "")); // Do a shaking animation when you enter these characters
 });
 
@@ -348,8 +360,6 @@ input.addEventListener("input", (event) => {
     event.target.value.slice(1).toLowerCase();
   givenWord.indicateInputValue();
 });
-
-// Add something that when pressed will reveal the word
 
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
