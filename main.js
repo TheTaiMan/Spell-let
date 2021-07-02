@@ -15,6 +15,11 @@ class Word {
     text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     return (this._word = text.trim());
   }
+  static start() {
+    let randomWord = Math.floor(Math.random() * word.length);
+    input.setAttribute("maxlength", word[randomWord].length);
+    return word[randomWord];
+  }
 }
 
 class Speak extends Word {
@@ -202,7 +207,7 @@ class Speak extends Word {
     this.resumeText();
     if (speechSynthesis.speaking) return;
     this.indicateText(text, state);
-    return window.speechSynthesis.speak(this.set_Utterance(text));
+    return window.speechSynthesis.speak(this.set_Utterance(text)); // Make it so when the letter is wrong, it will make a monster sound, and the volumn will be increased
   }
   fullWord() {
     this.playText(this.word, "full-word");
@@ -283,6 +288,7 @@ class Check extends Word {
     this.inCorrectCount = 0;
     let randomWord = Math.floor(Math.random() * word.length);
     setWordClass(word[randomWord]);
+    this.input.setAttribute("maxlength", word[randomWord].length);
     return SpeakFunction.playGivenWord();
   }
   correct() {
@@ -374,6 +380,6 @@ const setWordClass = (word) => {
   toCheck = new Check(word);
 };
 
-setWordClass("computer");
+setWordClass(Word.start());
 
 // Use the datamuse https://www.datamuse.com/api/ API to check if the input is actually a word. If it comes back with an Error, its not a word and will not be saved, but if is doesn't have any errors, it will save the word to local storage object
