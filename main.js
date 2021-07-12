@@ -302,7 +302,6 @@ class Check extends Word {
     this.inCorrectCount = 0;
   }
   pickWord() {
-    this.inCorrectCount = 0;
     let randomWord = Math.floor(Math.random() * word.length);
     setWordClass(word[randomWord]);
     this.input.setAttribute("maxlength", word[randomWord].length);
@@ -328,11 +327,15 @@ class Check extends Word {
     this.renderText.innerHTML = "";
     this.renderInput.innerHTML = "";
     this.input.value = "";
+    this.inCorrectCount = 0;
   }
-  checkSpelling() {
+  checkSpelling() { // Clean this up {🧹} 
     if (this.word === this.input.value) {
       this.correct();
       return true;
+    } else if (!this.input.value) { // If empty, then replay the word without counting it as inCorrect. 
+      this.inCorrect()
+      return null;
     }
     if (this.inCorrectCount === 5) {
       SpeakFunction.revealGivenWord();
