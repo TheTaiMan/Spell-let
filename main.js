@@ -15,7 +15,7 @@ class Word {
     text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     return (this._word = text.trim());
   }
-  static start() {
+  static start() { // This will DEFINITELY cause problems {⚠️} when moving to modules, it can't access word array
     let randomWord = Math.floor(Math.random() * word.length);
     input.setAttribute("maxlength", word[randomWord].length);
     input.focus();
@@ -38,7 +38,7 @@ class Speak extends Word {
     this.inputValue = [];
   }
   /* Tools */
-  syllabify(words) {
+  syllabify(words) { // Should be changed {🥼}
     const syllableRegex =
       /[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi;
     return words.match(syllableRegex);
@@ -345,8 +345,9 @@ class Check extends Word {
   }
 }
 
+input.onpaste = (e) => e.preventDefault();
+
 input.addEventListener("keyup", (event) => {
-  event.target.onpaste = (e) => e.preventDefault();
   if (event.keyCode === 13) {
     if (speechSynthesis.speaking) return;
     toCheck.checkSpelling();
@@ -384,6 +385,8 @@ let word = [
   "disappear",
   "resemblance",
   "activation",
+  "equilibrium",
+  "available",
 ];
 const setWordClass = (word) => {
   givenWord = new Speak(word);
