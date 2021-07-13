@@ -1,29 +1,8 @@
-class Word {
-  constructor(word) {
-    this._word = this.setWord(word);
-    this.input = document.getElementById("inputSpelling");
-    this.renderInput = document.getElementById("inputValue");
-    this.renderText = document.getElementById("text");
-  }
-  get word() {
-    return this._word;
-  }
-  setWord(text) {
-    if (typeof text !== "string" || !text.trim() || text.length === 0) {
-      throw Error("Enter an actual word");
-    }
-    text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-    return (this._word = text.trim());
-  }
-  static start() { // This will DEFINITELY cause problems {⚠️} when moving to modules, it can't access word array
-    let randomWord = Math.floor(Math.random() * word.length);
-    input.setAttribute("maxlength", word[randomWord].length);
-    input.focus();
-    return word[randomWord];
-  }
-}
+// ***Imports*** {✈}
+import { Word } from "./word.js";
 
-class Speak extends Word {
+// ***Exports*** {📦}
+export class Speak extends Word {
   constructor(word) {
     super(word);
     this.syllable = this.syllabify(this.word);
@@ -38,7 +17,8 @@ class Speak extends Word {
     this.inputValue = [];
   }
   /* Tools */
-  syllabify(words) { // Should be changed {🥼}
+  syllabify(words) {
+    // Should be changed {🥼}
     const syllableRegex =
       /[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi;
     return words.match(syllableRegex);
@@ -154,6 +134,19 @@ class Speak extends Word {
     this.inputValue = this.input.value.replace(/[^A-Za-z]/, "").split("");
     this.renderInput.innerHTML = this.inputValue.join("");
   }
+  fullWord() {
+    this.playText(this.word, "full-word");
+    this.utterance.addEventListener("end", (e) => {
+      this.stopText();
+    });
+  }
+  playText(text, state) {
+    // the play text function is second to the last step of speaking, it actually says what is passed into the function and passes its value and state to the indicate text of what is being said.
+    this.resumeText();
+    if (speechSynthesis.speaking) return;
+    this.indicateText(text, state);
+    return window.speechSynthesis.speak(this.set_Utterance(text)); // Make it so when the letter is wrong, it will make a monster sound, and the volumn will be increased
+  }
   /* Functions */
   indicateText(text = false, state) {
     switch (state) {
@@ -163,7 +156,9 @@ class Speak extends Word {
         }
         this.checkLetter(this.onCharacter())
           ? this.renderLetter.push(`<span class='highlight'>${text}</span>`)
-          : this.renderLetter.push(`<span class='highlightCorrect'>${text}</span>`);
+          : this.renderLetter.push(
+              `<span class='highlightCorrect'>${text}</span>`
+            );
 
         this.renderText.innerHTML = `${this.renderWord.join(
           " "
@@ -203,19 +198,6 @@ class Speak extends Word {
         break;
     }
   }
-  playText(text, state) {
-    // the play text function is second to the last step of speaking, it actually says what is passed into the function and passes its value and state to the indicate text of what is being said.
-    this.resumeText();
-    if (speechSynthesis.speaking) return;
-    this.indicateText(text, state);
-    return window.speechSynthesis.speak(this.set_Utterance(text)); // Make it so when the letter is wrong, it will make a monster sound, and the volumn will be increased
-  }
-  fullWord() {
-    this.playText(this.word, "full-word");
-    this.utterance.addEventListener("end", (e) => {
-      this.stopText();
-    });
-  }
   revealWord(text, state) {
     this.resumeText();
     if (speechSynthesis.speaking) return;
@@ -247,152 +229,3 @@ class Speak extends Word {
     });
   }
 }
-const input = document.getElementById("inputSpelling");
-let toCheck;
-let givenWord;
-
-const SpeakFunction = {
-  filter(value) {
-    const text = document.getElementById("text");
-    return (text.style.filter = value);
-  },
-  play(text, type) {
-    return givenWord.playText(text, type);
-  },
-  revealWord() {
-    return givenWord.revealWord(givenWord.syllable, "letter");
-  },
-  display(reveal) {
-    if (reveal) {
-      input.style.display = "none";
-      this.filter("blur(0px)");
-      document.getElementById("inputValue").style.display = "block";
-      playWord.focus();
-    } else {
-      input.style.display = "block";
-      this.filter("");
-      document.getElementById("inputValue").style.display = "none";
-      input.focus();
-    }
-  },
-  revealGivenWord() {
-    if (givenWord.block) return;
-    givenWord.block = true;
-    this.display(true);
-    return this.revealWord();
-  },
-  playGivenWord() {
-    if (givenWord.block) return;
-    givenWord.block = true;
-    this.display(false);
-    this.play(givenWord.word, "encrypt");
-    givenWord.utterance.addEventListener("end", (e) => {
-      return givenWord.set_timeElapsed(e);
-    });
-  },
-  playCorrectWord() {
-    this.filter("blur(0px)");
-    this.play(givenWord.word, "correct");
-  },
-};
-
-class Check extends Word {
-  constructor(word) {
-    super(word);
-    this.inCorrectCount = 0;
-  }
-  pickWord() {
-    this.inCorrectCount = 0;
-    let randomWord = Math.floor(Math.random() * word.length);
-    setWordClass(word[randomWord]);
-    this.input.setAttribute("maxlength", word[randomWord].length);
-    return SpeakFunction.playGivenWord();
-  }
-  correct() {
-    if (givenWord.block) return;
-    givenWord.block = true;
-    SpeakFunction.playCorrectWord();
-    if ((this.renderText.textContent = this.word))
-      this.renderText.innerHTML = "";
-    givenWord.utterance.addEventListener("end", (e) => {
-      setTimeout(() => {
-        this.blank();
-        this.pickWord();
-      }, 1000);
-    });
-  }
-  inCorrect() {
-    return SpeakFunction.playGivenWord();
-  }
-  blank() {
-    this.renderText.innerHTML = "";
-    this.renderInput.innerHTML = "";
-    this.input.value = "";
-  }
-  checkSpelling() {
-    if (this.word === this.input.value) {
-      this.correct();
-      return true;
-    }
-    if (this.inCorrectCount === 5) {
-      SpeakFunction.revealGivenWord();
-      this.inCorrectCount = 0;
-    } else {
-      this.inCorrect();
-    }
-    this.inCorrectCount++;
-    return false;
-  }
-}
-
-input.onpaste = (e) => e.preventDefault();
-
-input.addEventListener("keyup", (event) => {
-  if (event.keyCode === 13) {
-    if (speechSynthesis.speaking) return;
-    toCheck.checkSpelling();
-  }
-  return (event.target.value = event.target.value.replace(/[^A-Za-z]/, "")); // Do a shaking animation when you enter these characters
-});
-
-input.addEventListener("input", (event) => {
-  event.target.value =
-    event.target.value.charAt(0).toUpperCase() +
-    event.target.value.slice(1).toLowerCase();
-  givenWord.indicateInputValue();
-});
-
-const playWord = document.getElementById("play-word");
-playWord.addEventListener("click", () => {
-  SpeakFunction.playGivenWord();
-});
-
-const revealWord = document.getElementById("revealWord");
-revealWord.addEventListener("click", () => {
-  SpeakFunction.revealGivenWord();
-});
-
-let word = [
-  "perpendicular",
-  "Deforestation",
-  "Procrastination",
-  "computer",
-  "vegetable",
-  "molecules",
-  "text",
-  "beats",
-  "analogous",
-  "disappear",
-  "resemblance",
-  "activation",
-  "equilibrium",
-  "available",
-];
-const setWordClass = (word) => {
-  givenWord = new Speak(word);
-  toCheck = new Check(word);
-};
-
-setWordClass(Word.start());
-
-// Use the datamuse https://www.datamuse.com/api/ API to check if the input is actually a word. If it comes back with an Error, its not a word and will not be saved, but if is doesn't have any errors, it will save the word to local storage object
