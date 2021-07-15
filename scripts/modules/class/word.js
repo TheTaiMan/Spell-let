@@ -18,7 +18,7 @@ let word = [
 const input = document.getElementById("inputSpelling"); // Temporary {🥼}
 
 // ***Exports*** {📦}
-export class Word {
+export default class Word {
   // Add random word picker to the word class
   constructor(word) {
     this._word = this.setWord(word);

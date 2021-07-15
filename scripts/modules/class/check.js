@@ -1,6 +1,6 @@
 // ***Imports*** {✈}
-import { Word } from "./word.js";
-import {setWordClass} from "../setClass.js"; // Change this to word class because that will have a random word picker as a static property
+import Word from "./word.js";
+import setWordClass from "../setClass.js"; // Change this to word class because that will have a random word picker as a static property
 
 let word = [
   "perpendicular",
@@ -20,7 +20,7 @@ let word = [
 ]; // Temporary {🥼}
 
 // ***Exports*** {📦}
-export class Check extends Word {
+export default class Check extends Word {
   constructor(word, SpeakFunction) {
     super(word);
     this.inCorrectCount = 0;

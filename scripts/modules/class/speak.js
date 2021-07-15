@@ -1,8 +1,8 @@
 // ***Imports*** {✈}
-import { Word } from "./word.js";
+import Word from "./word.js";
 
 // ***Exports*** {📦}
-export class Speak extends Word {
+export default class Speak extends Word {
   constructor(word) {
     super(word);
     this.syllable = this.syllabify(this.word);

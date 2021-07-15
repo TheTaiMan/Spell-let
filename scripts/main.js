@@ -1,6 +1,6 @@
 // ***Imports*** {✈}
-import { Word } from "./modules/class/word.js";
-import {setWordClass} from "./modules/setClass.js";
+import Word from "./modules/class/word.js";
+import setWordClass from "./modules/setClass.js";
 
 // ***Function*** {🧱}
 const SpeakFunction = { // This needs to be wiped with soap {🧼}, so0O unclean code 
