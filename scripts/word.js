@@ -33,7 +33,7 @@ export default class Word {
   }
   setWord(text) {
     if (typeof text !== "string" || !text.trim() || text.length === 0) {
-      throw Error(`${text} is not an actual word`);
+      throw Error(`${text === "" ? "{empty}": text} is not an actual word`);
     }
     text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     return (this._word = text.trim());

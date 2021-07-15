@@ -7,9 +7,10 @@ const input = document.getElementById("inputWord"); // Temporary {🥼}
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
     // On enter, set wordStorage html and objectStorage to be empty {∅} and recreate the objectStorage with the newly added word and re-render wordStorage.
-    if (Storage.duplicates(event.target.value)) return;
+    if (Storage.falseFormat(event.target.value)) return;
     let store = new Storage(event.target.value);
     store.setStorage();
+    setTimeout(() => input.value = "", 0);
     console.log(localStorage);
   }
 });

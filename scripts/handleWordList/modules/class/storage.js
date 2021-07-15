@@ -27,21 +27,20 @@ export default class Storage extends Word {
     arrayParsed = arrayParsed.sort((a, b) => a.length - b.length);
     localStorage.setItem(this.word[0], JSON.stringify(arrayParsed));
   }
-  updateStorage() {
-    // Have this as a utility function in another file that can be accessed by any other file;
+  updateStorage() {// Have this as a utility function in another file that can be accessed by any other file;
     creatObj();
     renderFunc();
   }
-  static duplicates(word) {
-    // Do something about the input of Words, where the first letter is uppercased automatically
+  static falseFormat(word) {
     const array = JSON.parse(localStorage.getItem(word[0]));
-    if (array === null) {
+    if (word.length < 2) {
+      return true;
+    } else if (array === null) {
+      return false;
+    } else if (array.includes(word)) {
+      return true;
+    } else {
       return false;
     }
-
-    if (array.includes(word)) {
-      return true;
-    }
-    return false;
   }
 }
