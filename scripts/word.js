@@ -1,4 +1,6 @@
-let word = [
+import { creatObj, objectStorage } from "./handleWordList/modules/creatObj.js";
+
+/* let word = [
   "perpendicular",
   "Deforestation",
   "Procrastination",
@@ -14,8 +16,8 @@ let word = [
   "equilibrium",
   "available",
 ]; // Temporary {🥼}
-
-const input = document.getElementById("inputSpelling"); // Temporary {🥼}
+*/
+const input = document.getElementById("inputSpelling");
 
 // ***Exports*** {📦}
 export default class Word {
@@ -31,17 +33,35 @@ export default class Word {
   }
   setWord(text) {
     if (typeof text !== "string" || !text.trim() || text.length === 0) {
-      throw Error("Enter an actual word");
+      throw Error(`${text} is not an actual word`);
     }
     text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     return (this._word = text.trim());
   }
-  static start() {
-    // Temporary {🥼}
-    // This will DEFINITELY cause problems {⚠️} when moving to modules, it can't access word array
-    let randomWord = Math.floor(Math.random() * word.length);
-    input.setAttribute("maxlength", word[randomWord].length);
+  static pickWord() {
+    function random(parameter) {
+      return Math.floor(Math.random() * parameter);
+    }
+    let result = "";
+    let objectKey = Object.keys(objectStorage);
+  
+    if (!objectKey.length) return creatObj();
+  
+    let randomKey = random(objectKey.length);
+    let randomArray = objectStorage[objectKey[randomKey]];
+    let randomWord = random(randomArray.length);
+
+    result = randomArray[randomWord];
+
+    randomArray.splice(randomWord, 1);
+    if (!randomArray.length) {
+      delete objectStorage[objectKey[randomKey]];
+    }
+
+    input.setAttribute("maxlength", result.length);
     input.focus();
-    return word[randomWord];
+
+    return result;
   }
+  
 }

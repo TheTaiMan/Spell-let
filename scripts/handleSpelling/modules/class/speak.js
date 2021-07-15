@@ -77,13 +77,13 @@ export default class Speak extends Word {
   }
   renderReverse(time, text) {
     let encryptWord = text.split("");
-    for (let i = encryptWord.length; i >= 0; i--) {
+    for (let i = 0; i <= encryptWord.length; i++) {
       setTimeout(() => {
         this.renderText.innerHTML = encryptWord
           .slice(0, encryptWord.length - i)
           .join(" ");
-        i === encryptWord.length ? this.stopText() : false;
-      }, i * (this.syllable.length === 1 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // *THIS SECTION MIGHT CAUSE ERRORS IN THE FUTURE
+        (i === encryptWord.length) ? this.stopText() : false;
+      }, i * (this.syllable.length <= 2 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // Experimental {🧪} [WILL CAUSE ERRORS❌]
     }
   }
   onCharacter() {

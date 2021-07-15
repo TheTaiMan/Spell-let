@@ -1,23 +1,6 @@
 // ***Imports*** {✈}
 import Word from "../../../word.js";
-import setWordClass from "../setClass.js"; // Change this to word class because that will have a random word picker as a static property
-
-let word = [
-  "perpendicular",
-  "Deforestation",
-  "Procrastination",
-  "computer",
-  "vegetable",
-  "molecules",
-  "text",
-  "beats",
-  "analogous",
-  "disappear",
-  "resemblance",
-  "activation",
-  "equilibrium",
-  "available",
-]; // Temporary {🥼}
+import setWordClass from "../setClass.js";
 
 // ***Exports*** {📦}
 export default class Check extends Word {
@@ -26,12 +9,16 @@ export default class Check extends Word {
     this.inCorrectCount = 0;
     this.SpeakFunction = SpeakFunction;
   }
-  pickWord() {
-    // Temporary {🥼}
+  done() {
+    this.renderText.innerHTML = "Done!"; // Do something with when you are done
+    setWordClass(Word.pickWord(), this.SpeakFunction);
+  }
+  nextWord() {
     this.inCorrectCount = 0;
-    let randomWord = Math.floor(Math.random() * word.length);
-    setWordClass(word[randomWord], this.SpeakFunction); // This needs to cleaned {🧼}
-    this.input.setAttribute("maxlength", word[randomWord].length);
+    const randomWord = Word.pickWord();
+    if (!randomWord) return this.done();
+
+    setWordClass(randomWord, this.SpeakFunction); 
     return this.SpeakFunction.playGivenWord();
   }
   correct() {
@@ -43,7 +30,7 @@ export default class Check extends Word {
     this.SpeakFunction.word.utterance.addEventListener("end", (e) => { //This needs to cleaned {🧼}
       setTimeout(() => {
         this.blank();
-        this.pickWord();
+        this.nextWord();
       }, 1000);
     });
   }
@@ -59,7 +46,11 @@ export default class Check extends Word {
     if (this.word === this.input.value) {
       this.correct();
       return true;
+    } else if (!this.input.value) {
+      this.inCorrect();
+      return false;
     }
+
     if (this.inCorrectCount === 5) {
       this.SpeakFunction.revealGivenWord();
       this.inCorrectCount = 0;

@@ -58,7 +58,9 @@ const SpeakFunction = { // This needs to be wiped with soap {🧼}, so0O unclean
 };
 
 // ***Activate Class Functions*** {🏭}
-setWordClass(Word.start(), SpeakFunction); // {givenWord, toCheck} = [window.object]
+window.addEventListener("load", () => {
+  setWordClass(Word.pickWord(), SpeakFunction);// {givenWord, toCheck} = [window.object]
+});
 
 // ***DOM Events*** {📲}
 const input = document.getElementById("inputSpelling");
