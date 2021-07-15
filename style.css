@@ -2,6 +2,10 @@
   filter: blur(3px);
 }
 
+#inputValue {
+  display: none;
+}
+
 .highlight {
   background-color: rgb(83, 83, 83);
 }
