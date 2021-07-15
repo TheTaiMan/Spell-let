@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spelling Text</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <script type="module" src="./scripts/main.js"></script>
+    <script type="module" src="./scripts/handleSpelling/main.js"></script>
   </head>
   <body>
     <!-- ***Render*** {🎨} -->
@@ -28,5 +28,16 @@
 
     <!-- ***Input Render*** {⌨ ~🎨}-->
     <p id="inputValue"><!-- Do a shaking animation with it is wrong --></p>
+
+    <!-- ***Random Word*** {🎲}-->
+    <button id="randomWord">Random Word</button>
+    <p id="random"></p>
+
+    <!-- ***Word Interface*** {📋}-->
+    <div id="wordStorage">
+      <input id="inputWord" type="text" />
+      <div id="wordList"></div>
+      <button id="removeWord">Save</button>
+    </div>
   </body>
 </html>
