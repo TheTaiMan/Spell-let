@@ -1,5 +1,5 @@
 // ***Imports*** {✈}
-import Word from "./word.js";
+import Word from "../../../word.js";
 
 // ***Exports*** {📦}
 export default class Speak extends Word {

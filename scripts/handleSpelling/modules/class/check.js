@@ -1,5 +1,5 @@
 // ***Imports*** {✈}
-import Word from "./word.js";
+import Word from "../../../word.js";
 import setWordClass from "../setClass.js"; // Change this to word class because that will have a random word picker as a static property
 
 let word = [

@@ -1,5 +1,5 @@
 // ***Imports*** {✈}
-import Word from "./modules/class/word.js";
+import Word from "../word.js";
 import setWordClass from "./modules/setClass.js";
 
 // ***Function*** {🧱}
