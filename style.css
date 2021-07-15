@@ -15,9 +15,57 @@
 }
 
 body {
-  background-color: #181A1B;
+  background-color: #181a1b8f;
 }
 
 p {
   color: white;
 }
+
+.disappear {
+  display: none;
+}
+
+@keyframes remove {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.remove {
+  position: relative;
+}
+.remove::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: black;
+  animation-name: remove;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+/**
+  * When styling the words, and other parts of the words, select them by their tag names, not their class
+  * because the .disappear class won't work then.
+  */
+  
+p {
+  display: inline-block;
+  margin: 5px;
+}
+
+h2 {
+  color: white;
+}
+
+/* section {
+  display: flex;
+} */
