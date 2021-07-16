@@ -1,3 +1,4 @@
+// ***Exports*** {📦}
 export let objectStorage = new Object();
 
 export const creatObj = () => {
