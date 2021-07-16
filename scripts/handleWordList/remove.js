@@ -1,6 +1,8 @@
+// ***Imports*** {✈}
 import renderFunc from "./modules/renderFunc.js";
 import { creatObj } from "./modules/creatObj.js";
 
+// ***Save Mechanics*** {📷}
 class Save {
   constructor(word) {
     this.word = word;
@@ -25,6 +27,7 @@ class Save {
   }
 }
 
+// ***DOM Save*** {📸}
 document.getElementById("removeWord").onclick = function () {
   [...document.querySelectorAll(".category")].forEach((section) => {
     const categoryId = document.getElementById(section.id);

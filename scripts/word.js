@@ -1,27 +1,11 @@
+// ***Imports*** {✈}
 import { creatObj, objectStorage } from "./handleWordList/modules/creatObj.js";
 
-/* let word = [
-  "perpendicular",
-  "Deforestation",
-  "Procrastination",
-  "computer",
-  "vegetable",
-  "molecules",
-  "text",
-  "beats",
-  "analogous",
-  "disappear",
-  "resemblance",
-  "activation",
-  "equilibrium",
-  "available",
-]; // Temporary {🥼}
-*/
+// ***Global Variable*** {🌎}
 const input = document.getElementById("inputSpelling");
 
 // ***Exports*** {📦}
 export default class Word {
-  // Add random word picker to the word class
   constructor(word) {
     this._word = this.setWord(word);
     this.input = document.getElementById("inputSpelling");
@@ -63,5 +47,23 @@ export default class Word {
 
     return result;
   }
-  
 }
+
+/* 
+[
+  "perpendicular",
+  "Deforestation",
+  "Procrastination",
+  "computer",
+  "vegetable",
+  "molecules",
+  "text",
+  "beats",
+  "analogous",
+  "disappear",
+  "resemblance",
+  "activation",
+  "equilibrium",
+  "available",
+]
+*/

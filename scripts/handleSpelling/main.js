@@ -2,7 +2,7 @@
 import Word from "../word.js";
 import setWordClass from "./modules/setClass.js";
 
-// ***Function*** {🧱}
+// ***Speak Components*** {🧱}
 const SpeakFunction = { // This needs to be wiped with soap {🧼}, so0O unclean code 
   get block() {
     return givenWord.block;

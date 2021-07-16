@@ -16,7 +16,7 @@ export default class Speak extends Word {
     this.block = false;
     this.inputValue = [];
   }
-  /* Tools */
+  /* Tools [🛠] */
   syllabify(words) {
     // Should be changed {🥼}
     const syllableRegex =
@@ -147,7 +147,7 @@ export default class Speak extends Word {
     this.indicateText(text, state);
     return window.speechSynthesis.speak(this.set_Utterance(text)); // Make it so when the letter is wrong, it will make a monster sound, and the volumn will be increased
   }
-  /* Functions */
+  /* Functions [🎰] */
   indicateText(text = false, state) {
     switch (state) {
       case "letter":

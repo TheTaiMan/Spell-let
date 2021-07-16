@@ -1,5 +1,7 @@
+// ***Global Variable*** {🌎}
 const input = document.getElementById("inputWord");
 
+// ***Search Mechanics*** {🗺}
 class Search { // And something when there is no words found or no category found
   constructor(compare, input) {
     this.compare = compare;
@@ -36,6 +38,7 @@ class Search { // And something when there is no words found or no category foun
   }
 }
 
+// ***Search Components*** {🔎}
 const searchFunction = {
   input: input,
   checkInput(compare, type) {
@@ -65,6 +68,7 @@ const searchFunction = {
   },
 };
 
+// ***DOM Search*** {📁}
 input.addEventListener("input", (event) => {
   input.value =
     input.value.charAt(0).toUpperCase() + input.value.slice(1).toLowerCase();
