@@ -2,7 +2,7 @@
 export let objectStorage = new Object();
 
 export const creatObj = () => {
-  objectStorage = new Object()
+  objectStorage = new Object();
   let orderedKeys = [];
   for (let i = 0; i < localStorage.length; i++) {
     orderedKeys.push(localStorage.key(i));

@@ -24,6 +24,7 @@ listToggle.onclick = () => {
     input.value = "";
   }
   if (list.classList.contains("disappear")) {
+    creatObj();
     renderFunc();
   }
 }
