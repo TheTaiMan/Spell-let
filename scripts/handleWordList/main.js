@@ -5,6 +5,7 @@ import Storage from "./modules/class/storage.js";
 
 // ***Global Variable*** {🌎}
 const input = document.getElementById("inputWord");
+const listToggle = document.getElementById("listToggle");
 
 // ***DOM Events*** {📲}
 input.addEventListener("keyup", (event) => {
@@ -16,6 +17,16 @@ input.addEventListener("keyup", (event) => {
     console.log(localStorage);
   }
 });
+listToggle.onclick = () => {
+  const list = document.getElementById("wordStorage");
+  list.classList.toggle("disappear");
+  if (input.value) {
+    input.value = "";
+  }
+  if (list.classList.contains("disappear")) {
+    renderFunc();
+  }
+}
 
 // ***Render Word List*** {📋}
 creatObj();

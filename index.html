@@ -21,10 +21,6 @@
         const word = document.getElementById(event.target.id);
         word.classList.toggle("remove");
       };
-      const toggleList = (event) => {
-        const list = document.getElementById("wordStorage");
-        list.classList.toggle("disappear");
-      }
     </script>
     <!-- ***Render*** {🎨} -->
     <p id="text"></p>
@@ -48,7 +44,7 @@
     <p id="inputValue"><!-- Do a shaking animation with it is wrong --></p>
     <br /><br />
     <!-- ***Word List*** {📋}-->
-    <button id="listToggle" onclick="toggleList()">List</button>
+    <button id="listToggle">List</button>
     <div id="wordStorage">
       <input 
         id="inputWord" 
