@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+#text {
+  filter: blur(3px);
+}
+
+#inputValue {
+  display: none;
+}
+
+body {
+  background-color: #181a1b8f;
+}
+
+p {
+  color: white;
+}
+
+/**
+  * When styling the words, and other parts of the words, select them by their tag names, not their class
+  * because the .disappear class won't work then.
+  */
+  
+p {
+  display: inline-block;
+  margin: 5px;
+}
+
+h2 {
+  color: white;
+}
+
+/* section {
+  display: flex;
+} */

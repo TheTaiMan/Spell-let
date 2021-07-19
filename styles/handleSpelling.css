@@ -1,0 +1,86 @@
+
+.inputContainer {
+  display: inline-grid;
+  grid-template: 30px / repeat(3, 1fr);
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  height: 50px;
+  border-radius: 50px;
+  padding: 10px;
+  grid-gap: 5px;
+  background-color: #f9a374;
+}
+
+.input,
+#inputValue {
+  font-family: Arial;
+  height: 30px;
+  font-size: 25px;
+  background-color: #f9a374;
+  color: white;
+  border: 0;
+}
+
+.imgBtn {
+  transition: ease-in 0.2s;
+}
+
+.imgBtn:active {
+  transition: ease-out 0.1s;
+}
+
+::placeholder {
+  font-style: oblique;
+  color: white;
+  font-weight: 200;
+}
+
+#spellContainer {
+  width: 400px;
+}
+
+#checkBtn {
+  grid-area: 1 / 1 / span 1 / span 1;
+  width: 30px;
+  opacity: 0.25;
+}
+
+#checkBtn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+#checkBtn:active {
+  opacity: 1;
+  width: 32px;
+}
+
+#inputSpelling,
+#inputValue {
+  grid-area: 1 / 2 / span 1 / span 1;
+  width: 300px;
+}
+
+#inputValue:hover {
+  cursor: text;
+}
+
+#revealWord {
+  grid-area: 1 / 3 / span 1 / span 1;
+  opacity: 0.01; /* Will be invisible, and when a work is wrong, it will slowly appear */
+  width: 70px;
+  margin: -20px;
+}
+
+#revealWord:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+#revealWord:active {
+  opacity: 1;
+  width: 75px;
+}

@@ -3,12 +3,13 @@ import Word from "../word.js";
 import setWordClass from "./modules/setClass.js";
 
 // ***Speak Components*** {🧱}
-const SpeakFunction = { // This needs to be wiped with soap {🧼}, so0O unclean code 
+const SpeakFunction = {
+  // This needs to be wiped with soap {🧼}, so0O unclean code
   get block() {
     return givenWord.block;
   },
   set block(bouillon) {
-    return givenWord.block = bouillon;
+    return (givenWord.block = bouillon);
   },
   get word() {
     return givenWord;
@@ -21,6 +22,7 @@ const SpeakFunction = { // This needs to be wiped with soap {🧼}, so0O unclean
     return givenWord.playText(text, type);
   },
   revealWord() {
+    givenWord.indicateInputValue();
     return givenWord.revealWord(givenWord.syllable, "letter");
   },
   display(reveal) {
@@ -59,12 +61,24 @@ const SpeakFunction = { // This needs to be wiped with soap {🧼}, so0O unclean
 
 // ***Activate Class Functions*** {🏭}
 window.addEventListener("load", () => {
-  setWordClass(Word.pickWord(), SpeakFunction);// {givenWord, toCheck} = [window.object]
+  setWordClass(Word.pickWord(), SpeakFunction); // {givenWord, toCheck} = [window.object]
 });
 
 // ***DOM Events*** {📲}
 const input = document.getElementById("inputSpelling");
 input.onpaste = (e) => e.preventDefault();
+
+document.getElementById("checkBtn").onclick = () => {
+  if (speechSynthesis.speaking) return;
+  toCheck.checkSpelling();
+};
+
+document.getElementById("inputValue").onclick = (event) => {
+  if (speechSynthesis.speaking) return;
+  event.target.style.display = "none";
+  input.style.display = "block";
+  input.focus();
+}
 
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
@@ -90,7 +104,5 @@ const revealWord = document.getElementById("revealWord");
 revealWord.addEventListener("click", () => {
   SpeakFunction.revealGivenWord();
 });
-
-
 
 // Use the datamuse https://www.datamuse.com/api/ API to check if the input is actually a word. If it comes back with an Error, its not a word and will not be saved, but if is doesn't have any errors, it will save the word to local storage object
