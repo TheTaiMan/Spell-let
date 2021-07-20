@@ -15,6 +15,7 @@ export default class Check extends Word {
   }
   nextWord() {
     this.inCorrectCount = 0;
+    document.getElementById("bracket").innerHTML = ')';
     const randomWord = Word.pickWord();
     if (!randomWord) return this.done();
 

@@ -30,7 +30,6 @@ const SpeakFunction = {
       givenWord.input.style.display = "none";
       this.filter("blur(0px)");
       document.getElementById("inputValue").style.display = "block";
-      playWord.focus();
     } else {
       givenWord.input.style.display = "block";
       this.filter("");

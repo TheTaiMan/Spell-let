@@ -65,12 +65,16 @@ export default class Speak extends Word {
   }
   delayRender(time, text, retract = false) {
     for (let i = 0; i < text.length; i++) {
+      
       setTimeout(() => {
+        this.renderText.style.width = `${i}.3rem`;
         this.renderText.innerHTML += ` ${text[i]}`;
         if (i === text.length - 1) {
-          !retract
-            ? (this.renderText.innerHTML += ` ✔`)
-            : this.renderReverse(time * 0.5, text);
+          if (!retract) {
+            this.renderText.style.width = `${text.length -(text.length* 0.35)}rem`;
+            return document.getElementById("bracket").innerHTML = '✔';
+          }
+          return this.renderReverse(time * 0.5, text);
         }
       }, i * (time || 200));
     }
@@ -79,6 +83,7 @@ export default class Speak extends Word {
     let encryptWord = text.split("");
     for (let i = 0; i <= encryptWord.length; i++) {
       setTimeout(() => {
+        this.renderText.style.width = `${encryptWord.length - i}.3rem`;
         this.renderText.innerHTML = encryptWord
           .slice(0, encryptWord.length - i)
           .join(" ");

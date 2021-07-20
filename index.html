@@ -8,6 +8,7 @@
     <!-- Styles -->
     <link href="./styles/style.css" rel="stylesheet" type="text/css" />
     <link href="./styles/jsUtility.css" rel="stylesheet" type="text/css" />
+    <!-- ***Handle Spelling*** {🔊} -->
     <link href="./styles/handleSpelling.css" rel="stylesheet" type="text/css" />
 
     <!-- Scripts -->
@@ -27,14 +28,19 @@
       };
     </script>
     <!-- ***Render*** {🎨} -->
-    <p id="text"></p>
+    <!-- <p id="text"></p> -->
 
     <br /><br />
     <!-- ***Interface*** {🧈} -->
-    <!-- <img 
-      src="./images/speaker.png" 
-      id="play-word"/> -->
-    <button id="play-word">Word</button>
+    <div id="wordIndicator">
+      <img
+        src="./images/speaker.png"
+        id="play-word"
+        ondragstart="return false"
+      />
+      <p id="text"></p> <!-- Over flow will cause problems -->
+      <span id="bracket">)</span>
+    </div>
 
     <br /><br />
     <!-- ***Input*** {⌨}-->
@@ -43,14 +49,14 @@
         src="./images/check.png"
         class="imgBtn"
         id="checkBtn"
-        ondragstart="return false;"
-        ondrop="return false;"
+        ondragstart="return false"
       />
       <input
         class="input"
         autocomplete="off"
         spellcheck="false"
         id="inputSpelling"
+        ondrop="return false"
         type="text"
         placeholder="Spelling..."
         oninput="this.value = this.value.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '')"
@@ -61,14 +67,13 @@
         src="./images/reveal.png"
         class="imgBtn"
         id="revealWord"
-        ondragstart="return false;"
-        ondrop="return false;"
+        ondragstart="return false"
       />
     </div>
 
     <br /><br />
     <!-- ***Input Render*** {⌨ ~🎨}-->
-    <!-- Do a shaking animation with it is wrong --></p>
+    <!-- Do a shaking animation with it is wrong -->
     <br /><br />
     <!-- ***Word List*** {📋}-->
     <button id="listToggle">List</button>
