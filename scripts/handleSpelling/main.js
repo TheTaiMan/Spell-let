@@ -67,10 +67,7 @@ window.addEventListener("load", () => {
 const input = document.getElementById("inputSpelling");
 input.onpaste = (e) => e.preventDefault();
 
-document.getElementById("checkBtn").onclick = () => {
-  if (speechSynthesis.speaking) return;
-  toCheck.checkSpelling();
-};
+
 
 document.getElementById("inputValue").onclick = (event) => {
   if (speechSynthesis.speaking) return;
@@ -95,19 +92,31 @@ input.addEventListener("input", (event) => {
   givenWord.indicateInputValue();
 });
 
+const handleBtn = (btn, width) => {
+  if (speechSynthesis.speaking) return;
+  btn.style.opacity = "1";
+  btn.style.width = `${width}rem`;
+  return setTimeout(() => {
+    btn.style.opacity = "";
+    btn.style.width = "";
+  }, 180);
+}
+
+document.getElementById("checkBtn").onclick = (event) => {
+  if (speechSynthesis.speaking) return;
+  handleBtn(event.target, 2);
+  return toCheck.checkSpelling();
+};
+
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
-  SpeakFunction.playGivenWord();
+ handleBtn(playWord, 6.5);
+ return SpeakFunction.playGivenWord();
 });
 
 const revealWord = document.getElementById("revealWord");
 revealWord.addEventListener("click", () => {
-  revealWord.style.opacity = "1";
-  revealWord.style.width = "4.6875rem";
-  setTimeout(() => {
-    revealWord.style.opacity = "";
-    revealWord.style.width = "";
-  }, 180);
+  handleBtn(revealWord, 4.6875);
   toCheck.inCorrectCount = 0;
   return SpeakFunction.revealGivenWord();
 });
