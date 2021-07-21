@@ -1,3 +1,7 @@
+html {
+  font-size: 30px;
+}
+
 /* hebrew */
 @font-face {
   font-family: 'Varela Round';
@@ -44,44 +48,54 @@
 }
 
 #play-word {
-  width: 100px;
+  width: 6.25rem;
   transition: 0.2s;
 }
 
 #text {
-  filter: blur(3px);
-  width: 0px;
+  filter: blur(8px);
+  width: 0;
+  box-sizing: border-box;
   transition: 0.1s;
+  font-size: 1.5rem;
   white-space: nowrap;
-  /* overflow: hidden; */
+  overflow: visible;
 }
 
 #bracket {
-  font-size: 72px;
+  text-align: center;
+  font-size: 5rem;
+  margin-left: 0.5rem;
   color: #8898A6;
   font-family: 'Varela Round', sans-serif;
+  z-index: 4;
+}
+
+#boundary {
+  background-color:#0481ff;
+  /* background-color:#7D7E7F; */
 }
 
 .inputContainer {
   display: inline-grid;
-  grid-template: 30px / repeat(3, 1fr);
+  grid-template: 1.875rem / repeat(3, 1fr);
   align-content: center;
   justify-content: center;
   align-items: center;
   justify-items: center;
   overflow: hidden;
-  height: 50px;
-  border-radius: 50px;
-  padding: 10px;
-  grid-gap: 5px;
+  height: 3.125rem;
+  border-radius: 3.125rem;
+  padding: 0.625rem;
+  grid-gap: 0.3125rem;
   background-color: #f9a374;
 }
 
 .input,
 #inputValue {
   font-family: Arial;
-  height: 30px;
-  font-size: 25px;
+  height: 1.875rem;
+  font-size: 1.5625rem;
   background-color: #f9a374;
   color: white;
   border: 0;
@@ -102,12 +116,12 @@
 }
 
 #spellContainer {
-  width: 400px;
+  width: 25rem;
 }
 
 #checkBtn {
   grid-area: 1 / 1 / span 1 / span 1;
-  width: 30px;
+  width: 1.875rem;
   opacity: 0.25;
 }
 
@@ -118,7 +132,7 @@
 
 #checkBtn:active {
   opacity: 1;
-  width: 32px;
+  width: 2rem;
 }
 
 #inputValue {
@@ -128,7 +142,7 @@
 #inputSpelling,
 #inputValue {
   grid-area: 1 / 2 / span 1 / span 1;
-  width: 300px;
+  width: 18.75rem;
 }
 
 #inputValue:hover {
@@ -138,8 +152,8 @@
 #revealWord {
   grid-area: 1 / 3 / span 1 / span 1;
   opacity: 0.01; /* Will be invisible, and when a work is wrong, it will slowly appear */
-  width: 70px;
-  margin: -20px;
+  width: 4.375rem;
+  margin: -1.25rem;
 }
 
 #revealWord:hover {
@@ -149,5 +163,5 @@
 
 #revealWord:active {
   opacity: 1;
-  width: 75px;
+  width: 4.6875rem;
 }

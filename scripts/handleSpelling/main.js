@@ -77,6 +77,7 @@ document.getElementById("inputValue").onclick = (event) => {
   event.target.style.display = "none";
   input.style.display = "block";
   input.focus();
+  input.select();
 }
 
 input.addEventListener("keyup", (event) => {

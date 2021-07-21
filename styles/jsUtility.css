@@ -31,7 +31,7 @@
   top: 50%;
   left: 0;
   width: 100%;
-  height: 1px;
+  height: 0.0625rem;
   background: black;
   animation-name: remove;
   animation-duration: 0.4s;
