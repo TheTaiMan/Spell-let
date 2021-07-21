@@ -102,7 +102,14 @@ playWord.addEventListener("click", () => {
 
 const revealWord = document.getElementById("revealWord");
 revealWord.addEventListener("click", () => {
-  SpeakFunction.revealGivenWord();
+  revealWord.style.opacity = "1";
+  revealWord.style.width = "4.6875rem";
+  setTimeout(() => {
+    revealWord.style.opacity = "";
+    revealWord.style.width = "";
+  }, 180);
+  toCheck.inCorrectCount = 0;
+  return SpeakFunction.revealGivenWord();
 });
 
 // Use the datamuse https://www.datamuse.com/api/ API to check if the input is actually a word. If it comes back with an Error, its not a word and will not be saved, but if is doesn't have any errors, it will save the word to local storage object

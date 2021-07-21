@@ -35,7 +35,10 @@ export default class Check extends Word {
       }, 1000);
     });
   }
-  inCorrect() {
+  inCorrect(wrong = false) {
+    if (wrong){
+      document.getElementById("revealWord").style.opacity = this.inCorrectCount*2*0.1;
+    }
     return this.SpeakFunction.playGivenWord();
   }
   blank() {
@@ -46,19 +49,22 @@ export default class Check extends Word {
   checkSpelling() {
     if (this.word === this.input.value) {
       this.correct();
+      document.getElementById("revealWord").style.opacity = "";
       return true;
     } else if (!this.input.value) {
       this.inCorrect();
       return false;
     }
 
+    this.inCorrectCount++;
     if (this.inCorrectCount === 5) {
       this.SpeakFunction.revealGivenWord();
       this.inCorrectCount = 0;
+      document.getElementById("revealWord").style.opacity = "";
     } else {
-      this.inCorrect();
+      this.inCorrect(true);
     }
-    this.inCorrectCount++;
+    
     return false;
   }
 }
