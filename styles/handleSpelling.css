@@ -52,6 +52,10 @@ html {
   transition: 0.2s;
 }
 
+#play-word:hover {
+  cursor: pointer;
+}
+
 #text {
   filter: blur(8px);
   width: 0;
@@ -59,21 +63,17 @@ html {
   transition: 0.1s;
   font-size: 1.5rem;
   white-space: nowrap;
-  overflow: visible;
 }
 
 #bracket {
   text-align: center;
   font-size: 5rem;
+  opacity: 0;
   margin-left: 0.5rem;
   color: #8898A6;
   font-family: 'Varela Round', sans-serif;
   z-index: 4;
-}
-
-#boundary {
-  background-color:#0481ff;
-  /* background-color:#7D7E7F; */
+  transition:ease-in-out 0.2s;
 }
 
 .inputContainer {
