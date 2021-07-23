@@ -68,8 +68,6 @@ window.addEventListener("load", () => {
 const input = document.getElementById("inputSpelling");
 input.onpaste = (e) => e.preventDefault();
 
-
-
 document.getElementById("inputValue").onclick = (event) => {
   if (speechSynthesis.speaking) return;
   event.target.style.display = "none";
@@ -91,7 +89,6 @@ const handleBtn = (btn, width) => {
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
     if (speechSynthesis.speaking) return;
-    handleBtn(document.getElementById("checkBtn"), 2.2);
     return toCheck.checkSpelling();
   }
   return (event.target.value = event.target.value.replace(/[^A-Za-z]/, "")); // Do a shaking animation when you enter these characters
@@ -104,11 +101,9 @@ input.addEventListener("input", (event) => {
   givenWord.indicateInputValue();
 });
 
-
-
 document.getElementById("checkBtn").onclick = (event) => {
   if (speechSynthesis.speaking) return;
-  handleBtn(event.target, 2.2);
+  handleBtn(event.target, 2);
   return toCheck.checkSpelling();
 };
 

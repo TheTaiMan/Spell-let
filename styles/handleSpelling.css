@@ -46,11 +46,13 @@ html {
   align-content: center;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 #play-word {
   width: 6.25rem;
   transition: 0.2s;
+
 }
 
 #play-word:hover {
@@ -64,6 +66,7 @@ html {
   transition: 0.1s;
   font-size: 1.5rem;
   white-space: nowrap;
+
 }
 
 #bracket {
@@ -75,6 +78,8 @@ html {
   font-family: 'Varela Round', sans-serif;
   z-index: 4;
   transition:ease-in-out 0.2s;
+  letter-spacing: -7px;
+
 }
 
 .inputContainer {
