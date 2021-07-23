@@ -23,8 +23,16 @@ export default class Speak extends Word {
       /[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi;
     return words.match(syllableRegex);
   }
+  setVoice() {
+    const voices = window.speechSynthesis.getVoices();
+    return this.utterance.voice = voices.filter((voice) => {
+      return voice.name == "Google US English";
+    })[0];
+  }
   set_Utterance(text) {
-    return (this.utterance = new SpeechSynthesisUtterance(text));
+    this.utterance = new SpeechSynthesisUtterance(text);
+    this.setVoice();
+    return this.utterance;
   }
   pauseText() {
     return speechSynthesis.pause();
@@ -69,15 +77,15 @@ export default class Speak extends Word {
     for (let i = 0; i < text.length; i++) {
       setTimeout(() => {
         document.getElementById("bracket").style.opacity = "1";
-        document.getElementById("bracket").style.fontSize = `${(i*0.5) +5}rem`;
-        this.renderText.style.width = `${i*1.5}rem`;
+        document.getElementById("bracket").style.fontSize = `${i * 0.5 + 5}rem`;
+        this.renderText.style.width = `${i * 1.5}rem`;
         /* Make this a seperate mthod where you only contron the style */
         this.renderText.innerHTML += ` ${text[i]}`;
         if (i === text.length - 1) {
           if (!retract) {
             this.renderText.style.width = "auto";
             document.getElementById("bracket").style.fontSize = `5rem`;
-            return document.getElementById("bracket").innerHTML = '✔';
+            return (document.getElementById("bracket").innerHTML = "✔");
           }
           return this.renderReverse(time * 0.5, text);
         }
@@ -89,11 +97,11 @@ export default class Speak extends Word {
     for (let i = 0; i <= encryptWord.length; i++) {
       document.getElementById("bracket").style.fontSize = `5rem`;
       setTimeout(() => {
-        this.renderText.style.width = `${encryptWord.length - (i*1.3)}rem`;
+        this.renderText.style.width = `${encryptWord.length - i * 1.3}rem`;
         this.renderText.innerHTML = encryptWord
           .slice(0, encryptWord.length - i)
           .join(" ");
-        (i === encryptWord.length) ? this.stopText() : false;
+        i === encryptWord.length ? this.stopText() : false;
       }, i * (this.syllable.length <= 2 ? time * 7 : this.syllable.length >= 5 ? time / 2 : time)); // Experimental {🧪} [WILL CAUSE ERRORS❌]
     }
   }

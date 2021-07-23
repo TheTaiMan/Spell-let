@@ -60,7 +60,8 @@ const SpeakFunction = {
 
 // ***Activate Class Functions*** {🏭}
 window.addEventListener("load", () => {
-  setWordClass(Word.pickWord(), SpeakFunction); // {givenWord, toCheck} = [window.object]
+  setWordClass(Word.pickWord(), SpeakFunction);// {givenWord, toCheck} = [window.object]
+  givenWord.set_Utterance('Load Voice'); 
 });
 
 // ***DOM Events*** {📲}
