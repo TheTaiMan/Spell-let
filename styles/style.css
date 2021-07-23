@@ -6,8 +6,12 @@
 }
 
 
-
 body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
   background-color: #181a1b8f;
 }
 

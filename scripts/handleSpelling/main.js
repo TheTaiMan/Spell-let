@@ -77,10 +77,21 @@ document.getElementById("inputValue").onclick = (event) => {
   input.select();
 }
 
+const handleBtn = (btn, width) => {
+  if (speechSynthesis.speaking) return;
+  btn.style.opacity = "1";
+  btn.style.width = `${width}rem`;
+  return setTimeout(() => {
+    btn.style.opacity = "";
+    btn.style.width = "";
+  }, 180);
+}
+
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
     if (speechSynthesis.speaking) return;
-    toCheck.checkSpelling();
+    handleBtn(document.getElementById("checkBtn"), 2.2);
+    return toCheck.checkSpelling();
   }
   return (event.target.value = event.target.value.replace(/[^A-Za-z]/, "")); // Do a shaking animation when you enter these characters
 });
@@ -92,31 +103,23 @@ input.addEventListener("input", (event) => {
   givenWord.indicateInputValue();
 });
 
-const handleBtn = (btn, width) => {
-  if (speechSynthesis.speaking) return;
-  btn.style.opacity = "1";
-  btn.style.width = `${width}rem`;
-  return setTimeout(() => {
-    btn.style.opacity = "";
-    btn.style.width = "";
-  }, 180);
-}
+
 
 document.getElementById("checkBtn").onclick = (event) => {
   if (speechSynthesis.speaking) return;
-  handleBtn(event.target, 2);
+  handleBtn(event.target, 2.2);
   return toCheck.checkSpelling();
 };
 
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
- handleBtn(playWord, 6.5);
+ handleBtn(playWord, 6.7);
  return SpeakFunction.playGivenWord();
 });
 
 const revealWord = document.getElementById("revealWord");
 revealWord.addEventListener("click", () => {
-  handleBtn(revealWord, 4.6875);
+  handleBtn(revealWord, 4.7);
   toCheck.inCorrectCount = 0;
   return SpeakFunction.revealGivenWord();
 });
