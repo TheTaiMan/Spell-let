@@ -83,7 +83,7 @@ main {
   transition: 0.1s;
   font-size: 1.5rem;
   white-space: nowrap;
-
+  font-family: sans-serif;
 }
 
 #bracket {
@@ -129,11 +129,11 @@ main {
 }
 
 .imgBtn {
-  transition: ease-in 0.2s;
+  transition: ease-in 0.15s;
 }
 
 .imgBtn:active {
-  transition: ease-out 0.1s;
+  transition: ease-out 0.05s;
 }
 
 ::placeholder {
@@ -165,6 +165,10 @@ main {
 #inputValue {
   grid-area: 1 / 2 / span 1 / span 1;
   width: 18.75rem;
+}
+
+#inputSpelling {
+  transition: ease-in 0.15s;
 }
 
 #inputValue:hover {

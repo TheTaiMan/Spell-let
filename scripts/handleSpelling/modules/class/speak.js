@@ -78,7 +78,7 @@ export default class Speak extends Word {
       setTimeout(() => {
         document.getElementById("bracket").style.opacity = "1";
         document.getElementById("bracket").style.fontSize = `${i * 0.5 + 5}rem`;
-        this.renderText.style.width = `${i * 1.5}rem`;
+        this.renderText.style.width = `${i * 1.6}rem`;
         /* Make this a seperate mthod where you only contron the style */
         this.renderText.innerHTML += ` ${text[i]}`;
         if (i === text.length - 1) {
@@ -97,7 +97,7 @@ export default class Speak extends Word {
     for (let i = 0; i <= encryptWord.length; i++) {
       document.getElementById("bracket").style.fontSize = `5rem`;
       setTimeout(() => {
-        this.renderText.style.width = `${encryptWord.length - i * 1.3}rem`;
+        this.renderText.style.width = `${encryptWord.length - i * 1.2}rem`;
         this.renderText.innerHTML = encryptWord
           .slice(0, encryptWord.length - i)
           .join(" ");
@@ -127,13 +127,13 @@ export default class Speak extends Word {
     let correct;
     if (!this.checkLetter(index)) {
       if (this.inputValue[index] === undefined) {
-        this.inputValue.push(`<span class='highlightWrong'> - </span>`);
+        this.inputValue.push(`<span class='highlightWrong'>&nbsp;&nbsp;</span>`);
       } else {
         this.inputValue.splice(
           index,
           1,
           `<span class='highlightWrong'>${
-            !this.input.value[index] ? " - " : this.input.value[index]
+            !this.input.value[index] ? "&nbsp;&nbsp;" : this.input.value[index]
           }</span>`
         );
       }
