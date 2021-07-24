@@ -33,44 +33,49 @@
 
     <br /><br />
     <!-- ***Interface*** {🧈} -->
-    <div id="wordIndicator">
-      <img
-        src="./images/speaker.png"
-        id="play-word"
-        ondragstart="return false"
-      />
-      <p id="text"></p> <!-- Over flow will cause problems -->
-      <span id="bracket">)</span>
-    </div>
+    <!-- Bug, words bigger than 17 letters will have a visual glitch-->
+    <main id="handleSpelling">
+      <div id="wordIndicator">
+        <img
+          src="./images/speaker.png"
+          id="play-word"
+          ondragstart="return false"
+        />
+        <div id="textWave">
+          <!-- Over flow causes reveal word to not show, to fix this, make width 100% so the speaker goes all the wya back and the word can be revealed -->
+          <p id="text"></p>
+          <span id="bracket">)</span>
+        </div>
+      </div>
 
-    <br /><br />
-    <!-- ***Input*** {⌨}-->
-    <div class="inputContainer" id="spellContainer">
-      <img
-        src="./images/check.png"
-        class="imgBtn"
-        id="checkBtn"
-        ondragstart="return false"
-      />
-      <input
-        class="input"
-        autocomplete="off"
-        spellcheck="false"
-        id="inputSpelling"
-        ondrop="return false"
-        type="text"
-        placeholder="Spelling..."
-        oninput="this.value = this.value.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '')"
-        onkeydown="this.value = this.value.replace(/[^A-Za-z]/, '')"
-      />
-      <span id="inputValue"></span>
-      <img
-        src="./images/reveal.png"
-        class="imgBtn"
-        id="revealWord"
-        ondragstart="return false"
-      />
-    </div>
+      <!-- ***Input*** {⌨}-->
+      <div class="inputContainer" id="spellContainer">
+        <img
+          src="./images/check.png"
+          class="imgBtn"
+          id="checkBtn"
+          ondragstart="return false"
+        />
+        <input
+          class="input"
+          autocomplete="off"
+          spellcheck="false"
+          id="inputSpelling"
+          ondrop="return false"
+          type="text"
+          placeholder="Spelling..."
+          oninput="this.value = this.value.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '')"
+          onkeydown="this.value = this.value.replace(/[^A-Za-z]/, '')"
+        />
+        <span id="inputValue"></span>
+        <img
+          src="./images/reveal.png"
+          class="imgBtn"
+          id="revealWord"
+          ondragstart="return false"
+        />
+      </div>
+    </main>
 
     <br /><br />
     <!-- ***Input Render*** {⌨ ~🎨}-->
