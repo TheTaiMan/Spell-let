@@ -47,7 +47,7 @@ export default class Speak extends Word {
     speechSynthesis.resume();
     this.onSyllable = 0;
     this.onLetter = 0;
-    this.renderText.style.width = 0;
+    this.renderText.style.width = "auto";
     document.getElementById("bracket").style.opacity = "0";
     return speechSynthesis.cancel();
   }

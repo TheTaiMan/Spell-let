@@ -4,7 +4,7 @@ $(function () {
       $("#bracket").css({ opacity: 1 });
     },
     () => {
-      $("#bracket").css({ opacity: 0 });
+      $("#bracket").css({ opacity: "" });
     }
   );
 });
