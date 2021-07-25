@@ -23,17 +23,41 @@ const SpeakFunction = {
   },
   revealWord() {
     givenWord.indicateInputValue();
-    return givenWord.revealWord(givenWord.syllable, "letter");
+    return setTimeout(() => {
+      return givenWord.revealWord(givenWord.syllable, "letter");
+    }, 200);
   },
-  display(reveal) {
+  display(reveal, correct = false) {
     if (reveal) {
-      givenWord.input.style.display = "none";
-      this.filter("blur(0px)");
-      document.getElementById("inputValue").style.display = "block";
+      $("#inputSpelling").css({ display: "none" });
+      $("#inputValue").css({ display: "block" });
+      if ($("#wordIndicator").css("justifyContent") === "center") {
+        this.filter("blur(0px)");
+        $("#text").css({ width: "auto" });
+        $("#play-word").css({ position: "relative" });
+
+        $("#play-word").animate({ right: "12rem" }, 200, function () {
+          $("#play-word").css({ right: "" });
+          $("#play-word").css({ position: "" });
+          $("#wordIndicator").css({ justifyContent: "start" });
+        });
+      }
     } else {
-      givenWord.input.style.display = "block";
-      this.filter("");
-      document.getElementById("inputValue").style.display = "none";
+      !correct ? this.filter("") : this.filter("blur(0px)");
+      if ($("#wordIndicator").css("justifyContent") === "start") {
+        $("#inputSpelling").css({ display: "" });
+        $("#inputValue").css({ display: "" });
+
+        // $("#play-word").css({ position: "relative" });
+        // $("#text").css({ display: "none" });
+
+        // $("#play-word").animate({ left: "12rem" }, 120, function () {
+        //   $("#play-word").css({ left: "" });
+        //   $("#play-word").css({ position: "" });
+        //   $("#text").css({ display: "" });
+        $("#wordIndicator").css({ justifyContent: "center" });
+        // });
+      }
       input.focus();
     }
   },
@@ -53,28 +77,34 @@ const SpeakFunction = {
     });
   },
   playCorrectWord() {
-    this.filter("blur(0px)");
+    this.display(false, true);
     this.play(givenWord.word, "correct");
   },
 };
 
 // ***Activate Class Functions*** {🏭}
 window.addEventListener("load", () => {
-  setWordClass(Word.pickWord(), SpeakFunction);// {givenWord, toCheck} = [window.object]
-  givenWord.set_Utterance('Load Voice'); 
+  setWordClass(Word.pickWord(), SpeakFunction); // {givenWord, toCheck} = [window.object]
+  givenWord.set_Utterance("Load Voice");
 });
 
 // ***DOM Events*** {📲}
 const input = document.getElementById("inputSpelling");
 input.onpaste = (e) => e.preventDefault();
 
-document.getElementById("inputValue").onclick = (event) => {
+const inputValue = document.getElementById("inputValue");
+const resetInputValue = () => {
   if (speechSynthesis.speaking) return;
-  event.target.style.display = "none";
+  inputValue.innerHTML = "";
+  inputValue.style.display = "none";
   input.style.display = "block";
   input.focus();
   input.select();
-}
+};
+
+inputValue.onclick = () => {
+  return resetInputValue();
+};
 
 const handleBtn = (btn, width) => {
   if (speechSynthesis.speaking) return;
@@ -84,7 +114,7 @@ const handleBtn = (btn, width) => {
     btn.style.opacity = "";
     btn.style.width = "";
   }, 180);
-}
+};
 
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
@@ -109,8 +139,8 @@ document.getElementById("checkBtn").onclick = (event) => {
 
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
- handleBtn(playWord, 6.7);
- return SpeakFunction.playGivenWord();
+  handleBtn(playWord, 6);
+  return SpeakFunction.playGivenWord();
 });
 
 const revealWord = document.getElementById("revealWord");
