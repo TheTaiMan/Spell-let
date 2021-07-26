@@ -48,15 +48,15 @@ const SpeakFunction = {
         $("#inputSpelling").css({ display: "" });
         $("#inputValue").css({ display: "" });
 
-        // $("#play-word").css({ position: "relative" });
-        // $("#text").css({ display: "none" });
+        $("#play-word").css({ position: "relative" });
+        $("#text").css({ display: "none" });
 
-        // $("#play-word").animate({ left: "12rem" }, 120, function () {
-        //   $("#play-word").css({ left: "" });
-        //   $("#play-word").css({ position: "" });
-        //   $("#text").css({ display: "" });
+        $("#play-word").animate({ left: "12rem" }, 150, function () {
+          $("#play-word").css({ left: "" });
+          $("#play-word").css({ position: "" });
+          $("#text").css({ display: "" });
         $("#wordIndicator").css({ justifyContent: "center" });
-        // });
+        });
       }
       input.focus();
     }

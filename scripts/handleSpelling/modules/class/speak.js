@@ -25,9 +25,9 @@ export default class Speak extends Word {
   }
   setVoice() {
     const voices = window.speechSynthesis.getVoices();
-    return this.utterance.voice = voices.filter((voice) => {
+    return (this.utterance.voice = voices.filter((voice) => {
       return voice.name == "Google US English";
-    })[0];
+    })[0]);
   }
   set_Utterance(text) {
     this.utterance = new SpeechSynthesisUtterance(text);
@@ -127,7 +127,9 @@ export default class Speak extends Word {
     let correct;
     if (!this.checkLetter(index)) {
       if (this.inputValue[index] === undefined) {
-        this.inputValue.push(`<span class='highlightWrong'>&nbsp;&nbsp;</span>`);
+        this.inputValue.push(
+          `<span class='highlightWrong'>&nbsp;&nbsp;</span>`
+        );
       } else {
         this.inputValue.splice(
           index,
@@ -165,6 +167,13 @@ export default class Speak extends Word {
     if (speechSynthesis.speaking) return;
     this.indicateText(text, state);
     return window.speechSynthesis.speak(this.set_Utterance(text)); // Make it so when the letter is wrong, it will make a monster sound, and the volumn will be increased
+  }
+  soundWaveIndicator(time = false) {
+    document.getElementById("bracket").style.opacity = "1";
+    let bracketIndicator = setInterval(() => {
+      document.getElementById("bracket").style.opacity = "";
+      clearInterval(bracketIndicator);
+    }, 400 * (!time ? 1 : time));
   }
   /* Functions [🎰] */
   indicateText(text = false, state) {
@@ -205,6 +214,7 @@ export default class Speak extends Word {
           this.renderInput.innerHTML = this.inputValue.join("");
         break;
       case "full-word":
+        document.getElementById("bracket").style.opacity = "1";
         this.renderText.innerHTML = this.renderWord.join("");
         break;
       case "encrypt":
@@ -232,13 +242,16 @@ export default class Speak extends Word {
         } else {
           return this.fullWord();
         }
+        this.soundWaveIndicator();
         break;
       case "word":
         this.onLetter = 0;
         this.onSyllable++;
         text = text[this.onSyllable - 1];
+        this.soundWaveIndicator(text.length);
         break;
     }
+    //document.getElementById("bracket").style.opacity = "1";
     this.playText(text, state);
     this.utterance.addEventListener("end", (e) => {
       if (state === "letter" && syllable.length === this.onLetter) {

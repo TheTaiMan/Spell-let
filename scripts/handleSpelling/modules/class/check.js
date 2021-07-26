@@ -15,11 +15,11 @@ export default class Check extends Word {
   }
   nextWord() {
     this.inCorrectCount = 0;
-    document.getElementById("bracket").innerHTML = ')';
+    document.getElementById("bracket").innerHTML = ")";
     const randomWord = Word.pickWord();
     if (!randomWord) return this.done();
 
-    setWordClass(randomWord, this.SpeakFunction); 
+    setWordClass(randomWord, this.SpeakFunction);
     return this.SpeakFunction.playGivenWord();
   }
   correct() {
@@ -28,7 +28,8 @@ export default class Check extends Word {
     this.SpeakFunction.playCorrectWord();
     if ((this.renderText.textContent = this.word))
       this.renderText.innerHTML = "";
-    this.SpeakFunction.word.utterance.addEventListener("end", (e) => { //This needs to cleaned {🧼}
+    this.SpeakFunction.word.utterance.addEventListener("end", (e) => {
+      //This needs to cleaned {🧼}
       setTimeout(() => {
         this.blank();
         this.nextWord();
@@ -36,8 +37,9 @@ export default class Check extends Word {
     });
   }
   inCorrect(wrong = false) {
-    if (wrong){
-      document.getElementById("revealWord").style.opacity = this.inCorrectCount*2*0.1;
+    if (wrong) {
+      document.getElementById("revealWord").style.opacity =
+        this.inCorrectCount * 2 * 0.1;
     }
     return this.SpeakFunction.playGivenWord();
   }
