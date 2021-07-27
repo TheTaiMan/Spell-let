@@ -28,8 +28,11 @@ input.onpaste = (e) => {
   }, 0);
 };
 
-document.getElementById("saveBtn").onclick = () => {
+document.getElementById("saveBtn").onclick = (event) => {
   input.focus();
+  if (event.target.style.opacity === "1") {
+    event.target.style.opacity = "";
+  }
   return saveWord();
 };
 

@@ -8,13 +8,17 @@ export default class Storage extends Word {
   constructor(word) {
     super(word);
   }
+  storageIndication() {
+    document.getElementById("inputWord").placeholder = "Saved✔";
+    document.getElementById("saveBtn").style.opacity = "1";
+  }
   setStorage() {
     let word = this.word;
     let data = localStorage.getItem(word[0]);
     data = data ? JSON.parse(data) : [];
-    document.getElementById("inputWord").placeholder = "Added✔";
     data.push(word);
     localStorage.setItem(word[0], JSON.stringify(data));
+    this.storageIndication();
     return this.orderArray(), this.updateStorage(); // When implementing words for the first time take out .updateStorage()[❌]
   }
   checkLength() {
@@ -52,6 +56,9 @@ export default class Storage extends Word {
       formatIndicator();
       if (!word.length) {
         input.placeholder = "Can't be empty";
+        if (document.getElementById("saveBtn").style.opacity === "1") {
+          document.getElementById("saveBtn").style.opacity = "";
+        }
       } else {
         input.placeholder = "Isn't a word";
       }

@@ -44,9 +44,10 @@ const searchFunction = {
   input: input,
   checkInput(compare, type) {
     if (this.input.value) {
-      if (input.placeholder !== "Add Words...")
+      if (input.placeholder !== "Add Words...") {
         input.placeholder = "Add Words...";
-
+        document.getElementById("saveBtn").style.opacity = "";
+      }
       return type.compareLogic(compare);
     }
     return Search.reset();
