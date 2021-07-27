@@ -27,14 +27,14 @@
   border-radius: 7px;
   padding: 3px;
   margin: 0 1px;
-  background-color: rgb(149, 248, 91);
+  background-color: #7ff974;
 }
 
 .highlightWrong {
   border-radius: 7px;
   padding: 3px;
   margin: 0 1px;
-  background-color: rgb(252, 119, 119);
+  background-color: #f97474;
 }
 
 .disappear {

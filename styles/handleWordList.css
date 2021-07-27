@@ -1,0 +1,42 @@
+#searchContainer {
+  grid-area: content-start / content-center / span 1 / span 1;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  /* gap: 10px; */
+  width: 25rem;
+}
+
+#searchInputContainer {
+  width: 20rem;
+}
+
+#inputWord {
+  grid-area: 1 / 2 / span 1 / span 1;
+  width: 16rem;
+}
+
+#saveBtn {
+  grid-area: 1 / 1 / span -1 / span 1;
+  opacity: 0.3;
+  width: 2.24rem;
+}
+
+#saveBtn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+#saveBtn:active {
+  cursor: pointer;
+  width: 2.5rem;
+  opacity: 1;
+}
+
+#searchImg {
+  width: 4rem;
+}
+
+footer {
+  grid-area: content-end / content-center / span 1 / span 1;
+}

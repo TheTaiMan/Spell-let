@@ -21,7 +21,13 @@
       type="text/css"
       defer
     />
-
+    <!-- ***Handle Word List*** {📃} -->
+    <link
+      href="./styles/handleWordList.css"
+      rel="stylesheet"
+      type="text/css"
+      defer
+    />
     <!-- Scripts -->
     <!-- ***Handle Spelling*** {🔊} -->
     <script type="module" src="./scripts/handleSpelling/main.js"></script>
@@ -40,7 +46,6 @@
     </script>
     <!-- ***Render*** {🎨} -->
     <!-- <p id="text"></p> -->
-
 
     <!-- ***Interface*** {🧈} -->
     <!-- Bug, words bigger than 17 letters will have a visual glitch-->
@@ -92,17 +97,37 @@
     <!-- Do a shaking animation with it is wrong -->
     <br /><br />
     <!-- ***Word List*** {📋}-->
-    <button id="listToggle">List</button>
-    <div id="wordStorage">
-      <input
-        id="inputWord"
-        spellcheck="true"
-        type="text"
-        placeholder="Add or Search Words..."
-        oninput="this.value = this.value = this.value.replace(/[^A-Za-z]/, '')"
+    <section id="searchContainer">
+      <img
+        src="./images/search.png"
+        ondragstart="return false"
+        id="searchImg"
       />
-      <div id="wordList"></div>
-      <button id="removeWord">Save</button>
-    </div>
+      <div class="inputContainer" id="searchInputContainer">
+        <img
+          src="./images/save.png"
+          class="imgBtn"
+          id="saveBtn"
+          ondragstart="return false"
+        />
+        <input
+          class="input"
+          id="inputWord"
+          spellcheck="true"
+          type="text"
+          maxlength="17"
+          placeholder="Add Words..."
+          oninput="this.value = this.value = this.value.replace(/[^A-Za-z]/, '')"
+        />
+      </div>
+    </section>
+
+    <footer>
+      <button id="listToggle">List</button>
+      <div id="wordStorage">
+        <div id="wordList"></div>
+        <button id="removeWord">Remove</button>
+      </div>
+    </footer>
   </body>
 </html>

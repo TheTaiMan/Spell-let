@@ -78,11 +78,12 @@ export default class Speak extends Word {
   correct() {
     this.renderText.style.width = "auto";
     document.getElementById("bracket").style.fontSize = `5rem`;
-      
-    const correctColor = '#95f85b'
-    document.getElementById("spellContainer").style.backgroundColor = correctColor;
+
+    const correctColor = "#7ff974";
+    document.getElementById("spellContainer").style.backgroundColor =
+      correctColor;
     this.input.style.backgroundColor = correctColor;
-    
+
     return (document.getElementById("bracket").innerHTML = "✔");
   }
   delayRender(time, text, retract = false) {

@@ -110,7 +110,7 @@ main {
 
 .inputContainer {
   display: inline-grid;
-  grid-template: 1.875rem / repeat(3, 1fr);
+  grid-template: 1.875rem / 2.24rem repeat(2, 1fr);
   align-content: center;
   justify-content: center;
   align-items: center;
@@ -148,7 +148,6 @@ main {
 ::placeholder {
   font-style: oblique;
   color: white;
-  font-weight: 200;
 }
 
 #spellContainer {

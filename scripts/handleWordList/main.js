@@ -8,15 +8,25 @@ const input = document.getElementById("inputWord");
 const listToggle = document.getElementById("listToggle");
 
 // ***DOM Events*** {📲}
+const saveWord = () => {
+  if (Storage.falseFormat(input.value)) return;
+  let store = new Storage(input.value);
+  store.setStorage();
+  setTimeout(() => (input.value = ""), 0);
+  console.log(localStorage);
+};
+
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
-    if (Storage.falseFormat(event.target.value)) return;
-    let store = new Storage(event.target.value);
-    store.setStorage();
-    setTimeout(() => input.value = "", 0);
-    console.log(localStorage);
+    saveWord();
   }
 });
+
+document.getElementById("saveBtn").onclick = () => {
+  input.focus();
+  return saveWord();
+};
+
 listToggle.onclick = () => {
   const list = document.getElementById("wordStorage");
   list.classList.toggle("disappear");
@@ -27,9 +37,8 @@ listToggle.onclick = () => {
     creatObj();
     renderFunc();
   }
-}
+};
 
 // ***Render Word List*** {📋}
 creatObj();
 renderFunc();
-
