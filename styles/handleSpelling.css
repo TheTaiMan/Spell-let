@@ -153,6 +153,7 @@ main {
 
 #spellContainer {
   width: 25rem;
+  transition: 0.08s;
 }
 
 #checkBtn {
@@ -177,7 +178,7 @@ main {
 }
 
 #inputSpelling {
-  transition: ease-in 0.15s;
+  transition: 0.08s;
 }
 
 #inputValue:hover {

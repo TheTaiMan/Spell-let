@@ -17,6 +17,10 @@ export default class Check extends Word {
     this.inCorrectCount = 0;
     document.getElementById("bracket").innerHTML = ")";
     const randomWord = Word.pickWord();
+    
+    document.getElementById("spellContainer").style.backgroundColor = "";
+    this.input.style.backgroundColor = "";
+
     if (!randomWord) return this.done();
 
     setWordClass(randomWord, this.SpeakFunction);
@@ -40,6 +44,7 @@ export default class Check extends Word {
     if (wrong) {
       document.getElementById("revealWord").style.opacity =
         this.inCorrectCount * 2 * 0.1;
+      document.getElementById("spellContainer").classList.add("shake");
     }
     return this.SpeakFunction.playGivenWord();
   }
@@ -66,7 +71,7 @@ export default class Check extends Word {
     } else {
       this.inCorrect(true);
     }
-    
+
     return false;
   }
 }

@@ -47,6 +47,8 @@ export default class Speak extends Word {
     speechSynthesis.resume();
     this.onSyllable = 0;
     this.onLetter = 0;
+    if (document.getElementById("spellContainer").classList.contains("shake"))
+      document.getElementById("spellContainer").classList.remove("shake");
     this.renderText.style.width = "auto";
     document.getElementById("bracket").style.opacity = "0";
     return speechSynthesis.cancel();
@@ -73,6 +75,16 @@ export default class Speak extends Word {
     }
     return newCode.toUpperCase();
   }
+  correct() {
+    this.renderText.style.width = "auto";
+    document.getElementById("bracket").style.fontSize = `5rem`;
+      
+    const correctColor = '#95f85b'
+    document.getElementById("spellContainer").style.backgroundColor = correctColor;
+    this.input.style.backgroundColor = correctColor;
+    
+    return (document.getElementById("bracket").innerHTML = "✔");
+  }
   delayRender(time, text, retract = false) {
     for (let i = 0; i < text.length; i++) {
       setTimeout(() => {
@@ -83,9 +95,7 @@ export default class Speak extends Word {
         this.renderText.innerHTML += ` ${text[i]}`;
         if (i === text.length - 1) {
           if (!retract) {
-            this.renderText.style.width = "auto";
-            document.getElementById("bracket").style.fontSize = `5rem`;
-            return (document.getElementById("bracket").innerHTML = "✔");
+            return this.correct();
           }
           return this.renderReverse(time * 0.5, text);
         }
