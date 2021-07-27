@@ -2,7 +2,8 @@
 const input = document.getElementById("inputWord");
 
 // ***Search Mechanics*** {🗺}
-export class Search { // And something when there is no words found or no category found
+export class Search {
+  // And something when there is no words found or no category found
   constructor(compare, input) {
     this.compare = compare;
     this.input = input;
@@ -43,6 +44,9 @@ const searchFunction = {
   input: input,
   checkInput(compare, type) {
     if (this.input.value) {
+      if (input.placeholder !== "Add Words...")
+        input.placeholder = "Add Words...";
+
       return type.compareLogic(compare);
     }
     return Search.reset();

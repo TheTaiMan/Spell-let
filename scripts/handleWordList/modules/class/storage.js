@@ -12,6 +12,7 @@ export default class Storage extends Word {
     let word = this.word;
     let data = localStorage.getItem(word[0]);
     data = data ? JSON.parse(data) : [];
+    document.getElementById("inputWord").placeholder = "Added✔";
     data.push(word);
     localStorage.setItem(word[0], JSON.stringify(data));
     return this.orderArray(), this.updateStorage(); // When implementing words for the first time take out .updateStorage()[❌]
@@ -33,13 +34,12 @@ export default class Storage extends Word {
     renderFunc();
   }
   static falseFormat(word) {
+    const input = document.getElementById("inputWord");
     function formatIndicator() {
       const searchContainer = document.getElementById("searchInputContainer");
       searchContainer.classList.add("shake");
       setTimeout(() => {
         searchContainer.classList.remove("shake");
-
-        const input = document.getElementById("inputWord");
         if (input.value) {
           Search.reset();
           input.value = "";
@@ -50,11 +50,17 @@ export default class Storage extends Word {
 
     if (word.length < 2) {
       formatIndicator();
+      if (!word.length) {
+        input.placeholder = "Can't be empty";
+      } else {
+        input.placeholder = "Isn't a word";
+      }
       return true;
     } else if (array === null) {
       return false;
     } else if (array.includes(word)) {
       formatIndicator();
+      input.placeholder = "No Duplicates";
       return true;
     } else {
       return false;

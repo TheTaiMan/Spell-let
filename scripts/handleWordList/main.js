@@ -22,6 +22,12 @@ input.addEventListener("keyup", (event) => {
   }
 });
 
+input.onpaste = (e) => {
+  setTimeout(() => {
+    input.value = input.value.replace(/[^a-zA-Z ]/g, "");
+  }, 0);
+};
+
 document.getElementById("saveBtn").onclick = () => {
   input.focus();
   return saveWord();
