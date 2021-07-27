@@ -2,7 +2,7 @@
 const input = document.getElementById("inputWord");
 
 // ***Search Mechanics*** {🗺}
-class Search { // And something when there is no words found or no category found
+export class Search { // And something when there is no words found or no category found
   constructor(compare, input) {
     this.compare = compare;
     this.input = input;

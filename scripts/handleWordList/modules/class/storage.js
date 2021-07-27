@@ -1,6 +1,7 @@
 import Word from "../../../word.js";
 import renderFunc from "../renderFunc.js";
 import { creatObj } from "../creatObj.js";
+import { Search } from "../../search.js";
 
 export default class Storage extends Word {
   // Add something that will prevent it from adding letters that are 2 characters long
@@ -33,13 +34,17 @@ export default class Storage extends Word {
   }
   static falseFormat(word) {
     function formatIndicator() {
-      document.getElementById("searchInputContainer").classList.add("shake");
+      const searchContainer = document.getElementById("searchInputContainer");
+      searchContainer.classList.add("shake");
       setTimeout(() => {
-        document
-          .getElementById("searchInputContainer")
-          .classList.remove("shake");
-        document.getElementById("inputWord").value = "";
-      }, 300);
+        searchContainer.classList.remove("shake");
+
+        const input = document.getElementById("inputWord");
+        if (input.value) {
+          Search.reset();
+          input.value = "";
+        }
+      }, 600);
     }
     const array = JSON.parse(localStorage.getItem(word[0]));
 
