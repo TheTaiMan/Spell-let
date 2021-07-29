@@ -171,7 +171,7 @@ main {
 #inputSpelling,
 #inputValue {
   grid-area: 1 / 2 / span 1 / span 1;
-  width: 18.75rem;
+  width: 18.72rem;
 }
 
 #inputSpelling {
@@ -194,13 +194,12 @@ main {
   opacity: 0.6;
 }
 
-@media (max-width: 625px) {
+@media (max-width: 643px) {
   #spellContainer {
     width: 100%;
   }
   #inputSpelling,
   #inputValue {
-    grid-area: 1 / 2 / span 1 / span 1;
     width: 100%;
   }
 }

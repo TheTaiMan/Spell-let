@@ -2,6 +2,7 @@
 import { creatObj } from "./modules/creatObj.js";
 import renderFunc from "./modules/renderFunc.js";
 import Storage from "./modules/class/storage.js";
+import { Search } from "./search.js";
 
 // ***Global Variable*** {🌎}
 const input = document.getElementById("inputWord");
@@ -36,16 +37,32 @@ document.getElementById("saveBtn").onclick = (event) => {
   return saveWord();
 };
 
+$("#storageList").css({ height: "10rem" });
+
 listToggle.onclick = () => {
-  const list = document.getElementById("wordStorage");
-  list.classList.toggle("disappear");
+  //const list = document.getElementById("wordStorage");
+  //$("footer").css({ height: "0.8rem" });
+  /* list.classList.toggle("disappear"); */
+
   if (input.value) {
     input.value = "";
+    setTimeout(() => {
+      Search.reset();
+    }, 200);
   }
-  if (list.classList.contains("disappear")) {
+  $("#storageList").css("height", function () {
+    if (document.getElementById("storageList").style.height === "10rem") {
+      return "0.8rem";
+    } else {
+      return "10rem";
+    }
+  });
+
+  /* if (list.classList.contains("disappear")) {
+    
     creatObj();
     renderFunc();
-  }
+  } */
 };
 
 // ***Render Word List*** {📋}

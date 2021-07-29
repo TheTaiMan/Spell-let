@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spelling</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Styles -->
     <link href="./styles/style.css" rel="stylesheet" type="text/css" defer />
     <link
@@ -32,7 +33,6 @@
     <!-- ***Handle Spelling*** {🔊} -->
     <script type="module" src="./scripts/handleSpelling/main.js"></script>
     <!-- ***Handle Word List*** {📃} -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./scripts/handleWordList/remove.js" type="module"></script>
     <script src="./scripts/handleWordList/main.js" type="module"></script>
     <script src="./scripts/handleWordList/search.js" type="module"></script>
@@ -97,7 +97,7 @@
     <!-- Do a shaking animation with it is wrong -->
     <br /><br />
     <!-- ***Word List*** {📋}-->
-    <section id="searchContainer">
+    <div id="searchContainer">
       <img
         src="./images/search.png"
         ondragstart="return false"
@@ -120,13 +120,20 @@
           oninput="this.value = this.value = this.value.replace(/[^A-Za-z]/, '')"
         />
       </div>
-    </section>
+    </div>
 
-    <footer>
-      <button id="listToggle">List</button>
-      <div id="wordStorage">
-        <div id="wordList"></div>
-        <button id="removeWord">Remove</button>
+    <footer id="storageList">
+      <div id="footerContent">
+        <div id="storageInterface">
+          <div id="listToggle">
+            <button id="staticBtn"></button>
+          </div>
+          <button id="removeWord">Remove</button>
+        </div>
+
+        <div id="wordStorage">
+          <div id="wordList"></div>
+        </div>
       </div>
     </footer>
   </body>

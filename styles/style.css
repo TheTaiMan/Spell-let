@@ -12,8 +12,13 @@ body {
   grid-template: [content-start] 150px [content-center] 1fr 1fr [content-end] 1fr / 1fr [content-center] minmax(300px, 800px) 1fr;
   align-items: center;
   justify-items: center;
-  overflow-x: hidden;
-  background-color: #181a1b8f;
+  overflow: hidden;
+  background-color: #464646;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
 }
 
 p {
