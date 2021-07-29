@@ -1,15 +1,17 @@
 #searchContainer {
   grid-area: content-start / content-center / span 1 / span 1;
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template: 1fr / 1fr 5fr;
   align-items: center;
-  justify-content: space-between;
-  /* gap: 10px; */
-  width: 25rem;
+  justify-items: center;
+  justify-content: center;
+  grid-gap: 0.8rem;
+  max-width: 25rem;
 }
 
 #searchInputContainer {
-  width: 20.8rem;
+  grid-area: 1 / 2 / span 1 / span 1;
+  width: 100%;
 }
 
 #inputWord {
@@ -34,6 +36,7 @@
 }
 
 #searchImg {
+  grid-area: 1 / 1 / span 1 / span 1;
   width: 4rem;
 }
 

@@ -126,8 +126,7 @@ main {
 
 #spellContainer {
   grid-area: 3 / 1 / span 1 / span 1;
-  max-width: 25rem; /* 25rem */
-  /* min-width: 20rem; */
+  max-width: 25rem;
   transition: 0.08s;
 }
 
@@ -169,12 +168,10 @@ main {
   display: none;
 }
 
-
-/* For the transaction to occurs make input spellings width 100%*/
 #inputSpelling,
 #inputValue {
   grid-area: 1 / 2 / span 1 / span 1;
-  width: 18.75rem; /* Change the size of this 18.75rem*/
+  width: 18.75rem;
 }
 
 #inputSpelling {
@@ -195,4 +192,15 @@ main {
 #revealWord:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+@media (max-width: 625px) {
+  #spellContainer {
+    width: 100%;
+  }
+  #inputSpelling,
+  #inputValue {
+    grid-area: 1 / 2 / span 1 / span 1;
+    width: 100%;
+  }
 }
