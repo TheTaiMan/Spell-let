@@ -3,25 +3,21 @@ import renderFunc from "./modules/renderFunc.js";
 import { creatObj } from "./modules/creatObj.js";
 
 // ***Save Mechanics*** {📷}
-class Save {
+class Remove {
   constructor(word) {
     this.word = word;
   }
-  checkClass() {
-    if (this.word.classList.contains("remove")) {
-      return this.removeWord(this.word.id);
-    }
-  }
-  removeWord(word) {
-    const key = word[0];
+  removeWord() {
+    const key = this.word[0];
     let array = JSON.parse(localStorage.getItem(key));
-    array.splice(array.indexOf(word), 1);
+    array.splice(array.indexOf(this.word), 1);
     if (!array.length) {
       return localStorage.removeItem(key);
     }
     return localStorage.setItem(key, JSON.stringify(array));
   }
   static update() {
+    sessionStorage.setItem("pendingRemove", JSON.stringify([]));
     creatObj();
     renderFunc();
   }
@@ -29,15 +25,10 @@ class Save {
 
 // ***DOM Save*** {📸}
 document.getElementById("removeWord").onclick = function () {
-  [...document.querySelectorAll(".category")].forEach((section) => {
-    const categoryId = document.getElementById(section.id);
-    const words = categoryId.children[1].children;
-
-    for (const word of words) {
-      const save = new Save(word);
-      save.checkClass();
-    }
-  });
-  Save.update();
+  let pendingRemoves = JSON.parse(sessionStorage.getItem("pendingRemove"));
+  for (const pendingRemove of pendingRemoves) {
+    const remove = new Remove(pendingRemove);
+    remove.removeWord();
+  }
+  Remove.update();
 };
-

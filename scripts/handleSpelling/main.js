@@ -27,37 +27,42 @@ const SpeakFunction = {
       return givenWord.revealWord(givenWord.syllable, "letter");
     }, 200);
   },
+  revealAnimation() {
+    if ($("#wordIndicator").css("justifyContent") === "start") return;
+
+    this.filter("blur(0px)");
+    $("#text").css({ width: "auto" });
+    $("#play-word").css({ position: "relative" });
+
+    $("#play-word").animate({ right: "50%" }, 200, function () {
+      $("#play-word").css({ right: "" });
+      $("#play-word").css({ position: "" });
+      $("#wordIndicator").css({ justifyContent: "start" });
+    });
+  },
+  resetRevealAnimation() {
+    if ($("#wordIndicator").css("justifyContent") === "center") return;
+
+    $("#inputSpelling").css({ display: "" });
+    $("#inputValue").css({ display: "" });
+
+    $("#play-word").css({ position: "relative" });
+    $("#textWave").css({ display: "none" });
+
+    $("#play-word").animate({ left: "50%" }, 150, function () {
+      $("#play-word").css({ left: "",  position: ""});
+      $("#textWave").css({ display: "" });
+      $("#wordIndicator").css({ justifyContent: "center" });
+    });
+  },
   display(reveal, correct = false) {
     if (reveal) {
       $("#inputSpelling").css({ display: "none" });
       $("#inputValue").css({ display: "block" });
-      if ($("#wordIndicator").css("justifyContent") === "center") {
-        this.filter("blur(0px)");
-        $("#text").css({ width: "auto" });
-        $("#play-word").css({ position: "relative" });
-
-        $("#play-word").animate({ right: "12rem" }, 200, function () {
-          $("#play-word").css({ right: "" });
-          $("#play-word").css({ position: "" });
-          $("#wordIndicator").css({ justifyContent: "start" });
-        });
-      }
+      this.revealAnimation();
     } else {
       !correct ? this.filter("") : this.filter("blur(0px)");
-      if ($("#wordIndicator").css("justifyContent") === "start") {
-        $("#inputSpelling").css({ display: "" });
-        $("#inputValue").css({ display: "" });
-
-        $("#play-word").css({ position: "relative" });
-        $("#text").css({ display: "none" });
-
-        $("#play-word").animate({ left: "12rem" }, 150, function () {
-          $("#play-word").css({ left: "" });
-          $("#play-word").css({ position: "" });
-          $("#text").css({ display: "" });
-        $("#wordIndicator").css({ justifyContent: "center" });
-        });
-      }
+      this.resetRevealAnimation();
       input.focus();
     }
   },

@@ -39,9 +39,28 @@
   </head>
   <body>
     <script>
-      const pendingRemove = (event) => {
-        const word = document.getElementById(event.target.id);
+      sessionStorage.setItem("pendingRemove", JSON.stringify([]));
+
+      const pendingRemove = ({ target }) => {
+        let pendingRemove = JSON.parse(sessionStorage.getItem("pendingRemove"));
+
+        const word = document.getElementById(target.id);
         word.classList.toggle("remove");
+
+        if (word.classList.contains("remove")) {
+          pendingRemove.push(target.id);
+          sessionStorage.setItem(
+            "pendingRemove",
+            JSON.stringify(pendingRemove)
+          );
+        } else {
+          const restoreWord = pendingRemove.indexOf(target.id);
+          pendingRemove.splice(restoreWord, 1);
+          sessionStorage.setItem(
+            "pendingRemove",
+            JSON.stringify(pendingRemove)
+          );
+        }
       };
     </script>
     <!-- ***Render*** {🎨} -->

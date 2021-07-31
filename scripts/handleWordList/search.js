@@ -42,12 +42,15 @@ export class Search {
 // ***Search Components*** {🔎}
 const searchFunction = {
   input: input,
+  resetPlaceholder() {
+    if (this.input.placeholder !== "Add Words...")
+      this.input.placeholder = "Add Words...";
+    if (document.getElementById("saveBtn").style.opacity === "1")
+      document.getElementById("saveBtn").style.opacity = "";
+  },
   checkInput(compare, type) {
     if (this.input.value) {
-      if (input.placeholder !== "Add Words...") {
-        input.placeholder = "Add Words...";
-        document.getElementById("saveBtn").style.opacity = "";
-      }
+      this.resetPlaceholder();
       return type.compareLogic(compare);
     }
     return Search.reset();
