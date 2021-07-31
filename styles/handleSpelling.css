@@ -71,7 +71,7 @@ main {
 
 #play-word {
   width: 6.25rem;
-  z-index: 2;
+  z-index: 5;
   transition: 0.1s;
   transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
 }
@@ -105,7 +105,7 @@ main {
   color: #8898a6;
   font-family: "Varela Round", sans-serif;
   z-index: 1;
-  transition: ease-in-out 0.2s;
+  transition: ease 0.21s;
   letter-spacing: -7px;
 }
 
@@ -125,6 +125,7 @@ main {
 }
 
 #spellContainer {
+  z-index: 4;
   grid-area: 3 / 1 / span 1 / span 1;
   max-width: 25rem;
   transition: 0.08s;

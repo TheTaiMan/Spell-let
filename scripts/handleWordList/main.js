@@ -37,33 +37,31 @@ document.getElementById("saveBtn").onclick = (event) => {
   return saveWord();
 };
 
-$("#storageList").css({ height: "10rem" });
+$("#storageList").css({ height: "0.8rem" });
 
-listToggle.onclick = () => {
-  //const list = document.getElementById("wordStorage");
-  //$("footer").css({ height: "0.8rem" });
-  /* list.classList.toggle("disappear"); */
-
+const WordListToggle = () => {
   if (input.value) {
     input.value = "";
     setTimeout(() => {
       Search.reset();
     }, 200);
   }
-  $("#storageList").css("height", function () {
-    if (document.getElementById("storageList").style.height === "10rem") {
-      return "0.8rem";
-    } else {
-      return "10rem";
-    }
-  });
 
-  /* if (list.classList.contains("disappear")) {
-    
-    creatObj();
-    renderFunc();
-  } */
+  if (document.getElementById("storageList").style.height === "10rem") {
+    $("#overlay").css({ display: "" });
+    $("#overlay").off();
+    return $("#storageList").css({ height: "0.8rem" });
+  }
+
+  $("#overlay").css({ display: "block" });
+  $("#overlay").click(function () {
+    WordListToggle();
+  });
+  input.focus();
+  return $("#storageList").css({ height: "10rem" });
 };
+
+listToggle.onclick = () => WordListToggle(); // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
 
 // ***Render Word List*** {📋}
 creatObj();
