@@ -82,6 +82,9 @@ export default class Storage extends Word {
 
           return this.inputMessage("Can't be empty");
         }
+        if (word === "I" || word === "A") {
+          return this.inputMessage("You know it already");
+        }
         return this.inputMessage("Isn't a word");
       },
       duplicateIndicator(wordEle) {
