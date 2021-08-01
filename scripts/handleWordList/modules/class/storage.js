@@ -33,41 +33,84 @@ export default class Storage extends Word {
     localStorage.setItem(this.word[0], JSON.stringify(arrayParsed));
   }
   updateStorage() {
-    // Have this as a utility function in another file that can be accessed by any other file;
     creatObj();
     renderFunc();
+    sessionStorage.setItem("pendingRemove", JSON.stringify([]));
+  }
+  static onDuplicate(inputWord) {
+    let pendingRemove = JSON.parse(sessionStorage.getItem("pendingRemove"));
+
+    const word = inputWord;
+    word.classList.toggle("remove");
+
+    if (word.classList.contains("remove")) {
+      pendingRemove.push(word.id);
+      sessionStorage.setItem("pendingRemove", JSON.stringify(pendingRemove));
+    } else {
+      const restoreWord = pendingRemove.indexOf(word.id);
+      pendingRemove.splice(restoreWord, 1);
+      sessionStorage.setItem("pendingRemove", JSON.stringify(pendingRemove));
+    }
   }
   static falseFormat(word) {
     const input = document.getElementById("inputWord");
-    function formatIndicator() {
-      const searchContainer = document.getElementById("searchInputContainer");
-      searchContainer.classList.add("shake");
-      setTimeout(() => {
-        searchContainer.classList.remove("shake");
-        if (input.value) {
-          Search.reset();
-          input.value = "";
-        }
-      }, 600);
-    }
     const array = JSON.parse(localStorage.getItem(word[0]));
 
-    if (word.length < 2) {
-      formatIndicator();
-      if (!word.length) {
-        input.placeholder = "Can't be empty";
-        if (document.getElementById("saveBtn").style.opacity === "1") {
-          document.getElementById("saveBtn").style.opacity = "";
+    const falseFormat = {
+      inputMessage(type) {
+        return (input.placeholder = type);
+      },
+      resetInput() {
+        if (input.value) {
+          input.value = "";
+          Search.reset();
         }
-      } else {
-        input.placeholder = "Isn't a word";
+      },
+      animationIndicator() {
+        const searchContainer = document.getElementById("searchInputContainer");
+        searchContainer.classList.add("shake");
+        setTimeout(() => {
+          searchContainer.classList.remove("shake");
+          this.resetInput();
+        }, 600);
+      },
+      inputLength() {
+        this.animationIndicator();
+        if (!word.length) {
+          if (document.getElementById("saveBtn").style.opacity === "1")
+            document.getElementById("saveBtn").style.opacity = "";
+
+          return this.inputMessage("Can't be empty");
+        }
+        return this.inputMessage("Isn't a word");
+      },
+      duplicateIndicator(wordEle) {
+        if (wordEle.classList.contains("remove")) {
+          this.animationIndicator();
+          this.inputMessage("Remove...");
+
+          const saveBtn = document.getElementById("saveBtn");
+          saveBtn.classList.add("wobble");
+          setTimeout(() => {
+            saveBtn.classList.remove("wobble");
+            this.resetInput();
+          }, 800);
+        } else {
+          this.inputMessage("Unlisted");
+          this.resetInput();
+        }
       }
+    };
+
+    if (word.length < 2) {
+      falseFormat.inputLength();
       return true;
     } else if (array === null) {
       return false;
     } else if (array.includes(word)) {
-      formatIndicator();
-      input.placeholder = "No Duplicates";
+      const word = document.getElementById(input.value);
+      Storage.onDuplicate(word);
+      falseFormat.duplicateIndicator(word);
       return true;
     } else {
       return false;

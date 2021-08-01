@@ -18,6 +18,43 @@
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
+.wobble {
+  animation: wobble 0.8s ease-in-out infinite normal forwards;
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: translateX(0%);
+    transform-origin: 50% 50%;
+  }
+
+  15% {
+    transform: translateX(-3px) rotate(-12deg);
+    opacity: 0.5;
+  }
+
+  30% {
+    transform: translateX(3px) rotate(12deg);
+    opacity:0;
+  }
+
+  45% {
+    transform: translateX(-3px) rotate(-7.2deg);
+    opacity: 0.8;
+  }
+
+  60% {
+    transform: translateX(1.8px) rotate(4.8deg);
+    opacity:0;
+  }
+
+  75% {
+    transform: translateX(-1.2px) rotate(-2.4deg);
+    opacity: 0.6;
+  }
+}
+
 .highlight {
   border-radius: 7px;
   background-color: rgb(148, 148, 148);
@@ -66,3 +103,5 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
+

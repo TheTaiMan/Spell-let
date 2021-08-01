@@ -50,7 +50,7 @@ const SpeakFunction = {
     $("#textWave").css({ display: "none" });
 
     $("#play-word").animate({ left: "50%" }, 150, function () {
-      $("#play-word").css({ left: "",  position: ""});
+      $("#play-word").css({ left: "", position: "" });
       $("#textWave").css({ display: "" });
       $("#wordIndicator").css({ justifyContent: "center" });
     });
@@ -89,8 +89,10 @@ const SpeakFunction = {
 
 // ***Activate Class Functions*** {🏭}
 window.addEventListener("load", () => {
-  setWordClass(Word.pickWord(), SpeakFunction); // {givenWord, toCheck} = [window.object]
-  givenWord.set_Utterance("Load Voice");
+  setTimeout(() => {
+    setWordClass(Word.pickWord(), SpeakFunction); // {givenWord, toCheck} = [window.object]
+    givenWord.set_Utterance("Load Voice");
+  }, 10);
 });
 
 // ***DOM Events*** {📲}

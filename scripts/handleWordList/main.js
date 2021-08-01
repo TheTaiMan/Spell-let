@@ -64,5 +64,8 @@ const WordListToggle = () => {
 listToggle.onclick = () => WordListToggle(); // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
 
 // ***Render Word List*** {📋}
-creatObj();
-renderFunc();
+window.addEventListener("load", () => {
+  creatObj();
+  renderFunc();
+  sessionStorage.setItem("pendingRemove", JSON.stringify([]));
+});
