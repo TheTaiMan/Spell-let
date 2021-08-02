@@ -61,10 +61,7 @@ export default class Storage extends Word {
         return (input.placeholder = type);
       },
       resetInput() {
-        if (input.value) {
-          input.value = "";
-          Search.reset();
-        }
+        return Search.reset();
       },
       animationIndicator() {
         const searchContainer = document.getElementById("searchInputContainer");
@@ -102,7 +99,7 @@ export default class Storage extends Word {
           this.inputMessage("Unlisted");
           this.resetInput();
         }
-      }
+      },
     };
 
     if (word.length < 2) {

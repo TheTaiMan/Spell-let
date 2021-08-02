@@ -2,7 +2,6 @@
 import { creatObj } from "./modules/creatObj.js";
 import renderFunc from "./modules/renderFunc.js";
 import Storage from "./modules/class/storage.js";
-import { Search } from "./search.js";
 
 // ***Global Variable*** {🌎}
 const input = document.getElementById("inputWord");
@@ -17,17 +16,11 @@ const saveWord = () => {
   console.log(localStorage);
 };
 
-input.addEventListener("keyup", (event) => {
-  if (event.keyCode === 13) {
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
     saveWord();
   }
 });
-
-input.onpaste = (e) => {
-  setTimeout(() => {
-    input.value = input.value.replace(/[^a-zA-Z ]/g, "");
-  }, 0);
-};
 
 document.getElementById("saveBtn").onclick = (event) => {
   input.focus();
@@ -37,31 +30,11 @@ document.getElementById("saveBtn").onclick = (event) => {
   return saveWord();
 };
 
-$("#storageList").css({ height: "0.8rem" });
-
-const WordListToggle = () => {
-  if (input.value) {
-    input.value = "";
-    setTimeout(() => {
-      Search.reset();
-    }, 200);
-  }
-
-  if (document.getElementById("storageList").style.height === "200%") {
-    $("#overlay").css({ display: "" });
-    $("#overlay").off();
-    return $("#storageList").css({ height: "0.8rem" });
-  }
-
-  $("#overlay").css({ display: "block" });
-  $("#overlay").click(function () {
-    WordListToggle();
-  });
-  input.focus();
-  return $("#storageList").css({ height: "200%" });
+input.onpaste = (e) => {
+  setTimeout(() => {
+    input.value = input.value.replace(/[^a-zA-Z ]/g, "");
+  }, 0);
 };
-
-listToggle.onclick = () => WordListToggle(); // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
 
 // ***Render Word List*** {📋}
 window.addEventListener("load", () => {

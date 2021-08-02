@@ -124,7 +124,7 @@ const handleBtn = (btn, width) => {
 };
 
 input.addEventListener("keyup", (event) => {
-  if (event.keyCode === 13) {
+  if (event.key === 'Enter') {
     if (speechSynthesis.speaking) return;
     return toCheck.checkSpelling();
   }

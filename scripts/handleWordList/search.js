@@ -33,6 +33,7 @@ export class Search {
           prop.classList.remove("disappear");
       }
     }
+    if (input.value) input.value = "";
     const words = document.getElementsByClassName("word");
     const categories = document.getElementsByClassName("category");
     return loop(words), loop(categories);
