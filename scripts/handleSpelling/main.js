@@ -146,7 +146,7 @@ document.getElementById("checkBtn").onclick = (event) => {
 
 const playWord = document.getElementById("play-word");
 playWord.addEventListener("click", () => {
-  handleBtn(playWord, 6);
+  //handleBtn(playWord, 6);
   return SpeakFunction.playGivenWord();
 });
 
