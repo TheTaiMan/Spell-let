@@ -47,7 +47,7 @@ const WordListToggle = () => {
     }, 200);
   }
 
-  if (document.getElementById("storageList").style.height === "10rem") {
+  if (document.getElementById("storageList").style.height === "200%") {
     $("#overlay").css({ display: "" });
     $("#overlay").off();
     return $("#storageList").css({ height: "0.8rem" });
@@ -58,7 +58,7 @@ const WordListToggle = () => {
     WordListToggle();
   });
   input.focus();
-  return $("#storageList").css({ height: "10rem" });
+  return $("#storageList").css({ height: "200%" });
 };
 
 listToggle.onclick = () => WordListToggle(); // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
