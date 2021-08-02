@@ -59,13 +59,4 @@ h2 {
   bottom: 0;
   background-color: rgba(110, 110, 110, 0);
   z-index: 1;
-  cursor: pointer;
 }
-
-#overlay:hover {
-  cursor:  pointer;
-}
-
-/* section {
-  display: flex;
-} */

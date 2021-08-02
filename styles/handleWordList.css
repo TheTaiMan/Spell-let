@@ -41,6 +41,10 @@
   width: 4rem;
 }
 
+#storageList {
+  height: 0.8rem;
+}
+
 /* Change the height with JS */
 #wordList {
   margin-top: 0.5rem;
@@ -57,7 +61,6 @@ footer {
   align-items: center;
   width: 100%;
   overflow: hidden;
-  z-index: 3;
   transition: 0.3s;
   transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
 }
@@ -106,7 +109,7 @@ footer {
   height: 100%;
   border-radius: 0.8rem 0.8rem 0 0;
   background-color: #919191;
-
+  z-index: 3;
   padding: 0 18px;
 }
 

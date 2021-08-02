@@ -61,7 +61,9 @@ export default class Storage extends Word {
         return (input.placeholder = type);
       },
       resetInput() {
-        return Search.reset();
+        if (input.value) {
+          return Search.reset();
+        }
       },
       animationIndicator() {
         const searchContainer = document.getElementById("searchInputContainer");
