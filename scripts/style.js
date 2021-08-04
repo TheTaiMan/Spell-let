@@ -58,7 +58,7 @@ $(function () {
             {
               width: `${$(this.name).outerWidth() / this.scaleRate}px`,
               height: `${$(this.name).outerHeight() / this.scaleRate}px`,
-              right: `${$("#wordIndicator").width() / 2.48}px`,
+              right: `${$("#wordIndicator").width() / 2.5}px`,
             },
             time / 2,
             function () {
