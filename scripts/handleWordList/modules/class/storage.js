@@ -58,7 +58,9 @@ export default class Storage extends Word {
 
     const falseFormat = {
       inputMessage(type) {
-        return (input.placeholder = type);
+        if (input.placeholder !== type) {
+          return (input.placeholder = type);
+        }
       },
       resetInput() {
         if (input.value) {

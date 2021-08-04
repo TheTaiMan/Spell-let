@@ -10,18 +10,18 @@ $(function () {
   );
 
   const animateSpelling = (reset = false) => {
-    let time = 3000;
+    let time = 500;
     const animations = {
       spellContainer: {
         name: document.getElementsByTagName("MAIN")[0],
         animate() {
           $(this.name).animate(
             {
-              top: "-82px",
-              height: "300px",
+              top: "-180px",
+              height: "230px",
               width: "25rem",
             },
-            time
+            time,
           );
         },
         reset() {
@@ -37,6 +37,7 @@ $(function () {
       },
       speakerContainer: {
         name: document.getElementById("wordIndicator"),
+
         animate() {
           $(this.name).animate(
             { minHeight: `${$("#wordIndicator").height() / 1.8}px` },
@@ -44,30 +45,35 @@ $(function () {
           );
         },
         reset() {
-          $(this.name).animate({ minHeight: "" }, time);
+          setTimeout(() => {
+            $(this.name).animate({ minHeight: "" }, time);
+          }, time / 3);
         },
       },
       speaker: {
         name: document.getElementById("play-word"),
+        scaleRate: 2.15,
         animate() {
           $(this.name).animate(
             {
-              width: `${$(this.name).width() / 2}px`,
-              height: `${$(this.name).height() / 2}px`,
-              right: "42%",
+              width: `${$(this.name).outerWidth() / this.scaleRate}px`,
+              height: `${$(this.name).outerHeight() / this.scaleRate}px`,
+              right: `${$("#wordIndicator").width() / 2.48}px`,
             },
-            time
+            time / 1.5
           );
         },
         reset() {
-          $(this.name).animate(
-            {
-              width: `${$(this.name).width() * 2}px`,
-              height: `${$(this.name).height() * 2}px`,
-              right: "",
-            },
-            time
-          );
+          setTimeout(() => {
+            $(this.name).animate(
+              {
+                width: `${$(this.name).outerWidth() * this.scaleRate}px`,
+                height: `${$(this.name).outerHeight() * this.scaleRate}px`,
+                right: "",
+              },
+              time / 1.5,
+            );
+          }, time / 3);
         },
       },
       inputSpelling: {
@@ -75,18 +81,33 @@ $(function () {
         animate() {
           $(this.name).animate(
             {
+              marginBottom: "213px",
               maxWidth: "504.16px",
+              marginLeft: "120px",
             },
-            time
+            time,
+            function () {
+              $("#searchContainer").css({ visibility: "visible"});
+              $("Main").css({ visibility: "hidden" });
+            }
           );
         },
         reset() {
           $(this.name).animate(
             {
+              marginBottom: "",
               maxWidth: "625px",
+              marginLeft: "",
             },
-            time
+            time, function () {
+              $("#inputSpelling").focus();
+            }
           );
+          function reset() {
+            $("#searchContainer").css({ visibility: "hidden" });
+            $("Main").css({ visibility: "visible" });
+          }
+          reset();
         },
       },
     };
@@ -94,17 +115,19 @@ $(function () {
       for (const animation in animations) {
         animations[animation].animate();
       }
-      console.log("Run");
     } else {
       for (const animation in animations) {
         animations[animation].reset();
       }
-      console.log("Reset");
     }
   };
 
   const WordListToggle = () => {
     const input = document.getElementById("inputWord");
+
+    if (input.placeholder !== "Add Words...")
+      input.placeholder = "Add Words...";
+
     const animations = {
       resetInput() {
         if (input.value) {
@@ -129,14 +152,16 @@ $(function () {
       },
       animate() {
         this.outerClick();
-        input.focus();
+        setTimeout(() => {
+          input.focus();
+        }, 800);
         animateSpelling();
-        return $("#storageList").css({ height: "200%" });
+        return $("#storageList").css({ height: "250%" });
       },
       start() {
         if ($("main").queue("fx").length !== 0) return; // If animation present
         this.resetInput();
-        if (document.getElementById("storageList").style.height === "200%") {
+        if (document.getElementById("storageList").style.height === "250%") {
           return this.reset();
         }
         return this.animate();
