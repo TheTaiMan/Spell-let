@@ -8,12 +8,13 @@
   grid-gap: 0.8rem;
   max-width: 25rem;
   z-index: 6;
-  visibility: hidden;
+  overflow: hidden;
 }
 
 #searchInputContainer {
   grid-area: 1 / 2 / span 1 / span 1;
   width: 100%;
+  visibility: hidden;
 }
 
 #inputWord {
@@ -42,8 +43,10 @@
 }
 
 #searchImg {
+  position: relative;
   grid-area: 1 / 1 / span 1 / span 1;
   width: 4rem;
+  right: 100px;
 }
 
 #storageList {

@@ -21,7 +21,7 @@ $(function () {
               height: "230px",
               width: "25rem",
             },
-            time,
+            time
           );
         },
         reset() {
@@ -60,10 +60,16 @@ $(function () {
               height: `${$(this.name).outerHeight() / this.scaleRate}px`,
               right: `${$("#wordIndicator").width() / 2.48}px`,
             },
-            time / 1.5
+            time / 2,
+            function () {
+              setTimeout(() => {
+                $("#searchImg").animate({ right: "" }, time - 300);
+              }, 150);
+            }
           );
         },
         reset() {
+          $("#searchImg").animate({ right: 100 }, time - 440);
           setTimeout(() => {
             $(this.name).animate(
               {
@@ -71,7 +77,7 @@ $(function () {
                 height: `${$(this.name).outerHeight() * this.scaleRate}px`,
                 right: "",
               },
-              time / 1.5,
+              time / 1.5
             );
           }, time / 3);
         },
@@ -87,8 +93,10 @@ $(function () {
             },
             time,
             function () {
-              $("#searchContainer").css({ visibility: "visible"});
               $("Main").css({ visibility: "hidden" });
+              setTimeout(() => {
+                $("#searchInputContainer").css({ visibility: "visible" });
+              }, 80);
             }
           );
         },
@@ -99,12 +107,15 @@ $(function () {
               maxWidth: "625px",
               marginLeft: "",
             },
-            time, function () {
+            time,
+            function () {
               $("#inputSpelling").focus();
             }
           );
           function reset() {
-            $("#searchContainer").css({ visibility: "hidden" });
+            setTimeout(() => {
+              $("#searchInputContainer").css({ visibility: "hidden" });
+            }, 20);
             $("Main").css({ visibility: "visible" });
           }
           reset();
@@ -159,7 +170,8 @@ $(function () {
         return $("#storageList").css({ height: "250%" });
       },
       start() {
-        if ($("main").queue("fx").length !== 0) return; // If animation present
+        if ($("main").queue("fx").length !== 0 || speechSynthesis.speaking)
+          return; // If animation present
         this.resetInput();
         if (document.getElementById("storageList").style.height === "250%") {
           return this.reset();
