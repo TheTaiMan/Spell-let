@@ -19,7 +19,7 @@ $(function () {
             {
               top: "-180px",
               height: "230px",
-              width: "25rem",
+              width: `${$('#searchContainer').outerWidth()}px`,
             },
             time
           );
@@ -58,7 +58,7 @@ $(function () {
             {
               width: `${$(this.name).outerWidth() / this.scaleRate}px`,
               height: `${$(this.name).outerHeight() / this.scaleRate}px`,
-              right: `${$("#wordIndicator").width() / 2.5}px`,
+              right: `${$('#searchContainer').outerWidth() / 1.92}px`,
             },
             time / 2,
             function () {
@@ -88,12 +88,13 @@ $(function () {
           $(this.name).animate(
             {
               marginBottom: "213px",
-              maxWidth: "504.16px",
-              marginLeft: "120px",
+              maxWidth: `${$('#searchInputContainer').outerWidth()}px`,
+              marginLeft: "120px", 
             },
             time,
             function () {
               $("Main").css({ visibility: "hidden" });
+        
               setTimeout(() => {
                 $("#searchInputContainer").css({ visibility: "visible" });
               }, 80);
@@ -168,7 +169,7 @@ $(function () {
           input.focus();
         }, 800);
         animateSpelling();
-        return $("#storageList").css({ height: "250%" });
+        return $("#storageList").css({ height: "280%" });
       },
       start() {
         if ($("main").queue("fx").length !== 0 || speechSynthesis.speaking)
@@ -181,7 +182,7 @@ $(function () {
         }
 
         this.resetInput();
-        if (document.getElementById("storageList").style.height === "250%") {
+        if (document.getElementById("storageList").style.height === "280%") {
           return this.reset();
         }
         return this.animate();

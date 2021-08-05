@@ -5,7 +5,6 @@ import Storage from "./modules/class/storage.js";
 
 // ***Global Variable*** {🌎}
 const input = document.getElementById("inputWord");
-const listToggle = document.getElementById("listToggle");
 
 // ***DOM Events*** {📲}
 const saveWord = () => {
