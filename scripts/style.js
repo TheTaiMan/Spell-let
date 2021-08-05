@@ -158,6 +158,7 @@ $(function () {
       reset() {
         this.outerClick(true);
         animateSpelling(true);
+
         return $("#storageList").css({ height: "0.8rem" });
         // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
       },
@@ -172,6 +173,13 @@ $(function () {
       start() {
         if ($("main").queue("fx").length !== 0 || speechSynthesis.speaking)
           return; // If animation present
+
+        if (document.getElementById("text").innerHTML) {
+          document.getElementById("text").innerHTML = "";
+          $("#inputSpelling").css({ display: "" });
+          $("#inputValue").css({ display: "" });
+        }
+
         this.resetInput();
         if (document.getElementById("storageList").style.height === "250%") {
           return this.reset();
