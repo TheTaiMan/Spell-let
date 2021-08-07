@@ -19,7 +19,7 @@ $(function () {
             {
               top: "-180px",
               height: "230px",
-              width: `${$('#searchContainer').outerWidth()}px`,
+              width: `${$("#searchContainer").outerWidth()}px`,
             },
             time
           );
@@ -58,7 +58,7 @@ $(function () {
             {
               width: `${$(this.name).outerWidth() / this.scaleRate}px`,
               height: `${$(this.name).outerHeight() / this.scaleRate}px`,
-              right: `${$('#searchContainer').outerWidth() / 1.92}px`,
+              right: `${$("#searchContainer").outerWidth() / 1.92}px`,
             },
             time / 2,
             function () {
@@ -85,21 +85,27 @@ $(function () {
       inputSpelling: {
         name: document.getElementById("spellContainer"),
         animate() {
+          let margin = "120px";
+          if ($(window).width() < 643) {
+            $(this.name).css({ justifySelf: "end" });
+            margin = "0";
+          }
           $(this.name).animate(
             {
               marginBottom: "213px",
-              maxWidth: `${$('#searchInputContainer').outerWidth()}px`,
-              marginLeft: "120px", 
+              maxWidth: `${$("#searchInputContainer").outerWidth()}px`,
+              marginLeft: margin,
             },
             time,
             function () {
               $("Main").css({ visibility: "hidden" });
-        
+
               setTimeout(() => {
                 $("#searchInputContainer").css({ visibility: "visible" });
               }, 80);
             }
           );
+          //}
         },
         reset() {
           $(this.name).animate(
@@ -110,6 +116,13 @@ $(function () {
             },
             time,
             function () {
+              if (
+                document.getElementById("spellContainer").style.justifySelf ===
+                "end"
+              )
+                document.getElementById("spellContainer").style.justifySelf =
+                  "center";
+
               $("#inputSpelling").focus();
             }
           );
