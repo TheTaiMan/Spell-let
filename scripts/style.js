@@ -211,4 +211,15 @@ $(function () {
   $("#listToggle").click(function () {
     WordListToggle();
   });
+
+  let lock;
+  window.onwheel = () => {
+    if (!lock && !$("#footerContent").is(":hover")) {
+      lock = true;
+      WordListToggle();
+      setTimeout(() => {
+        lock = false;
+      }, 780);
+    }
+  };
 });
