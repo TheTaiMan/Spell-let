@@ -57,21 +57,23 @@
 
 .highlight {
   border-radius: 7px;
-  background-color: rgb(148, 148, 148);
+  background-color: #c8d5de;
 }
 
 .highlightCorrect {
   border-radius: 7px;
   padding: 3px;
   margin: 0 1px;
-  background-color: #7ff974;
+  background-color: #1BEF5B;
+  color: black;
 }
 
 .highlightWrong {
   border-radius: 7px;
   padding: 3px;
   margin: 0 1px;
-  background-color: #f97474;
+  background-color: #ef3b1b;
+  color: black;
 }
 
 .disappear {
@@ -96,9 +98,9 @@
   left: 0;
   width: 100%;
   height: 0.0825rem;
-  background: rgb(255, 46, 46);
+  background: #ef3b1b;
   animation-name: remove;
-  animation-duration: 0.4s;
+  animation-duration: 0.3s;
   animation-timing-function: linear;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;

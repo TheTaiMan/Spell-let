@@ -44,9 +44,10 @@ export default class Speak extends Word {
     this.block = false;
     this.renderWord = [];
     this.renderLetter = [];
-    speechSynthesis.resume();
+    this.resumeText();
     this.onSyllable = 0;
     this.onLetter = 0;
+    document.getElementById("text").style.fontWeight = "";
     if (document.getElementById("spellContainer").classList.contains("shake"))
       document.getElementById("spellContainer").classList.remove("shake");
     this.renderText.style.width = "auto";
@@ -79,7 +80,7 @@ export default class Speak extends Word {
     this.renderText.style.width = "auto";
     document.getElementById("bracket").style.fontSize = `5rem`;
 
-    const correctColor = "#7ff974";
+    const correctColor = "#1BEF5B";
     document.getElementById("spellContainer").style.backgroundColor =
       correctColor;
     this.input.style.backgroundColor = correctColor;
@@ -230,6 +231,7 @@ export default class Speak extends Word {
         break;
       case "encrypt":
         this.renderText.innerHTML = "";
+        document.getElementById("text").style.fontWeight = "700";
         let time = text.length * 10;
         this.delayRender(time, this.encrypt(text), true);
         break;

@@ -176,10 +176,12 @@ $(function () {
         for (const word of pendingRemove) {
           $(`#${word}`).click();
         }
+        $('#stripe').css('transform', '');
         return $("#storageList").css({ height: "0.8rem" });
         // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
       },
       animate() {
+        $('#stripe').css('transform', 'translateX(-50%) translateY(-50%) rotate(-10deg)');
         this.outerClick();
         setTimeout(() => {
           input.focus();

@@ -18,7 +18,8 @@ body {
   align-items: center;
   justify-items: center;
   overflow: hidden;
-  background-color: #646464;
+  background-color:#16181a;
+  
 }
 
 /* width */
@@ -29,7 +30,30 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background: #fcbe8b;
+  background: #B1EAFF;
+}
+
+#stripe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%) rotate(0deg);
+  min-width: 110%;
+  max-height: 50%;
+  background-color:#2d3438;
+  width: 110%;
+  height: auto;
+  transition: ease 0.5s;
+  z-index: -1;
+  overflow: hidden;
+}
+
+#background {
+  position: relative;
+  top: -50px;
+  height:100%;
+  width: 100%;
 }
 
 /**

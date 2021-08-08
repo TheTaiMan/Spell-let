@@ -112,7 +112,7 @@ footer {
   opacity: 1;
   font-weight: bold;
   border-radius: 0.4rem;
-  background-color: #ffb06f;
+  background-color: #6d99b3;
   color: black;
   border: 2px rgb(0, 0, 0) solid;
 }
@@ -122,7 +122,7 @@ footer {
 }
 
 #removeWord:disabled {
-  background-color: #fcbe8b;
+  background-color: #587C91;
   width: 3rem;
   font-weight: bold;
   color: rgb(255, 255, 255);
@@ -141,13 +141,13 @@ footer {
   width: 25rem;
   height: 100%;
   border-radius: 0.8rem 0.8rem 0 0;
-  background-color: #ff9860;
+  background-color: #587C91;
   z-index: 3;
   padding: 0 18px;
 }
 
 section {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #273845;
   margin-bottom: 10px;
   display: flex;
   flex-flow: column wrap;
@@ -172,7 +172,7 @@ section {
 .word:hover {
   cursor: pointer;
   border-radius: 10px;
-  background-color: rgb(255, 199, 153);
+  background-color: #8dbbcc;
 }
 
 .word:active {
