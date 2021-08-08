@@ -41,7 +41,7 @@ body {
   transform: translateX(-50%) translateY(-50%) rotate(0deg);
   min-width: 110%;
   max-height: 50%;
-  background-color:#2d3438;
+  background-color:#26292b;
   width: 110%;
   height: auto;
   transition: ease 0.5s;
@@ -52,8 +52,9 @@ body {
 #background {
   position: relative;
   top: -50px;
+  left: -50px;
   height:100%;
-  width: 100%;
+  width: 2200px;
 }
 
 /**
