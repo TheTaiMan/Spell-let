@@ -44,7 +44,7 @@ body {
   background-color:#26292b;
   width: 110%;
   height: auto;
-  transition: ease 0.5s;
+  transition: ease 1s;
   z-index: -1;
   overflow: hidden;
 }
