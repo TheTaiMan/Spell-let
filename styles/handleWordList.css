@@ -74,6 +74,7 @@ footer {
 }
 
 #staticBtn {
+  position: relative;
   height: 0.25rem;
   background-color: black;
   margin-top: 8px;
@@ -106,17 +107,41 @@ footer {
 
 #removeWord {
   height: 1rem;
-  width: 2.5rem;
-  background-color: white;
-  border-radius: 0.3rem;
-  border: 1px black solid;
+  width: 2.8rem;
+  transition: 0.5s;
+  opacity: 1;
+  font-weight: bold;
+  border-radius: 0.4rem;
+  background-color: #ffb06f;
+  color: black;
+  border: 2px rgb(0, 0, 0) solid;
 }
+
+#removeWord:hover {
+  cursor: pointer;
+}
+
+#removeWord:disabled {
+  background-color: #fcbe8b;
+  width: 3rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  opacity: 0.6;
+  border-radius: 0.2rem;
+  border: 2px rgb(255, 255, 255) solid;
+}
+
+#removeWord:disabled:hover {
+  cursor: not-allowed;
+}
+
+
 
 #footerContent {
   width: 25rem;
   height: 100%;
   border-radius: 0.8rem 0.8rem 0 0;
-  background-color: #919191;
+  background-color: #ff9860;
   z-index: 3;
   padding: 0 18px;
 }
@@ -147,7 +172,7 @@ section {
 .word:hover {
   cursor: pointer;
   border-radius: 10px;
-  background-color: rgb(117, 117, 117);
+  background-color: rgb(255, 199, 153);
 }
 
 .word:active {

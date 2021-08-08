@@ -59,13 +59,36 @@
             JSON.stringify(pendingRemove)
           );
         }
+        if (!pendingRemove.length) {
+          if ($("#removeWord").prop("disabled") === false) {
+            $("#staticBtn").animate(
+              { right: "47%", marginRight: "" },
+              300,
+              function () {
+                $("#staticBtn").css({ right: "", marginRight: "" });
+                $("#listToggle").css({ justifyContent: "center" });
+              }
+            );
+            return $("#removeWord").prop("disabled", true);
+          }
+        }
+        if ($("#removeWord").prop("disabled") === true) {
+          $("#staticBtn").animate(
+            { left: "50%", marginRight: "69px" },
+            300,
+            function () {
+              $("#staticBtn").css({ left: "", marginRight: "15px" });
+              $("#listToggle").css({ justifyContent: "flex-end" });
+              $("#removeWord").prop("disabled", false);
+            }
+          );
+          return $("#removeWord").prop("disabled", false);
+        }
       };
     </script>
     <!-- ***Render*** {🎨} -->
     <!-- <p id="text"></p> -->
-    <div id="overlay">
-
-    </div>
+    <div id="overlay"></div>
     <!-- ***Interface*** {🧈} -->
     <!-- Bug, words bigger than 17 letters will have a visual glitch-->
     <main id="handleSpelling">
@@ -148,6 +171,7 @@
             <button id="staticBtn"></button>
           </div>
           <button id="removeWord">Remove</button>
+          <!-- Remove -->
         </div>
 
         <div id="wordStorage">

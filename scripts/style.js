@@ -172,7 +172,10 @@ $(function () {
       reset() {
         this.outerClick(true);
         animateSpelling(true);
-
+        let pendingRemove = JSON.parse(sessionStorage.getItem("pendingRemove"));
+        for (const word of pendingRemove) {
+          $(`#${word}`).click();
+        }
         return $("#storageList").css({ height: "0.8rem" });
         // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
       },

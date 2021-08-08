@@ -89,6 +89,7 @@ const SpeakFunction = {
 
 // ***Activate Class Functions*** {🏭}
 window.addEventListener("load", () => {
+  $("#removeWord").prop('disabled', true);
   setTimeout(() => {
     setWordClass(Word.pickWord(), SpeakFunction); // {givenWord, toCheck} = [window.object]
     givenWord.set_Utterance("Load Voice");

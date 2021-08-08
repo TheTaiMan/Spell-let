@@ -11,6 +11,7 @@ class Remove {
     const key = this.word[0];
     let array = JSON.parse(localStorage.getItem(key));
     array.splice(array.indexOf(this.word), 1);
+    document.getElementById(this.word).click();
     if (!array.length) {
       return localStorage.removeItem(key);
     }

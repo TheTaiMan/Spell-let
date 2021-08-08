@@ -37,21 +37,6 @@ export default class Storage extends Word {
     renderFunc();
     sessionStorage.setItem("pendingRemove", JSON.stringify([]));
   }
-  static onDuplicate(inputWord) {
-    let pendingRemove = JSON.parse(sessionStorage.getItem("pendingRemove"));
-
-    const word = inputWord;
-    word.classList.toggle("remove");
-
-    if (word.classList.contains("remove")) {
-      pendingRemove.push(word.id);
-      sessionStorage.setItem("pendingRemove", JSON.stringify(pendingRemove));
-    } else {
-      const restoreWord = pendingRemove.indexOf(word.id);
-      pendingRemove.splice(restoreWord, 1);
-      sessionStorage.setItem("pendingRemove", JSON.stringify(pendingRemove));
-    }
-  }
   static falseFormat(word) {
     const input = document.getElementById("inputWord");
     const array = JSON.parse(localStorage.getItem(word[0]));
@@ -113,7 +98,7 @@ export default class Storage extends Word {
       return false;
     } else if (array.includes(word)) {
       const word = document.getElementById(input.value);
-      Storage.onDuplicate(word);
+      $(`#${input.value}`).click();
       falseFormat.duplicateIndicator(word);
       return true;
     } else {

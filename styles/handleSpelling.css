@@ -132,7 +132,7 @@ main {
   border-radius: 3.125rem;
   padding: 0.625rem;
   grid-gap: 0.3125rem;
-  background-color: #f9a374;
+  background-color: #ffa371;
 }
 
 #spellContainer {
@@ -150,7 +150,7 @@ main {
   font-family: Arial;
   height: 1.875rem;
   font-size: 1.5625rem;
-  background-color: #f9a374;
+  background-color: #ffa371;
   color: white;
   border: 0;
 }
