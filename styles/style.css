@@ -41,7 +41,7 @@ body {
   transform: translateX(-50%) translateY(-50%) rotate(0deg);
   min-width: 110%;
   max-height: 50%;
-  background-color:#26292b;
+  background-color:#27292e;
   width: 110%;
   height: auto;
   transition: ease 1s;
