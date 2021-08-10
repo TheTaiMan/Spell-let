@@ -10,7 +10,7 @@ body {
   height: 100%;
   display: grid;
   grid-template:
-    [content-start] 150px [content-center] 1fr 1fr [content-end] 1fr / 1fr [content-center] minmax(
+    [content-start] 150px [content-center] 1fr [content-end] 1fr / 1fr [content-center] minmax(
       300px,
       800px
     )

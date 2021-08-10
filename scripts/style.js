@@ -17,7 +17,9 @@ $(function () {
         animate() {
           $(this.name).animate(
             {
-              top: "-180px",
+              top: `-${
+                $(window).height() / 3.891566265060240963855421686747
+              }px`,
               height: "230px",
               width: `${$("#searchContainer").outerWidth()}px`,
             },
@@ -99,7 +101,6 @@ $(function () {
             time,
             function () {
               $("Main").css({ visibility: "hidden" });
-
               setTimeout(() => {
                 $("#searchInputContainer").css({ visibility: "visible" });
               }, 80);
@@ -179,8 +180,20 @@ $(function () {
           $(`#${word}`).click();
         }
         $("#stripe").css("transform", "");
-        return $("#storageList").css({ height: "0.8rem" });
-        // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
+        $("#storageList").css({ height: "0.8rem" });
+        $(window).off("resize");
+      },
+      setWordListHeight() {
+        if (
+          $("#wordList").outerHeight() + 60 !==
+          $("#storageList").outerHeight()
+        ) {
+          return $("#wordList").css({
+            height: `${$("#storageList").outerHeight() - 60}px`,
+            overflowY: "scroll",
+            marginTop: "0.5rem",
+          });
+        }
       },
       animate() {
         $("#stripe").css(
@@ -192,7 +205,18 @@ $(function () {
           input.focus();
         }, 800);
         animateSpelling();
-        return $("#storageList").css({ height: "280%" });
+        $("#storageList").css({ height: "200%" });
+        setTimeout(() => {
+          this.setWordListHeight();
+        }, 500);
+
+        let height = $(window).height();
+        $(window).resize(() => {
+          if ($(window).height() <= 969 && $(window).height() !== height) {
+            height = $(window).height();
+            this.setWordListHeight();
+          }
+        });
       },
       start() {
         if ($("main").queue("fx").length !== 0 || speechSynthesis.speaking)
@@ -205,10 +229,10 @@ $(function () {
         }
 
         this.resetInput();
-        if (document.getElementById("storageList").style.height === "280%") {
-          return this.reset();
+        if ($("#storageList").outerHeight() === 20) {
+          return this.animate();
         }
-        return this.animate();
+        return this.reset();
       },
     };
 
@@ -230,3 +254,5 @@ $(function () {
     }
   };
 });
+
+/* Make a separate reset option for input, where it resets the placeholder text and the save btn */
