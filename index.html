@@ -59,6 +59,14 @@
             JSON.stringify(pendingRemove)
           );
         }
+
+        function resetInput(message) {
+          if ($("#inputWord").prop("placeholder") !== message)
+            $("#inputWord").prop("placeholder", message);
+          if ($("#saveBtn").css("opacity") === "1")
+            $("#saveBtn").css({ opacity: "" });
+        }
+
         if (!pendingRemove.length) {
           if ($("#removeWord").prop("disabled") === false) {
             $("#staticBtn").animate(
@@ -67,8 +75,10 @@
               function () {
                 $("#staticBtn").css({ right: "", marginRight: "" });
                 $("#listToggle").css({ justifyContent: "center" });
+                resetInput("Add Words...");
               }
             );
+
             return $("#removeWord").prop("disabled", true);
           }
         }
@@ -80,6 +90,7 @@
               $("#staticBtn").css({ left: "", marginRight: "15px" });
               $("#listToggle").css({ justifyContent: "flex-end" });
               $("#removeWord").prop("disabled", false);
+              resetInput("Remove...");
             }
           );
           return $("#removeWord").prop("disabled", false);
@@ -90,7 +101,7 @@
     <!-- <p id="text"></p> -->
     <div id="overlay"></div>
     <div id="stripe">
-      <img src="./images/background.png" id="background"/>
+      <img src="./images/background.png" id="background" />
     </div>
     <!-- ***Interface*** {🧈} -->
     <!-- Bug, words bigger than 17 letters will have a visual glitch-->
