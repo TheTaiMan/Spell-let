@@ -254,5 +254,3 @@ $(function () {
     }
   };
 });
-
-/* Make a separate reset option for input, where it resets the placeholder text and the save btn */

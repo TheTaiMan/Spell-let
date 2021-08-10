@@ -4,7 +4,6 @@ import { creatObj } from "../creatObj.js";
 import { Search } from "../../search.js";
 
 export default class Storage extends Word {
-  // Add something that will prevent it from adding letters that are 2 characters long
   constructor(word) {
     super(word);
   }
@@ -19,7 +18,7 @@ export default class Storage extends Word {
     data.push(word);
     localStorage.setItem(word[0], JSON.stringify(data));
     this.storageIndication();
-    return this.orderArray(), this.updateStorage(); // When implementing words for the first time take out .updateStorage()[❌]
+    return this.orderArray(), this.updateStorage();
   }
   checkLength() {
     return JSON.parse(localStorage.getItem(this.word[0])).length > 1

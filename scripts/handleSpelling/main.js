@@ -4,7 +4,6 @@ import setWordClass from "./modules/setClass.js";
 
 // ***Speak Components*** {🧱}
 const SpeakFunction = {
-  // This needs to be wiped with soap {🧼}, so0O unclean code
   get block() {
     return givenWord.block;
   },
@@ -129,7 +128,7 @@ input.addEventListener("keyup", (event) => {
     if (speechSynthesis.speaking) return;
     return toCheck.checkSpelling();
   }
-  return (event.target.value = event.target.value.replace(/[^A-Za-z]/, "")); // Do a shaking animation when you enter these characters
+  return (event.target.value = event.target.value.replace(/[^A-Za-z]/, ""));
 });
 
 input.addEventListener("input", (event) => {

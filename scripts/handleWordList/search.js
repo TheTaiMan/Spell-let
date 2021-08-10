@@ -3,7 +3,6 @@ const input = document.getElementById("inputWord");
 
 // ***Search Mechanics*** {🗺}
 export class Search {
-  // And something when there is no words found or no category found
   constructor(compare, input) {
     this.compare = compare;
     this.input = input;
