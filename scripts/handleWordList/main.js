@@ -37,6 +37,10 @@ input.onpaste = (e) => {
 
 // ***Render Word List*** {📋}
 window.addEventListener("load", () => {
+  if (localStorage.length === 0) {
+    document.getElementById("listToggle").click();
+    localStorage.setItem("S", JSON.stringify(["Spelling"]));
+  }
   creatObj();
   renderFunc();
   sessionStorage.setItem("pendingRemove", JSON.stringify([]));

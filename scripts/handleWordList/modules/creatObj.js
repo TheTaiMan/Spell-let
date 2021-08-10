@@ -9,7 +9,9 @@ export const creatObj = () => {
   }
   orderedKeys.sort();
   for (let i = 0; i < localStorage.length; i++) {
-    objectStorage[orderedKeys[i]] = JSON.parse(localStorage.getItem(orderedKeys[i]));
+    objectStorage[orderedKeys[i]] = JSON.parse(
+      localStorage.getItem(orderedKeys[i])
+    );
   }
   //console.log(objectStorage)
 };
