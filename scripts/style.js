@@ -155,6 +155,8 @@ $(function () {
 
     const animations = {
       resetInput() {
+        if ($("#saveBtn").css("opacity") === "1")
+          $("#saveBtn").css({ opacity: "" });
         if (input.value) {
           return Search.reset();
         }
@@ -176,12 +178,15 @@ $(function () {
         for (const word of pendingRemove) {
           $(`#${word}`).click();
         }
-        $('#stripe').css('transform', '');
+        $("#stripe").css("transform", "");
         return $("#storageList").css({ height: "0.8rem" });
         // Restore all the pendingRemove words in sessionStorage clear sessionStorage.
       },
       animate() {
-        $('#stripe').css('transform', 'translateX(-50%) translateY(-50%) rotate(-10deg)');
+        $("#stripe").css(
+          "transform",
+          "translateX(-50%) translateY(-50%) rotate(-10deg)"
+        );
         this.outerClick();
         setTimeout(() => {
           input.focus();
