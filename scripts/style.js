@@ -94,19 +94,19 @@ $(function () {
           }
           $(this.name).animate(
             {
-              marginBottom: "213px",
+              marginBottom: "212.8px",
               maxWidth: `${$("#searchInputContainer").outerWidth()}px`,
               marginLeft: margin,
             },
             time,
             function () {
-              $("Main").css({ visibility: "hidden" });
-              setTimeout(() => {
+              let visibleTime = setInterval(() => {
+                $("Main").css({ visibility: "hidden" });
                 $("#searchInputContainer").css({ visibility: "visible" });
+                clearInterval(visibleTime);
               }, 80);
             }
           );
-          //}
         },
         reset() {
           $(this.name).animate(
@@ -128,8 +128,9 @@ $(function () {
             }
           );
           function reset() {
-            setTimeout(() => {
+            let hiddenTime = setInterval(() => {
               $("#searchInputContainer").css({ visibility: "hidden" });
+              clearInterval(hiddenTime);
             }, 20);
             $("Main").css({ visibility: "visible" });
           }
@@ -215,6 +216,30 @@ $(function () {
           if ($(window).height() <= 969 && $(window).height() !== height) {
             height = $(window).height();
             this.setWordListHeight();
+          }
+          if ($(window).width() <= 643) {
+            $("#spellContainer").css({
+              maxWidth: `${$("#searchInputContainer").outerWidth()}px`,
+              justifySelf: "end",
+              marginLeft: 0,
+            });
+            $("Main").css({
+              width: `${$("#searchContainer").outerWidth()}px`,
+            });
+            $("#play-word").css({
+              right: `${$("#searchContainer").outerWidth() / 1.92}px`,
+            });
+          } else {
+            if ($("#spellContainer").css("justifySelf") !== "center") {
+              $("#spellContainer").css({
+                maxWidth: "504.156px",
+                justifySelf: "center",
+                marginLeft: "120px",
+              });
+              $("Main").css({
+                width: `${$("#searchContainer").outerWidth()}px`,
+              });
+            }
           }
         });
       },
