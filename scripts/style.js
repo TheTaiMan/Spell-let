@@ -196,26 +196,17 @@ $(function () {
           });
         }
       },
-      animate() {
-        $("#stripe").css(
-          "transform",
-          "translateX(-50%) translateY(-50%) rotate(-10deg)"
-        );
-        this.outerClick();
-        setTimeout(() => {
-          input.focus();
-        }, 800);
-        animateSpelling();
-        $("#storageList").css({ height: "200%" });
-        setTimeout(() => {
-          this.setWordListHeight();
-        }, 500);
-
+      onWindowResize() {
         let height = $(window).height();
         $(window).resize(() => {
           if ($(window).height() <= 969 && $(window).height() !== height) {
             height = $(window).height();
             this.setWordListHeight();
+            $("Main").css({
+              top: `-${
+                $(window).height() / 3.891566265060240963855421686747
+              }px`,
+            });
           }
           if ($(window).width() <= 643) {
             $("#spellContainer").css({
@@ -242,6 +233,23 @@ $(function () {
             }
           }
         });
+      },
+      animate() {
+        $("#stripe").css(
+          "transform",
+          "translateX(-50%) translateY(-50%) rotate(-10deg)"
+        );
+        this.outerClick();
+        setTimeout(() => {
+          input.focus();
+        }, 800);
+        animateSpelling();
+        $("#storageList").css({ height: "200%" });
+        setTimeout(() => {
+          this.setWordListHeight();
+        }, 500);
+
+        this.onWindowResize();
       },
       start() {
         if ($("main").queue("fx").length !== 0 || speechSynthesis.speaking)
