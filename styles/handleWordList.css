@@ -1,0 +1,192 @@
+#searchContainer {
+  grid-area: content-start / content-center / span 1 / span 1;
+  display: grid;
+  grid-template: 1fr / 1fr 5fr;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  grid-gap: 0.8rem;
+  max-width: 25rem;
+  z-index: 6;
+  overflow: hidden;
+}
+
+#searchInputContainer {
+  grid-area: 1 / 2 / span 1 / span 1;
+  width: 100%;
+  visibility: hidden;
+}
+
+#inputWord {
+  grid-area: 1 / 2 / span 1 / span 1;
+  width: 100%;
+}
+
+#saveBtn {
+  grid-area: 1 / 1 / span 1 / span 1;
+  opacity: 0.3;
+  z-index: 1;
+  transition: 0s;
+  width: 2.24rem;
+}
+
+#saveBtn:hover {
+  transition: 0.2s;
+  cursor: pointer;
+  opacity: 0.6;
+}
+#saveBtn:active {
+  transition: 0.3s;
+  cursor: pointer;
+  width: 2.5rem;
+  opacity: 1;
+}
+
+#searchImg {
+  position: relative;
+  grid-area: 1 / 1 / span 1 / span 1;
+  width: 4rem;
+  right: 100px;
+}
+
+#storageList {
+  height: 0.8rem;
+}
+
+/* Change the height with JS */
+#wordList {
+  margin-top: 0.5rem;
+  height: 28rem;
+  overflow-y: scroll;
+}
+
+footer {
+  grid-area: content-end / content-center / span 1 / span 1;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.5s;
+  transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+#staticBtn {
+  position: relative;
+  height: 0.25rem;
+  background-color: black;
+  margin-top: 8px;
+  width: 1.5rem;
+  border-radius: 1rem;
+  border: 0;
+}
+
+#staticBtn:hover {
+  cursor: pointer;
+}
+
+#storageInterface {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#listToggle {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 0.8rem;
+  width: 100%;
+}
+
+#listToggle:hover {
+  cursor: pointer;
+}
+
+#removeWord {
+  height: 1rem;
+  width: 2.8rem;
+  transition: 0.8s;
+  opacity: 1;
+  font-weight: bold;
+  border-radius: 0.4rem;
+  background-color: #6d99b3;
+  color: black;
+  border: 2px rgb(0, 0, 0) solid;
+}
+
+#removeWord:hover {
+  cursor: pointer;
+}
+
+#removeWord:disabled {
+  background-color: #8798A5;
+  width: 3rem;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  opacity: 0.6;
+  border-radius: 0.2rem;
+  border: 2px rgb(255, 255, 255) solid;
+}
+
+#removeWord:disabled:hover {
+  cursor: not-allowed;
+}
+
+
+
+#footerContent {
+  width: 25rem;
+  height: 100%;
+  border-radius: 0.8rem 0.8rem 0 0;
+  background-color: #587C91;
+  z-index: 3;
+  padding: 0 18px;
+}
+
+section {
+  border-bottom: 1px solid #273845;
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+}
+
+.header,
+.wordsContaner {
+  font-family: sans-serif;
+}
+
+.header {
+  margin-left: 7px;
+}
+
+.word {
+  transition: ease-out 0.2s;
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+.word:hover {
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #8dbbcc;
+}
+
+.word:active {
+  border-radius: 15px;
+}
+
+.wordsContaner {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+}
+
+@media (max-width: 627px) {
+  #footerContent {
+    width: 100%;
+  }
+}

@@ -1,0 +1,227 @@
+html {
+  height: 100%;
+  font-size: 25px;
+}
+
+/* hebrew */
+@font-face {
+  font-family: "Varela Round";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/varelaround/v13/w8gdH283Tvk__Lua32TysjIfpcuPP9g.woff2)
+    format("woff2");
+  unicode-range: U+0590-05FF, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* vietnamese */
+@font-face {
+  font-family: "Varela Round";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/varelaround/v13/w8gdH283Tvk__Lua32TysjIfqMuPP9g.woff2)
+    format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Varela Round";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/varelaround/v13/w8gdH283Tvk__Lua32TysjIfqcuPP9g.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Varela Round";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/varelaround/v13/w8gdH283Tvk__Lua32TysjIfp8uP.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+main {
+  position: relative;
+  grid-area: content-center / content-center / span 1 / span 1;
+  display: grid;
+  grid-template: auto 0.25fr 3.5rem / 1fr;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 450px;
+  visibility: visible;
+  overflow: hidden;
+
+  /* border: 1px solid red; */
+}
+
+#wordIndicator {
+  grid-area: 1 / 1 / span 1 / span 1;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  min-height: 10.5rem;
+
+  /* border: 1px solid red; */
+}
+
+#play-word {
+  position: relative;
+  width: 6.25rem;
+  z-index: 5;
+  transition: 0.1s;
+  transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+
+  /* border: 1px solid red; */
+}
+
+#play-word:hover {
+  cursor: pointer;
+}
+
+#textWave {
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  width: auto;
+  overflow: hidden;
+}
+
+#text {
+  filter: blur(8px);
+  width: auto;
+  box-sizing: border-box;
+  transition: 0.1s;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  font-family: sans-serif;
+}
+
+#bracket {
+  text-align: center;
+  font-size: 5rem;
+  opacity: 0;
+  margin-left: 0.5rem;
+  color: #8898a6;
+  font-family: "Varela Round", sans-serif;
+  z-index: 1;
+  transition: ease 0.21s;
+  letter-spacing: -7px;
+}
+
+.inputContainer {
+  display: inline-grid;
+  grid-template: 1.875rem / 2.24rem 1fr 2.24rem;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  height: 3.125rem;
+  border-radius: 3.125rem;
+  padding: 0.625rem;
+  grid-gap: 0.3125rem;
+  background-color: #8799A5;
+}
+
+#spellContainer {
+  /* position: relative; */
+  z-index: 4;
+  grid-area: 3 / 1 / span 1 / span 1;
+  max-width: 25rem;
+  transition: 0.08s;
+
+  /* border: 1px solid red; */
+}
+
+.input,
+#inputValue {
+  font-family: Arial;
+  height: 1.875rem;
+  font-size: 1.5625rem;
+  background-color: #8799A5;
+  color: white;
+  border: 0;
+}
+
+.imgBtn {
+  transition: ease-in 0.15s;
+}
+
+.imgBtn:active {
+  transition: ease-out 0.05s;
+}
+
+::placeholder {
+  font-style: oblique;
+  color: white;
+}
+
+#checkBtn {
+  grid-area: 1 / 1 / span 1 / span 1;
+  width: 1.875rem;
+  opacity: 0.25;
+}
+
+#checkBtn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+#inputValue {
+  display: none;
+}
+
+#inputSpelling,
+#inputValue {
+  grid-area: 1 / 2 / span 1 / span 1;
+}
+
+#inputSpelling {
+  width: 100%;
+}
+
+#inputValue {
+  width: 18.72rem;
+}
+
+#inputSpelling {
+  transition: 0.08s;
+}
+
+#inputValue:hover {
+  cursor: text;
+}
+
+#revealWord {
+  grid-area: 1 / 3 / span 1 / span 1;
+  opacity: 0; /* Will be invisible, and when a work is wrong, it will slowly appear */
+  width: 4.375rem;
+  margin: -1.25rem;
+}
+
+#revealWord:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+@media (max-width: 643px) {
+  #spellContainer {
+    width: 100%;
+  }
+  #inputSpelling,
+  #inputValue {
+    width: 100%;
+  }
+}
