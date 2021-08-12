@@ -240,6 +240,8 @@ export default class Speak extends Word {
       case "correct":
         this.delayRender(this.timeElapsed, text);
         break;
+      default:
+        break;
     }
   }
   revealWord(text, state) {

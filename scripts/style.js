@@ -235,6 +235,7 @@ $(function () {
         });
       },
       animate() {
+        $("#bracket").css({ opacity: 0 });
         $("#stripe").css(
           "transform",
           "translateX(-50%) translateY(-50%) rotate(-10deg)"

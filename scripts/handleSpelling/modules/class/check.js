@@ -15,6 +15,7 @@ export default class Check extends Word {
       transform: "rotate(-90deg)",
     });
     $("#textWave").css({ display: "none" });
+    this.SpeakFunction.play("You completed all the words! Congrats!", "");
 
     setTimeout(() => {
       $("#play-word").css({
