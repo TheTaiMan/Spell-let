@@ -85,7 +85,7 @@ export default class Speak extends Word {
       correctColor;
     this.input.style.backgroundColor = correctColor;
 
-    return (document.getElementById("bracket").innerHTML = "✔");
+    return (document.getElementById("bracket").innerText = "✔");
   }
   delayRender(time, text, retract = false) {
     for (let i = 0; i < text.length; i++) {
@@ -177,6 +177,8 @@ export default class Speak extends Word {
     // the play text function is second to the last step of speaking, it actually says what is passed into the function and passes its value and state to the indicate text of what is being said.
     this.resumeText();
     if (speechSynthesis.speaking) return;
+    if (document.getElementById("bracket").innerText !== ")")
+      document.getElementById("bracket").innerText = ")";
     this.indicateText(text, state);
     return window.speechSynthesis.speak(this.set_Utterance(text)); // Make it so when the letter is wrong, it will make a monster sound, and the volumn will be increased
   }
