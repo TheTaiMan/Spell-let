@@ -31,6 +31,7 @@ document.getElementById("saveBtn").onclick = (event) => {
 
 input.onpaste = (e) => {
   setTimeout(() => {
+    input.value = input.value.replace(/\s/g, "");
     input.value = input.value.replace(/[^a-zA-Z ]/g, "");
   }, 0);
 };
