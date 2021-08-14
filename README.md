@@ -39,4 +39,4 @@ Spell-let is **not mobile friendly**, however it (*mostly*) has responsive desig
 + Microsoft Edge (*intended voice will **not work***)
 
 ## Other
-I will be adding a way to check if the word saved or about to be saved is an actual word in the English language whenever I get the chance. Also, this was my first big project, hopefully it turned out well and anyone can use it (*besides mobile users, your out of luck*). I have learned a lot while making this project, even when I was about to pull my hair out.
+I will be adding a way to check if the word saved or about to be saved is an actual word in the English language whenever I get the chance. Also, this was my first big project, hopefully it turned out well and anyone can use it (*besides mobile users, your out of luck*). I have learned a lot while making this project, even when I was about to pull my hair out. One last thought, you might be intrigued or saddened to know that I used PowerPoint to design the whole project :).
