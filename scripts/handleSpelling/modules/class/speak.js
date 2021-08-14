@@ -114,7 +114,7 @@ export default class Speak extends Word {
           .slice(0, encryptWord.length - i)
           .join(" ");
         i === encryptWord.length ? this.stopText() : false;
-      }, i * (this.syllable.length <= 2 && this.word.length < 7 ? time * 7 : this.word.length === 7 ? time * 2 : this.syllable.length >= 5 ? time / 2 : time)); // Experimental {🧪} [WILL CAUSE ERRORS❌]
+      }, i * (this.word.length < 4 ? time * 10 : this.syllable.length <= 2 && this.word.length < 6 ? time * 6 : this.word.length <= 7 && this.syllable.length <= 2 ? time * 2 : this.syllable.length >= 5 ? time / 2 : time)); // Experimental {🧪} [WILL CAUSE ERRORS❌]
     }
   }
   onCharacter() {

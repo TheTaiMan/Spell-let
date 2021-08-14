@@ -183,6 +183,10 @@ $(function () {
         $("#stripe").css("transform", "");
         $("#storageList").css({ height: "0.8rem" });
         $(window).off("resize");
+        /*
+         * Add a window resize event that resizes the input spelling
+         * and word container length so it doesn't overflow
+         */
       },
       setWordListHeight() {
         if (
