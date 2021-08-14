@@ -1,4 +1,4 @@
-# [Spell-let](https://thetaiman.github.io/Spelling-Project/)
+# [Spell-let](https://thetaiman.github.io/Spell-let/)
 Spell-let is a personal project created to improve my spelling skills (*cuz I suck at it*) by joining all the techniques that make learning easy and convenient. It also had a side benefit of implementing what I have learned so far in programming (*plus trying new things*), killing two birds with one stone.
 ## Table of contents
 * [Description](#description)
