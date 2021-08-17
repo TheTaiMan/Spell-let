@@ -1,8 +1,10 @@
+// ***Imports*** {✈}
 import Word from "../../../word.js";
 import renderFunc from "../renderFunc.js";
 import { creatObj } from "../creatObj.js";
 import { Search } from "../../search.js";
 
+// ***Exports*** {📦}
 export default class Storage extends Word {
   constructor(word) {
     super(word);

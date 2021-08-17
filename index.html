@@ -13,7 +13,7 @@
     <meta name="author" content="Miah Tayen" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Styles -->
+    <!-- ***Styles*** {✨}-->
     <link href="./styles/style.css" rel="stylesheet" type="text/css" defer />
     <link
       href="./styles/jsUtility.css"
@@ -29,6 +29,7 @@
       type="text/css"
       defer
     />
+    <script type="module" src="./scripts/handleSpelling/main.js"></script>
     <!-- ***Handle Word List*** {📃} -->
     <link
       href="./styles/handleWordList.css"
@@ -36,10 +37,6 @@
       type="text/css"
       defer
     />
-    <!-- Scripts -->
-    <!-- ***Handle Spelling*** {🔊} -->
-    <script type="module" src="./scripts/handleSpelling/main.js"></script>
-    <!-- ***Handle Word List*** {📃} -->
     <script src="./scripts/handleWordList/remove.js" type="module"></script>
     <script src="./scripts/handleWordList/main.js" type="module"></script>
     <script src="./scripts/handleWordList/search.js" type="module"></script>
@@ -104,14 +101,13 @@
         }
       };
     </script>
-    <!-- ***Render*** {🎨} -->
-    <!-- <p id="text"></p> -->
+    <!-- ***Background*** {🎨} -->
     <div id="overlay"></div>
     <div id="stripe">
       <img src="./images/background.png" id="background" />
     </div>
+    
     <!-- ***Interface*** {🧈} -->
-    <!-- Bug, words bigger than 17 letters will have a visual glitch-->
     <main id="handleSpelling">
       <div id="wordIndicator">
         <img
@@ -120,7 +116,6 @@
           ondragstart="return false"
         />
         <div id="textWave">
-          <!-- Over flow causes reveal word to not show, to fix this, make width 100% so the speaker goes all the wya back and the word can be revealed -->
           <p id="text"></p>
           <span id="bracket">)</span>
         </div>
@@ -155,10 +150,6 @@
       </div>
     </main>
 
-    <br /><br />
-    <!-- ***Input Render*** {⌨ ~🎨}-->
-    <!-- Do a shaking animation with it is wrong -->
-    <br /><br />
     <!-- ***Word List*** {📋}-->
     <div id="searchContainer">
       <img
@@ -192,7 +183,6 @@
             <button id="staticBtn"></button>
           </div>
           <button id="removeWord">Remove</button>
-          <!-- Remove -->
         </div>
 
         <div id="wordStorage">

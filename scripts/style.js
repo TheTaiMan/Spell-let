@@ -1,4 +1,7 @@
+// ***Imports*** {✈}
 import { Search } from "./handleWordList/search.js";
+
+// ***DOM Events*** {📲}
 $(function () {
   $("#play-word").hover(
     () => {

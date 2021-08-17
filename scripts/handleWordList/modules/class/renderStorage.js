@@ -1,3 +1,4 @@
+// ***Exports*** {📦}
 export default class RenderStorage {
   constructor(array, key) {
     this.array = array;
