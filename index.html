@@ -103,13 +103,13 @@
     </script>
     <!-- ***Background*** {🎨} -->
     <div id="overlay"></div>
-    <div id="stripe">
+    <div id="stripe" class="noselect">
       <img src="./images/background.png" id="background" />
     </div>
     
     <!-- ***Interface*** {🧈} -->
     <main id="handleSpelling">
-      <div id="wordIndicator">
+      <div id="wordIndicator" class="noselect">
         <img
           src="./images/speaker.png"
           id="play-word"
@@ -125,7 +125,7 @@
       <div class="inputContainer" id="spellContainer">
         <img
           src="./images/check.png"
-          class="imgBtn"
+          class="imgBtn noselect"
           id="checkBtn"
           ondragstart="return false"
         />
@@ -143,7 +143,7 @@
         <span id="inputValue"></span>
         <img
           src="./images/reveal.png"
-          class="imgBtn"
+          class="imgBtn noselect"
           id="revealWord"
           ondragstart="return false"
         />
@@ -156,11 +156,12 @@
         src="./images/search.png"
         ondragstart="return false"
         id="searchImg"
+        class="noselect"
       />
       <div class="inputContainer" id="searchInputContainer">
         <img
           src="./images/save.png"
-          class="imgBtn"
+          class="imgBtn noselect"
           id="saveBtn"
           ondragstart="return false"
         />
@@ -176,7 +177,7 @@
       </div>
     </div>
 
-    <footer id="storageList">
+    <footer id="storageList" class="noselect">
       <div id="footerContent">
         <div id="storageInterface">
           <div id="listToggle">
