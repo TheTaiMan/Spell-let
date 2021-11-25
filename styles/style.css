@@ -27,13 +27,13 @@ body {
 }
 
 ::-moz-selection {
-  background-color: #ccd7de;
-  color: #27292e;
+  background-color: #c8d5de;
+  color: #ffffff;
 }
 
 ::selection {
-  background-color: #ccd7de;
-  color: #27292e;
+  background-color: #c8d5de;
+  color: #ffffff;
 }
 
 .noselect {
