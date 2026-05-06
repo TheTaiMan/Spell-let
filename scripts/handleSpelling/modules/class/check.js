@@ -1,7 +1,7 @@
 // ***Imports*** {✈}
 import Word from "../../../word.js";
 import setWordClass from "../setClass.js";
-import confetti from "https://cdn.skypack.dev/canvas-confetti";
+import confetti from "https://esm.sh/canvas-confetti@1.9.3";
 
 // ***Exports*** {📦}
 export default class Check extends Word {
